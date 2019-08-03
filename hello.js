@@ -1,34 +1,17 @@
 import React from 'react';
-import Butter from 'buttercms'
-import Transmit from 'react-transmit';
+import useAxios from "axios-hooks";
 
-const butter = Butter('b60a008584313ed21803780bc9208557b3b49fbb');
+export default function Hello() {
+  const [{ data, loading, error }, refetch] = useAxios(
+    'https://www.revrobotics.com/content/sw/max/sparkmax-gui-cfg.json'
+  );
 
-var Hello = React.createClass({
-  render: function() {
-    if (this.props.posts) {
-      return (
-        <div>
-          {this.props.posts.data.map((post) => {
-            return (
-              <div key={post.slug}>{post.title}</div>
-            )
-          })}
-        </div>
-      );
-    } else {
-      return <div>Loading...</div>;
-    }
-  }
-});
-
-export default Transmit.createContainer(Hello, {
-  // These must be set or else it would fail to render
-  initialVariables: {},
-  // Each fragment will be resolved into a prop
-  fragments: {
-    posts() {
-      return butter.post.list().then((resp) => resp.data);
-    }
-  }
-});
+  return (
+    <div>
+      <button onClick={refetch}>refetch</button>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error!!!</p>}
+      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+    </div>
+  );
+}
