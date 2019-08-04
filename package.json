@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "Official Live Results For FIRST Global",
   "scripts": {
+    "lint": "tslint --test",
     "build-client": "webpack --config ./config/webpack.client.config.js",
     "build-server": "webpack --config ./config/webpack.server.config.js",
-    "build": "npm run build-client && npm run build-server"
+    "build": "npm run build-client && npm run build-server",
+    "start": "node build/server/index.js"
   },
   "author": "Kyle Flynn",
   "license": "MIT",
@@ -15,6 +17,8 @@
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@material-ui/core": "^4.3.1",
+    "@material-ui/icons": "^4.2.1",
     "@types/react": "^16.8.24",
     "@types/react-dom": "^16.8.5",
     "axios": "^0.19.0",
@@ -30,6 +34,8 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.0.4",
     "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.0.0",
     "typescript": "^3.5.3",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
