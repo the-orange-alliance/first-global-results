@@ -7,7 +7,7 @@ module.exports = {
     extensions: [".json", ".js", ".ts", ".tsx"]
   },
   output: {
-    path: path.join(__dirname, '../build/server'),
+    path: path.resolve(__dirname, '../build/server'),
     filename: 'index.js',
     publicPath: '../../'
   },
