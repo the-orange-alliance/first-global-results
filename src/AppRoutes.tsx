@@ -5,6 +5,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import CameraIcon from "@material-ui/icons/VideocamRounded";
 
 import HomeView from "./views/home/HomeView"
+import TeamsView from "./views/teams/TeamsView";
 
 export interface AppRoute {
   name: string;
@@ -19,14 +20,14 @@ const appRoutes: AppRoute[] = [
     name: "Home",
     path: '/',
     exact: true,
-    component: <HomeView/>,
+    component: <HomeView/>, // DEBUG view
     menuIcon: <HomeIcon/>
   },
   {
     name: "Teams",
     path: '/teams',
     exact: true,
-    component: <span>Teams</span>,
+    component: <TeamsView/>,
     menuIcon: <PeopleIcon/>
   },
   {

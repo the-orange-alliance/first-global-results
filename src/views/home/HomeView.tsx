@@ -3,7 +3,6 @@ import Banner from "../../components/Banner";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import Card from "@material-ui/core/Card";
 import ActiveTeamsModule from "../../modules/ActiveTeamsModule";
 import MatchesPlayedModule from "../../modules/MatchesPlayedModule";
 import AppTheme from "../../AppTheme";
