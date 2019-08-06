@@ -3,6 +3,8 @@ import HomeIcon from "@material-ui/icons/Home"
 import PeopleIcon from "@material-ui/icons/People"
 import CalendarTodayIcon from "@material-ui/icons/CalendarTodayTwoTone"
 
+import HomeView from "./views/home/HomeView"
+
 export interface AppRoute {
   name: string;
   path: string;
@@ -16,7 +18,7 @@ const appRoutes: AppRoute[] = [
     name: "Home",
     path: '/',
     exact: true,
-    component: <span>Home</span>,
+    component: <HomeView/>,
     menuIcon: <HomeIcon/>
   },
   {

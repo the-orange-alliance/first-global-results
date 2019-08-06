@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Official Live Results For FIRST Global",
   "scripts": {
-    "serve": "webpack-dev-server --config ./config/webpack.client.config.js",
+    "serve": "webpack-dev-server --config ./config/webpack.client.config.js --open",
     "build-client": "webpack --config ./config/webpack.client.config.js",
     "build-server": "webpack --config ./config/webpack.server.config.js",
     "build": "npm run build-client && npm run build-server",
