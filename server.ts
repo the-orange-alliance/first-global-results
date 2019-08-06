@@ -10,6 +10,7 @@ import * as path from "path";
 const app: Application = express();
 
 app.use('/build/client', express.static(path.resolve("build/client")));
+// TODO - Use .png|.jpg to static the same directory since it's not being loaded properly
 
 // Serve requests with our handleRender function
 app.use(async (req: any, res: any) => {

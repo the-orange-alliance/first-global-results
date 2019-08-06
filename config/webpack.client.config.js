@@ -1,15 +1,15 @@
 const path = require('path');
-console.log(path.resolve(__dirname, "../build/client/"));
+
 module.exports = {
   entry: path.resolve(__dirname, '../client.tsx'),
   devtool: "source-map",
   resolve: {
-    extensions: [".json", ".js", ".ts", ".tsx"]
+    extensions: [".json", ".js", ".ts", ".tsx", ".png", ".jpg"]
   },
   output: {
     path: path.join(__dirname, '../build/client'),
     filename: 'index.js',
-    publicPath: '../'
+    publicPath: '/build/client/'
   },
   module: {
     rules: [
@@ -27,12 +27,22 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: 'source-map-loader'
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
       }
     ]
   },
   devServer: {
     contentBase: path.join(__dirname, "../"),
-    publicPath: "http://localhost:8080/build/client/"
+    publicPath: "http://localhost:9090/build/client/",
+    port: 9090
   },
   node: {
     __dirname: false

@@ -16,7 +16,9 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 import { AppRoute } from "../AppRoutes";
 import {NavLink} from "react-router-dom";
 
-const drawerWidth = 240;
+import POWERED_BY_REV from "../assets/powered_by_rev.png";
+
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
         width: `calc(100% - ${drawerWidth}px)`,
       },
     },
+    logo: {
+      maxWidth: '100%',
+      height: 'auto'
+    },
+    sponsor: {
+      padding: theme.spacing(2),
+      maxWidth: '100%',
+      height: 'auto'
+    },
     menuButton: {
       marginRight: theme.spacing(2),
       [theme.breakpoints.up('sm')]: {
@@ -46,8 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
+      flexGrow: 1
     },
   }),
 );
@@ -56,11 +66,12 @@ interface ResponsiveDrawerProps {
   appRoutes: AppRoute[];
   container?: Element;
   title?: string;
-  view: JSX.Element
+  logo?: any;
+  view: JSX.Element;
 }
 
 export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
-  const { appRoutes, container, title, view } = props;
+  const { appRoutes, container, title, logo, view } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -80,12 +91,17 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar}>
+        {logo ? <img src={logo} className={classes.logo}/> : title}
+      </div>
       <Divider />
       <List>
         {menuItems}
       </List>
       <Divider />
+      <div>
+        <img src={POWERED_BY_REV} className={classes.sponsor}/>
+      </div>
     </div>
   );
 

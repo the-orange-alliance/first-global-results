@@ -1,7 +1,8 @@
 import * as React from "react";
-import HomeIcon from "@material-ui/icons/Home"
-import PeopleIcon from "@material-ui/icons/People"
-import CalendarTodayIcon from "@material-ui/icons/CalendarTodayTwoTone"
+import HomeIcon from "@material-ui/icons/Home";
+import PeopleIcon from "@material-ui/icons/People";
+import CalendarTodayIcon from "@material-ui/icons/CalendarTodayTwoTone";
+import CameraIcon from "@material-ui/icons/VideocamRounded";
 
 import HomeView from "./views/home/HomeView"
 
@@ -34,6 +35,13 @@ const appRoutes: AppRoute[] = [
     exact: true,
     component: <span>Events</span>,
     menuIcon: <CalendarTodayIcon/>
+  },
+  {
+    name: "Streaming",
+    path: '/streams',
+    exact: true,
+    component: <span>Streaming</span>,
+    menuIcon: <CameraIcon/>
   }
 ];
 

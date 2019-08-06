@@ -1,0 +1,49 @@
+import * as React from "react";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import VideoGameIcon from "@material-ui/icons/VideogameAssetOutlined";
+import AppTheme from "../AppTheme";
+import Typography from "@material-ui/core/Typography";
+
+const styles = {
+  avatar: {
+    margin: AppTheme.spacing(2),
+    backgroundColor: AppTheme.palette.primary.main
+  },
+  text: {
+    margin: AppTheme.spacing(2)
+  }
+};
+
+class MatchesPlayedModule extends React.Component {
+  constructor(props: any) {
+    super(props);
+  }
+
+  public render() {
+    return (
+      <Card>
+        <Grid container={true} spacing={2}>
+          <Grid item={true} sm={6} md={4} lg={3}>
+            <Avatar style={styles.avatar}>
+              <VideoGameIcon fontSize={"large"}/>
+            </Avatar>
+          </Grid>
+          <Grid item={true} sm={6} md={8} lg={9}>
+            <Grid container={true} spacing={0} style={styles.text}>
+              <Grid item={true} xs={12}>
+                <Typography variant={'body1'}><b>100</b></Typography>
+              </Grid>
+              <Grid item={true} xs={12}>
+                <Typography variant={'body2'} color={"textSecondary"}>Matches Played</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Card>
+    );
+  }
+}
+
+export default MatchesPlayedModule;
