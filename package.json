@@ -3,15 +3,10 @@
   "version": "0.0.1",
   "description": "Official Live Results For FIRST Global",
   "scripts": {
-    "lint": "tslint --test",
-    "watch-client": "webpack --config ./config/webpack.client.config.js --watch",
-    "watch-server": "webpack --config ./config/webpack.server.config.js --watch",
+    "serve": "webpack-dev-server --config ./config/webpack.client.config.js",
     "build-client": "webpack --config ./config/webpack.client.config.js",
     "build-server": "webpack --config ./config/webpack.server.config.js",
     "build": "npm run build-client && npm run build-server",
-    "build-client-dev": "webpack --config ./config/webpack.client.config.js --env.NODE_ENV=development",
-    "build-server-dev": "webpack --config ./config/webpack.server.config.js --env.NODE_ENV=development",
-    "build-dev": "npm run build-client-dev && npm run build-server-dev",
     "start": "nodemon build/server/index.js --config nodemon.json"
   },
   "author": "Kyle Flynn",
@@ -33,14 +28,11 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1",
-    "webpack-dev-middleware": "^3.7.0"
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.0",
     "@types/react-router-dom": "^4.3.4",
-    "@types/webpack": "^4.32.1",
-    "@types/webpack-dev-middleware": "^2.0.3",
     "babel-loader": "^8.0.6",
     "nodemon": "^1.19.1",
     "source-map-loader": "^0.2.4",

@@ -30,6 +30,9 @@ module.exports = {
       }
     ]
   },
+  node: {
+    __dirname: false
+  },
   target: "node"
   // externals: {
   //   "react": "React",

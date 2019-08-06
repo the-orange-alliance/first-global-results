@@ -7,9 +7,20 @@ import * as AxiosHooks from "axios-hooks";
 (AxiosHooks as any).loadCache((window as any).__AXIOS_HOOKS_CACHE__);
 delete (window as any).__AXIOS_HOOKS_CACHE__;
 
-ReactDOM.hydrate(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('app')
-);
+const isDev: boolean = true;
+
+if (isDev) {
+  ReactDOM.render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    document.getElementById('app')
+  );
+} else {
+  ReactDOM.hydrate(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    document.getElementById('app')
+  );
+}

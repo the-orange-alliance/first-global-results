@@ -1,5 +1,5 @@
 const path = require('path');
-
+console.log(path.resolve(__dirname, "../build/client/"));
 module.exports = {
   entry: path.resolve(__dirname, '../client.tsx'),
   devtool: "source-map",
@@ -29,7 +29,14 @@ module.exports = {
         loader: 'source-map-loader'
       }
     ]
-  }
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "../"),
+    publicPath: "http://localhost:8080/build/client/"
+  },
+  node: {
+    __dirname: false
+  },
   // externals: {
   //   "react": "React",
   //   "react-dom": "ReactDOM"

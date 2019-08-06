@@ -7,23 +7,9 @@ import App from "./src/App";
 import * as AxiosHooks from "axios-hooks";
 import * as path from "path";
 
-const isDev: boolean = false;
 const app: Application = express();
 
-// Serve built files with static files middleware
-if (isDev) { // TODO - Figure out...
-  // import webpack from "webpack";
-  // import webpackMiddleware from "webpack-dev-middleware";
-  //
-  // const compiler = webpack(require("./config/webpack.server.config"));
-  // console.log(require("./config/webpack.server.config"));
-  // app.use(webpackMiddleware(compiler, {
-  //   publicPath: './'
-  // }));
-  // console.log("Using webpack middleware for development.");
-} else {
-  app.use('/build/client', express.static(path.resolve("build/client")));
-}
+app.use('/build/client', express.static(path.resolve("build/client")));
 
 // Serve requests with our handleRender function
 app.use(async (req: any, res: any) => {
@@ -44,7 +30,7 @@ app.use(async (req: any, res: any) => {
     res.send(
       index
         .replace('{{{body}}}', html)
-        .replace('{{{cache}}}', JSON.stringify(cache).replace(/</g, '\\u003c'))
+        .replace('["__CACHE__"]', JSON.stringify(cache).replace(/</g, '\\u003c'))
     );
   }
 });
