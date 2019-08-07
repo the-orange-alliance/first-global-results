@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Route} from "react-router-dom";
+import {Route, RouteComponentProps} from "react-router-dom";
 import {AppRoute} from "./AppRoutes";
 
 interface IProps {
@@ -15,7 +15,7 @@ class AppRouter extends React.Component<IProps> {
     const {appRoutes} = this.props;
     const routes = appRoutes.map((route: AppRoute, index: number) => {
       return (
-        <Route key={index} exact={route.exact} path={route.path} component={() => route.component} />
+        <Route key={index} exact={route.exact} path={route.path} component={(routeProps: RouteComponentProps) => route.component(routeProps)} />
       );
     });
 
