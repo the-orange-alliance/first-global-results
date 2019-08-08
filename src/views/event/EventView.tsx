@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import AppTheme from "../../AppTheme";
 import EventHeaderCard from "../../components/EventHeaderCard";
 import EventSelectorCard from "../../components/EventSelectorCard";
+import EventResultsModule from "../../modules/EventResultsModule";
 
 const styles = {
   grid: {
@@ -29,6 +30,9 @@ class EventView extends React.Component<IProps> {
         </Grid>
         <Grid item={true} xs={12} sm={12} md={4}>
           <EventSelectorCard/>
+        </Grid>
+        <Grid item={true} xs={12}>
+          <EventResultsModule/>
         </Grid>
       </Grid>
     );
