@@ -1,11 +1,14 @@
 import * as React from "react";
 
-import OceanBackground from "../assets/ocean_background.jpg";
+import FG_BG from "../assets/global-bg.png";
 
 const styles = {
+  container: {
+    height: '25vh',
+    overflow: 'hidden'
+  },
   bg: {
-    width: '100%',
-    height: '25vh'
+    width: '100%'
   }
 };
 
@@ -16,8 +19,8 @@ class Banner extends React.Component {
 
   public render() {
     return (
-      <div>
-        <img style={styles.bg} src={OceanBackground}/>
+      <div style={styles.container}>
+        <img style={styles.bg} src={FG_BG}/>
       </div>
     );
   }

@@ -20,7 +20,7 @@ export interface AppRoute {
 const appRoutes: AppRoute[] = [
   {
     name: "Home",
-    path: '/home',
+    path: '/',
     exact: true,
     component: () => <HomeView/>, // DEBUG view
     menuIcon: <HomeIcon/>
@@ -34,7 +34,7 @@ const appRoutes: AppRoute[] = [
   },
   {
     name: "Events",
-    path: '/',
+    path: '/events',
     exact: false,
     component: (routeProps: RouteComponentProps) => <EventsView routeProps={routeProps}/>,
     menuIcon: <CalendarTodayIcon/>
