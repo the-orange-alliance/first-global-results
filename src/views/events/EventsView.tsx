@@ -2,7 +2,6 @@ import * as React from "react";
 import { Route, RouteComponentProps} from "react-router-dom";
 import AppTheme from "../../AppTheme";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
 import EventView from "../event/EventView";
 
 const styles = {

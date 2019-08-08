@@ -8,6 +8,7 @@ import CameraIcon from "@material-ui/icons/VideocamRounded";
 import HomeView from "./views/home/HomeView"
 import TeamsView from "./views/teams/TeamsView";
 import EventsView from "./views/events/EventsView";
+import StreamingView from "./views/streaming/StreamingView";
 
 export interface AppRoute {
   name: string;
@@ -43,7 +44,7 @@ const appRoutes: AppRoute[] = [
     name: "Streaming",
     path: '/streams',
     exact: true,
-    component: () => <span>Streaming</span>,
+    component: () => <StreamingView/>,
     menuIcon: <CameraIcon/>
   }
 ];
