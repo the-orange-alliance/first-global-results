@@ -10,6 +10,9 @@ import AppTheme from "../AppTheme";
 const styles = {
   avatar: {
     backgroundColor: AppTheme.palette.secondary.main
+  },
+  iFrame: {
+    maxWidth: '100%'
   }
 };
 
@@ -27,7 +30,7 @@ class StreamCard extends React.Component {
           subheader={<span>Field 1</span>}
         />
         <CardContent>
-          <iframe src={"https://player.twitch.tv/?channel=theorangealliance1"} frameBorder={"0"} allowFullScreen={true} scrolling={"no"} height={"378"} width={"620"}/>
+          <iframe src={"https://player.twitch.tv/?channel=theorangealliance1"} frameBorder={"0"} allowFullScreen={true} scrolling={"no"} height={"378"} width={"620"} style={styles.iFrame}/>
         </CardContent>
       </Card>
     );

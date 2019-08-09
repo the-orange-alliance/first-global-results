@@ -31,10 +31,10 @@ class HomeView extends React.Component {
             <Grid item={true} xs={12} sm={6}>
               {/* Left Grid Content */}
               <Grid container={true} spacing={1}>
-                <Grid item={true} xs={12} sm={6}>
+                <Grid item={true} xs={6} sm={12} md={6}>
                   <ActiveTeamsModule/>
                 </Grid>
-                <Grid item={true} xs={12} sm={6}>
+                <Grid item={true} xs={6} sm={12} md={6}>
                   <MatchesPlayedModule/>
                 </Grid>
                 <Grid item={true} xs={12} sm={12}>

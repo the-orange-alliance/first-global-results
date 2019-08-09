@@ -25,12 +25,12 @@ class ActiveTeamsModule extends React.Component {
     return (
       <Card>
         <Grid container={true} spacing={2}>
-          <Grid item={true} sm={6} md={4} lg={3}>
+          <Grid item={true} xs={4} sm={5} md={4} lg={3}>
             <Avatar style={styles.avatar}>
               <PublicIcon fontSize={"large"}/>
             </Avatar>
           </Grid>
-          <Grid item={true} sm={6} md={8} lg={9}>
+          <Grid item={true} xs={8} sm={7} md={8} lg={9}>
             <Grid container={true} spacing={0} style={styles.text}>
               <Grid item={true} xs={12}>
                 <Typography variant={'body1'}><b>180</b></Typography>
