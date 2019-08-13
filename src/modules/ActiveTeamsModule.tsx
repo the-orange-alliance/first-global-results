@@ -16,12 +16,17 @@ const styles = {
   }
 };
 
-class ActiveTeamsModule extends React.Component {
-  constructor(props: any) {
+interface IProps {
+  count: number;
+}
+
+class ActiveTeamsModule extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props);
   }
 
   public render() {
+    const {count} = this.props;
     return (
       <Card>
         <Grid container={true} spacing={2}>
@@ -33,7 +38,7 @@ class ActiveTeamsModule extends React.Component {
           <Grid item={true} xs={8} sm={7} md={8} lg={9}>
             <Grid container={true} spacing={0} style={styles.text}>
               <Grid item={true} xs={12}>
-                <Typography variant={'body1'}><b>180</b></Typography>
+                <Typography variant={'body1'}><b>{count}</b></Typography>
               </Grid>
               <Grid item={true} xs={12}>
                 <Typography variant={'body2'} color={"textSecondary"}>Active Countries</Typography>
