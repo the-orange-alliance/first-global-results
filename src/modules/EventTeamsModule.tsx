@@ -16,7 +16,7 @@ class EventTeamsModule extends React.Component {
   public render() {
     return (
       <div style={styles.container}>
-        <TeamsListModule/>
+        <TeamsListModule teams={[]}/>
       </div>
     );
   }

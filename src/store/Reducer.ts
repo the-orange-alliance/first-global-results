@@ -1,11 +1,14 @@
 import {IApplicationState} from "./Models";
 import {Reducer} from "redux";
 import {ApplicationActions} from "./Actions";
-import {SET_SEASONS, SET_TEAMS} from "./Types";
+import {SET_EVENT, SET_SEASONS, SET_TEAMS} from "./Types";
+
+import {Event} from "@the-orange-alliance/lib-ems";
 
 export const initialState: IApplicationState = {
   seasons: [],
-  teams: []
+  teams: [],
+  event: new Event()
 };
 
 const reducer: Reducer<IApplicationState> = (state: IApplicationState = initialState, action) => {
@@ -14,6 +17,8 @@ const reducer: Reducer<IApplicationState> = (state: IApplicationState = initialS
       return  {...state, seasons: action.payload.action};
     case SET_TEAMS:
       return {...state, teams: action.payload.teams};
+    case SET_EVENT:
+      return {...state, event: action.payload.event};
     default:
       return state;
   }

@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import ActiveTeamsModule from "../../modules/ActiveTeamsModule";
 import MatchesPlayedModule from "../../modules/MatchesPlayedModule";
-import AppTheme from "../../AppTheme";
+import AppTheme, {CURRENT_SEASON} from "../../AppTheme";
 import UpcomingMatchesModule from "../../modules/UpcomingMatchesModule";
 import HighestScoresModule from "../../modules/HighestScoresModule";
 
@@ -37,7 +37,7 @@ class HomeView extends React.Component<IProps> {
   public componentWillMount() {
     const {teams, setTeams} = this.props;
     if (teams.length <= 0) {
-      FGCProvider.getTeamsBySeason("2019").then((teams: Team[]) => {
+      FGCProvider.getTeamsBySeason(CURRENT_SEASON).then((teams: Team[]) => {
         setTeams(teams);
       });
     }

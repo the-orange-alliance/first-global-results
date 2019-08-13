@@ -6,9 +6,12 @@ import AppTheme from "../AppTheme";
 import Typography from "@material-ui/core/Typography";
 import PublicIcon from "@material-ui/icons/Public";
 
+import {Team} from "@the-orange-alliance/lib-ems";
+
 const styles = {
   avatar: {
     margin: AppTheme.spacing(1),
+    padding: AppTheme.spacing(1),
     backgroundColor: AppTheme.palette.secondary.main
   },
   text: {
@@ -16,27 +19,33 @@ const styles = {
   }
 };
 
-class TeamPaper extends React.Component {
-  constructor(props: any) {
+interface IProps {
+  team: Team
+}
+
+class TeamPaper extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props);
   }
 
   public render() {
+    const {team} = this.props;
     return (
       <Paper>
         <Grid container={true} spacing={1}>
           <Grid item={true} xs={3} sm={3} md={3}>
             <Avatar style={styles.avatar}>
-              <PublicIcon fontSize={"large"}/>
+              {/*<PublicIcon fontSize={"large"}/>*/}
+              <Typography variant={'body1'}><span className={`flag-icon flag-icon-${team.countryCode}`}/></Typography>
             </Avatar>
           </Grid>
           <Grid item={true} xs={9} sm={9} md={9}>
             <Grid container={true} spacing={0} style={styles.text}>
               <Grid item={true} xs={12}>
-                <Typography variant={'body1'}><b>Team Afghanistan</b></Typography>
+                <Typography display={'inline'} variant={'body1'}><b>{team.teamNameShort}</b></Typography>
               </Grid>
               <Grid item={true} xs={12}>
-                <Typography variant={'body2'} color={"textSecondary"}>Place, Afghanistan</Typography>
+                <Typography variant={'body2'} color={"textSecondary"}>({team.country}) {team.city}</Typography>
               </Grid>
             </Grid>
           </Grid>

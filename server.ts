@@ -8,13 +8,13 @@ import * as path from "path";
 
 // App imports
 import App from "./src/App";
-import {FGCProvider, Team} from "@the-orange-alliance/lib-ems";
+import {Event, FGCProvider, Team} from "@the-orange-alliance/lib-ems";
 
 // Redux imports
 import {createStore} from "redux";
 import {Provider} from "react-redux";
 import {IApplicationState} from "./src/store/Models";
-import appReducer from "./src/store/Reducer";
+import appReducer, {initialState} from "./src/store/Reducer";
 
 const app: Application = express();
 
@@ -24,8 +24,10 @@ FGCProvider.initialize("127.0.0.1", 8088);
 //   req.pipe()
 // });
 
+// The client needs this first line to find the actual index.js file.
 app.use('/build/client', express.static(path.resolve("build/client")));
-app.use('/', express.static(path.resolve("build/client")));
+app.use(express.static(path.resolve("build/client")));
+app.use(express.static(path.resolve("static")));
 
 // Serve requests with our handleRender function
 app.use(async (req: any, res: any) => {
@@ -59,14 +61,19 @@ app.use(async (req: any, res: any) => {
   }
 });
 
-async function loadPageData(path: string): Promise<IApplicationState> {
-  console.log(path);
+async function loadPageData(path: string, params?: any): Promise<IApplicationState> {
   switch (path) {
     case "/":
+      const homeTeams: Team[] = await FGCProvider.getTeamsBySeason("2019");
+      return {...initialState, teams: homeTeams};
+    case "/teams":
       const teams: Team[] = await FGCProvider.getTeamsBySeason("2019");
-      return {seasons: [], teams: teams};
+      return {...initialState, teams: teams};
+    case "/event":
+      const event: Event = await FGCProvider.getEventBySeason(params.seasonKey); // TODO - HANDLE PARAMS. EASY, JUST REQUIRES THOUGHT.
+      return {...initialState, event: event};
     default:
-      return {seasons: [], teams: []};
+      return initialState;
   }
 }
 

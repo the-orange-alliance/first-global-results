@@ -1,10 +1,11 @@
 import * as React from "react";
-import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import AppTheme from "../../AppTheme";
 import EventHeaderCard from "../../components/EventHeaderCard";
 import EventSelectorCard from "../../components/EventSelectorCard";
 import EventResultsModule from "../../modules/EventResultsModule";
+
+import {Event} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   grid: {
@@ -13,7 +14,7 @@ const styles = {
 };
 
 interface IProps {
-  eventKey: string;
+  event: Event;
 }
 
 class EventView extends React.Component<IProps> {
@@ -22,11 +23,11 @@ class EventView extends React.Component<IProps> {
   }
 
   public render() {
-    const {eventKey} = this.props;
+    const {event} = this.props;
     return (
       <Grid container={true} spacing={3} style={styles.grid}>
         <Grid item={true} xs={12} sm={12} md={8}>
-          <EventHeaderCard/>
+          <EventHeaderCard event={event}/>
         </Grid>
         <Grid item={true} xs={12} sm={12} md={4}>
           <EventSelectorCard/>

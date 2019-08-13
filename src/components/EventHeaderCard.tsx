@@ -10,6 +10,8 @@ import PlaceIcon from "@material-ui/icons/Place";
 import VideoGameController from "@material-ui/icons/VideogameAsset";
 import AppTheme from "../AppTheme";
 
+import {Event} from "@the-orange-alliance/lib-ems";
+
 const styles = {
   card: {
     padding: AppTheme.spacing(1)
@@ -19,16 +21,21 @@ const styles = {
   }
 };
 
-class EventHeaderCard extends React.Component {
-  constructor(props: any) {
+interface IProps {
+  event: Event
+}
+
+class EventHeaderCard extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props);
   }
 
   public render() {
+    const {event} = this.props;
     return (
       <Card style={styles.card}>
         <CardContent>
-          <Typography variant={'h5'}>FIRST Global Competition 2019</Typography>
+          <Typography variant={'h5'}>{event.eventName}</Typography>
         </CardContent>
         <Divider/>
         <CardContent>
@@ -45,19 +52,28 @@ class EventHeaderCard extends React.Component {
               <PlaceIcon style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              Coca Cola Arena, Dubai
+              {event.venue}, {event.country}
             </Grid>
             {/* Event Game */}
             <Grid item={true} xs={1}>
               <VideoGameController style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              Ocean Opportunities
+              {this.getGameName(event.season.seasonKey)}
             </Grid>
           </Grid>
         </CardContent>
       </Card>
     );
+  }
+
+  private getGameName(seasonKey: number): string {
+    switch (seasonKey) {
+      case 2019:
+        return "Ocean Opportunities";
+      default:
+        return "";
+    }
   }
 }
 
