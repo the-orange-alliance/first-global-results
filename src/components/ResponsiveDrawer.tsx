@@ -80,7 +80,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     setMobileOpen(!mobileOpen);
   }
 
-  const menuItems = appRoutes.map((route: AppRoute) => {
+  const menuItems = appRoutes.filter((route: AppRoute) => typeof route.menuIcon !== "undefined").map((route: AppRoute) => {
     return (
       <ListItem button key={route.path}>
         <ListItemIcon>{route.menuIcon ? route.menuIcon : <MenuIcon/>}</ListItemIcon>

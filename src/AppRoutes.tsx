@@ -9,6 +9,7 @@ import HomeView from "./views/home/HomeView"
 import TeamsView from "./views/teams/TeamsView";
 import EventsView from "./views/events/EventsView";
 import StreamingView from "./views/streaming/StreamingView";
+import MatchView from "./views/match/MatchView";
 
 export interface AppRoute {
   name: string;
@@ -46,6 +47,12 @@ const appRoutes: AppRoute[] = [
     exact: true,
     component: () => <StreamingView/>,
     menuIcon: <CameraIcon/>
+  },
+  {
+    name: "Match",
+    path: '/match/:match_key',
+    exact: false,
+    component: (routeProps: RouteComponentProps) => <MatchView routeProps={routeProps}/>
   }
 ];
 

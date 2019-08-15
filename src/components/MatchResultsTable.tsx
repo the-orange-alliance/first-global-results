@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import PlayCircleIcon from "@material-ui/icons/PlayCircleOutlineOutlined";
 import AppTheme from "../AppTheme";
 import Divider from "@material-ui/core/Divider";
+import {NavLink} from "react-router-dom";
 
 import {Match, MatchParticipant} from "@the-orange-alliance/lib-ems";
 
@@ -93,7 +94,9 @@ class MatchResultsTable extends React.Component<IProps> {
       <Grid key={m.matchKey} container={true} spacing={0}>
         {/* Match Info Header */}
         <Grid item={true} xs={3} style={styles.item}>
-          <Typography variant={"body1"}>{m.matchName}</Typography>
+          <Typography variant={"body1"}>
+            <NavLink to={`/match/${m.matchKey}`}>{m.matchName}</NavLink>
+          </Typography>
         </Grid>
         <Grid item={true} xs={1} style={styles.item}>
           <PlayCircleIcon style={styles.noVideo} fontSize={"large"}/>
