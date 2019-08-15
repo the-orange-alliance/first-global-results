@@ -6,3 +6,6 @@ export type SET_TEAMS = typeof SET_TEAMS;
 
 export const SET_EVENT = "SET_EVENT";
 export type SET_EVENT = typeof SET_EVENT;
+
+export const SET_MATCHES = "SET_MATCHES";
+export type SET_MATCHES = typeof SET_MATCHES;

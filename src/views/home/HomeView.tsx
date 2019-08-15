@@ -12,11 +12,11 @@ import HighestScoresModule from "../../modules/HighestScoresModule";
 // Redux imports
 import {IApplicationState} from "../../store/Models";
 import {connect} from "react-redux";
-import {ApplicationActions, ISetTeams, setTeams} from "../../store/Actions";
+import {ApplicationActions, ISetMatches, ISetTeams, setMatches, setTeams} from "../../store/Actions";
 import {Dispatch} from "redux";
 
 // EMS imports
-import {FGCProvider, Team} from "@the-orange-alliance/lib-ems";
+import {FGCProvider, Match, Team} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   container: {
@@ -26,7 +26,9 @@ const styles = {
 
 interface IProps {
   teams: Team[];
+  matches: Match[];
   setTeams: (teams: Team[]) => ISetTeams;
+  setMatches: (matches: Match[]) => ISetMatches;
 }
 
 class HomeView extends React.Component<IProps> {
@@ -35,16 +37,19 @@ class HomeView extends React.Component<IProps> {
   }
 
   public componentWillMount() {
-    const {teams, setTeams} = this.props;
+    const {teams, setTeams, setMatches} = this.props;
     if (teams.length <= 0) {
       FGCProvider.getTeamsBySeason(CURRENT_SEASON).then((teams: Team[]) => {
         setTeams(teams);
       });
     }
+    FGCProvider.getUpcomingMatches(CURRENT_SEASON, 10).then((matches: Match[]) => {
+      setMatches(matches);
+    });
   }
 
   public render() {
-    const {teams} = this.props;
+    const {matches, teams} = this.props;
 
     return (
       <div>
@@ -63,7 +68,7 @@ class HomeView extends React.Component<IProps> {
                   <MatchesPlayedModule count={100}/>
                 </Grid>
                 <Grid item={true} xs={12} sm={12}>
-                  <UpcomingMatchesModule/>
+                  <UpcomingMatchesModule matches={matches} length={5}/>
                 </Grid>
               </Grid>
             </Grid>
@@ -84,13 +89,15 @@ class HomeView extends React.Component<IProps> {
 
 export function mapStateToProps(state: IApplicationState) {
   return {
-    teams: state.teams
+    teams: state.teams,
+    matches: state.matches
   };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
   return {
-    setTeams: (teams: Team[]) => dispatch(setTeams(teams))
+    setTeams: (teams: Team[]) => dispatch(setTeams(teams)),
+    setMatches: (matches: Match[]) => dispatch(setMatches(matches))
   };
 }
 
