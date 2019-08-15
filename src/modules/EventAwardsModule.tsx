@@ -1,5 +1,6 @@
 import * as React from "react";
 import AppTheme from "../AppTheme";
+import Typography from "@material-ui/core/Typography";
 
 const styles = {
   container: {
@@ -15,7 +16,7 @@ class EventAwardsModule extends React.Component {
   public render() {
     return (
       <div style={styles.container}>
-        Awards!
+        <Typography variant={'body1'}>No awards have been posted for this event yet.</Typography>
       </div>
     );
   }

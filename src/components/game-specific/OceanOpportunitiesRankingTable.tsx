@@ -4,7 +4,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import AppTheme from "../../AppTheme";
+
+import {Ranking, OceanOpportunitiesRank} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   header: {
@@ -15,12 +16,32 @@ const styles = {
   }
 };
 
-class OceanOpportunitiesRankingTable extends React.Component {
+interface IProps {
+  rankings: Ranking[];
+}
+
+class OceanOpportunitiesRankingTable extends React.Component<IProps> {
   constructor(props: any) {
     super(props);
   }
 
   public render() {
+    const {rankings} = this.props;
+    const rankingsView = rankings.map((ranking: Ranking) => {
+      const name = typeof ranking.team !== "undefined" ? ranking.team.teamNameShort : ranking.teamKey;
+      const rank: OceanOpportunitiesRank = ranking as OceanOpportunitiesRank;
+      return (
+        <TableRow key={rank.rankKey}>
+          <TableCell>#{rank.rank}</TableCell>
+          <TableCell>{name}</TableCell>
+          <TableCell>{rank.rankingPoints}</TableCell>
+          <TableCell>{rank.wins}-{rank.losses}-{rank.ties}</TableCell>
+          <TableCell>{rank.totalPoints}</TableCell>
+          <TableCell>{rank.coopertitionPoints}</TableCell>
+          <TableCell>{rank.played}</TableCell>
+        </TableRow>
+      );
+    });
     return (
       <Table>
         <TableHead style={styles.header}>
@@ -35,24 +56,7 @@ class OceanOpportunitiesRankingTable extends React.Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>1</TableCell>
-            <TableCell>Team Africa</TableCell>
-            <TableCell>12</TableCell>
-            <TableCell>0-1-2</TableCell>
-            <TableCell>200</TableCell>
-            <TableCell>2</TableCell>
-            <TableCell>5</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>1</TableCell>
-            <TableCell>Team Africa</TableCell>
-            <TableCell>12</TableCell>
-            <TableCell>0-1-2</TableCell>
-            <TableCell>200</TableCell>
-            <TableCell>2</TableCell>
-            <TableCell>5</TableCell>
-          </TableRow>
+          {rankingsView}
         </TableBody>
       </Table>
     );

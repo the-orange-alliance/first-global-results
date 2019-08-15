@@ -5,7 +5,7 @@ import EventHeaderCard from "../../components/EventHeaderCard";
 import EventSelectorCard from "../../components/EventSelectorCard";
 import EventResultsModule from "../../modules/EventResultsModule";
 
-import {Event} from "@the-orange-alliance/lib-ems";
+import {Event, Match, Ranking, Team} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   grid: {
@@ -15,6 +15,9 @@ const styles = {
 
 interface IProps {
   event: Event;
+  matches: Match[];
+  teams: Team[];
+  rankings: Ranking[];
 }
 
 class EventView extends React.Component<IProps> {
@@ -23,7 +26,7 @@ class EventView extends React.Component<IProps> {
   }
 
   public render() {
-    const {event} = this.props;
+    const {event, matches, rankings, teams} = this.props;
     return (
       <Grid container={true} spacing={3} style={styles.grid}>
         <Grid item={true} xs={12} sm={12} md={8}>
@@ -33,7 +36,7 @@ class EventView extends React.Component<IProps> {
           <EventSelectorCard/>
         </Grid>
         <Grid item={true} xs={12}>
-          <EventResultsModule/>
+          <EventResultsModule matches={matches} teams={teams} rankings={rankings}/>
         </Grid>
       </Grid>
     );

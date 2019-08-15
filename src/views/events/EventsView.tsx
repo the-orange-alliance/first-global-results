@@ -4,12 +4,15 @@ import AppTheme, {CURRENT_SEASON} from "../../AppTheme";
 import Container from "@material-ui/core/Container";
 import EventView from "../event/EventView";
 
-import {ApplicationActions, ISetEvent, setEvent} from "../../store/Actions";
+import {
+  ApplicationActions, ISetEvent, ISetMatches, ISetRankings, ISetTeams, setEvent, setMatches, setRankings,
+  setTeams
+} from "../../store/Actions";
 import {IApplicationState} from "../../store/Models";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 
-import {Event, FGCProvider} from "@the-orange-alliance/lib-ems";
+import {Event, EventType, FGCProvider, Ranking, Team, Match} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   container: {
@@ -20,8 +23,14 @@ const styles = {
 
 interface IProps {
   routeProps: RouteComponentProps;
-  event: Event,
-  setEvent: (event: Event) => ISetEvent
+  event: Event;
+  matches: Match[];
+  rankings: Ranking[];
+  teams: Team[];
+  setEvent: (event: Event) => ISetEvent;
+  setMatches: (matches: Match[]) => ISetMatches;
+  setTeams: (teams: Team[]) => ISetTeams;
+  setRankings: (rankings: Ranking[]) => ISetRankings;
 }
 
 interface IState {
@@ -40,23 +49,41 @@ class EventsView extends React.Component<IProps, IState> {
   }
 
   public componentWillMount() {
-    const {routeProps, event, setEvent} = this.props;
+    const {routeProps, event, setEvent, setMatches, setRankings} = this.props;
     const {seasonKey} = this.state;
     if (event.eventCode.length <= 0) {
       const routeKey: string = (routeProps.match.params as any).seasonKey;
       const key: string = routeKey ? routeKey : seasonKey;
       FGCProvider.getEventBySeason(key).then((event: Event) => {
         setEvent(event);
+        FGCProvider.getAllEventMatches(event.eventKey).then((matches: Match[]) => {
+          setMatches(matches);
+        });
+        FGCProvider.getTeams(event.eventKey).then((teams: Team[]) => {
+          setTeams(teams);
+        });
+        FGCProvider.getRankingTeams(event.eventKey, getEventTypeFromKey(event.season.seasonKey.toString())).then((rankings: Ranking[]) => {
+          setRankings(rankings);
+        });
       });
     }
   }
 
   public componentDidUpdate(prevProps: IProps, prevState: IState) {
-    const {event, setEvent} = this.props;
+    const {event, setEvent, setMatches, setRankings} = this.props;
     const {seasonKey} = this.state;
     if (seasonKey !== prevState.seasonKey && event.eventKey.length <= 0) {
       FGCProvider.getEventBySeason(seasonKey).then((event: Event) => {
         setEvent(event);
+        FGCProvider.getAllEventMatches(event.eventKey).then((matches: Match[]) => {
+          setMatches(matches);
+        });
+        FGCProvider.getTeams(event.eventKey).then((teams: Team[]) => {
+          setTeams(teams);
+        });
+        FGCProvider.getRankingTeams(event.eventKey, getEventTypeFromKey(event.season.seasonKey.toString())).then((rankings: Ranking[]) => {
+          setRankings(rankings);
+        });
       });
     }
   }
@@ -74,7 +101,7 @@ class EventsView extends React.Component<IProps, IState> {
   }
 
   private renderEvent(routeParams: RouteComponentProps) {
-    const {event} = this.props;
+    const {event, matches, teams, rankings} = this.props;
     const {seasonKey} = this.state;
     const params: any = routeParams.match.params;
     if (typeof params.seasonKey !== "undefined" &&
@@ -82,19 +109,36 @@ class EventsView extends React.Component<IProps, IState> {
         params.seasonKey.length > 0) {
       this.setState({seasonKey: params.seasonKey});
     }
-    return <EventView event={event}/>;
+    return <EventView event={event} matches={matches} teams={teams} rankings={rankings}/>;
+  }
+}
+
+function getEventTypeFromKey(seasonKey: string): EventType | undefined {
+  switch (seasonKey) {
+    case "2018":
+      return "fgc_2018";
+    case "2019":
+      return "fgc_2019";
+    default:
+      return undefined;
   }
 }
 
 export function mapStateToProps(state: IApplicationState) {
   return {
-    event: state.event
+    event: state.event,
+    matches: state.matches,
+    teams: state.teams,
+    rankings: state.rankings
   };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
   return {
-    setEvent: (event: Event) => dispatch(setEvent(event))
+    setEvent: (event: Event) => dispatch(setEvent(event)),
+    setMatches: (matches: Match[]) => dispatch(setMatches(matches)),
+    setTeams: (teams: Team[]) => dispatch(setTeams(teams)),
+    setRankings: (rankings: Ranking[]) => dispatch(setRankings(rankings))
   };
 }
 

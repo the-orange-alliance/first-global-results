@@ -7,12 +7,20 @@ import EventMatchResultsModule from "./EventMatchResultsModule";
 import EventTeamsModule from "./EventTeamsModule";
 import EventAwardsModule from "./EventAwardsModule";
 
+import {Match, Ranking, Team} from "@the-orange-alliance/lib-ems";
+
+interface IProps {
+  matches: Match[];
+  teams: Team[];
+  rankings: Ranking[];
+}
+
 interface IState {
   index: number
 }
 
-class EventResultsModule extends React.Component<{}, IState> {
-  constructor(props: any) {
+class EventResultsModule extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       index: 0
@@ -41,17 +49,18 @@ class EventResultsModule extends React.Component<{}, IState> {
   }
 
   private getViewFromIndex(index: number) {
+    const {matches, teams, rankings} = this.props;
     switch (index) {
       case 0:
-        return <EventRankingsModule/>;
+        return <EventRankingsModule rankings={rankings}/>;
       case 1:
-        return <EventMatchResultsModule/>;
+        return <EventMatchResultsModule matches={matches}/>;
       case 2:
-        return <EventTeamsModule/>;
+        return <EventTeamsModule teams={teams}/>;
       case 3:
         return <EventAwardsModule/>;
       default:
-        return <EventRankingsModule/>;
+        return <EventRankingsModule rankings={rankings}/>;
     }
   }
 }
