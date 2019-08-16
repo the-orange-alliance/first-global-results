@@ -28,11 +28,11 @@ class HighestScoresModule extends React.Component {
         {/* Highest Scoring Qualification Match */}
         <Typography display={"block"} variant={"h6"}>Highest Scoring Ranking Match</Typography>
         <Typography display={"block"} variant={"body2"}>Ranking Match 1</Typography>
-        <MatchTable/>
+        {/*<MatchTable/>*/}
         <Divider style={styles.divider}/>
         <Typography display={"block"} variant={"h6"}>Highest Scoring Playoffs Match</Typography>
         <Typography display={"block"} variant={"body2"}>Round 1 Match 3</Typography>
-        <MatchTable/>
+        {/*<MatchTable/>*/}
       </Card>
     );
   }

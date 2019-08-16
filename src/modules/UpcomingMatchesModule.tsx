@@ -7,6 +7,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import AppTheme from "../AppTheme";
 
+import {NavLink} from "react-router-dom";
+
 import {Match} from "@the-orange-alliance/lib-ems";
 
 const styles = {
@@ -37,7 +39,7 @@ class UpcomingMatchesModule extends React.Component<IProps> {
       matchesView = matches.map((m: Match) => {
         return (
           <ListItem key={m.matchKey} button>
-            <ListItemText primary={m.matchName} />
+            <ListItemText primary={<NavLink to={`/match/${m.matchKey}`}>{m.matchName}</NavLink>} />
           </ListItem>
         );
       });

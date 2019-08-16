@@ -3,6 +3,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import AppTheme from "../AppTheme";
+import Skeleton from "@material-ui/lab/Skeleton/Skeleton";
+
+import {Match, MatchParticipant} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   headerItem: {
@@ -19,12 +22,83 @@ const styles = {
   }
 };
 
-class MatchTable extends React.Component {
-  constructor(props: any) {
+interface IProps {
+  match: Match
+}
+
+interface IState {
+  loading: boolean;
+}
+
+class MatchTable extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
+
+    this.state = {
+      loading: true
+    };
+  }
+
+  public componentWillMount(): void {
+    const {match} = this.props;
+    const {loading} = this.state;
+    if (typeof match.participants !== "undefined" && match.participants.length > 0 && loading) {
+      this.setState({loading: false});
+    }
+  }
+
+  public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    const {match} = this.props;
+    const {loading} = this.state;
+    if (typeof match.participants !== "undefined" && match.participants.length > 0 && loading) {
+      this.setState({loading: false});
+    }
   }
 
   public render() {
+    const {match} = this.props;
+    const {loading} = this.state;
+    const redTeams = !loading ? match.participants.filter((m: MatchParticipant) => m.station < MatchParticipant.BLUE_ALLIANCE_ONE) : [];
+    const blueTeams = !loading ? match.participants.filter((m: MatchParticipant) => m.station >= MatchParticipant.BLUE_ALLIANCE_ONE) : [];
+
+    const redAllianceView = redTeams.map((p: MatchParticipant) => {
+      const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
+      return (
+        <Grid key={p.matchParticipantKey} item={true} xs={3}>
+          <Paper square={true} style={styles.redItem}>
+            <Typography align={"center"} variant={"body1"}>{name}</Typography>
+          </Paper>
+        </Grid>
+      );
+    });
+
+    const blueAllianceView = blueTeams.map((p: MatchParticipant) => {
+      const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
+      return (
+        <Grid key={p.matchParticipantKey} item={true} xs={3}>
+          <Paper square={true} style={styles.blueItem}>
+            <Typography align={"center"} variant={"body1"}>{name}</Typography>
+          </Paper>
+        </Grid>
+      );
+    });
+
+    const redLoadingView = (
+      <Grid item={true} xs={9}>
+        <Paper square={true} style={styles.redItem}>
+          <Skeleton variant={'text'} width={'100%'} height={1}/>
+        </Paper>
+      </Grid>
+    );
+
+    const blueLoadingView = (
+      <Grid item={true} xs={9}>
+        <Paper square={true} style={styles.blueItem}>
+          <Skeleton variant={'text'} width={'100%'} height={1}/>
+        </Paper>
+      </Grid>
+    );
+
     return (
       <Grid container={true} spacing={0}>
         {/* Headers */}
@@ -39,45 +113,17 @@ class MatchTable extends React.Component {
           </Paper>
         </Grid>
         {/* Red Alliance */}
+        {loading ? redLoadingView : redAllianceView}
         <Grid item={true} xs={3}>
           <Paper square={true} style={styles.redItem}>
-            <Typography align={"center"} variant={"body1"}>AZO</Typography>
-          </Paper>
-        </Grid>
-        <Grid item={true} xs={3}>
-          <Paper square={true} style={styles.redItem}>
-            <Typography align={"center"} variant={"body1"}>USA</Typography>
-          </Paper>
-        </Grid>
-        <Grid item={true} xs={3}>
-          <Paper square={true} style={styles.redItem}>
-            <Typography align={"center"} variant={"body1"}>AFG</Typography>
-          </Paper>
-        </Grid>
-        <Grid item={true} xs={3}>
-          <Paper square={true} style={styles.redItem}>
-            <Typography align={"center"} variant={"body1"}>100</Typography>
+            <Typography align={"center"} variant={"body1"}>{match.redScore}</Typography>
           </Paper>
         </Grid>
         {/* Blue Alliance */}
+        {loading ? blueLoadingView : blueAllianceView}
         <Grid item={true} xs={3}>
           <Paper square={true} style={styles.blueItem}>
-            <Typography align={"center"} variant={"body1"}>CAN</Typography>
-          </Paper>
-        </Grid>
-        <Grid item={true} xs={3}>
-          <Paper square={true} style={styles.blueItem}>
-            <Typography align={"center"} variant={"body1"}>JPN</Typography>
-          </Paper>
-        </Grid>
-        <Grid item={true} xs={3}>
-          <Paper square={true} style={styles.blueItem}>
-            <Typography align={"center"} variant={"body1"}>DUB</Typography>
-          </Paper>
-        </Grid>
-        <Grid item={true} xs={3}>
-          <Paper square={true} style={styles.blueItem}>
-            <Typography align={"center"} variant={"body1"}>2</Typography>
+            <Typography align={"center"} variant={"body1"}>{match.blueScore}</Typography>
           </Paper>
         </Grid>
       </Grid>
