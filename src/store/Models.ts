@@ -6,4 +6,5 @@ export interface IApplicationState {
   event: Event;
   matches: Match[];
   rankings: Ranking[];
+  completeMatch: Match;
 }

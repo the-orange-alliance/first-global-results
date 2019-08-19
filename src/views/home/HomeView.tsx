@@ -45,7 +45,7 @@ class HomeView extends React.Component<IProps> {
     }
     FGCProvider.getUpcomingMatches(CURRENT_SEASON, 10).then((matches: Match[]) => {
       setMatches(matches);
-    });
+    }).catch(() => setMatches([]));
   }
 
   public render() {

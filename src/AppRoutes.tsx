@@ -10,6 +10,7 @@ import TeamsView from "./views/teams/TeamsView";
 import EventsView from "./views/events/EventsView";
 import StreamingView from "./views/streaming/StreamingView";
 import MatchView from "./views/match/MatchView";
+import TeamView from "./views/team/TeamView";
 
 export interface AppRoute {
   name: string;
@@ -53,6 +54,11 @@ const appRoutes: AppRoute[] = [
     path: '/match/:match_key',
     exact: false,
     component: (routeProps: RouteComponentProps) => <MatchView routeProps={routeProps}/>
+  },
+  {
+    name: "Tea",
+    path: '/team/:team_key',
+    component: (routeProps: RouteComponentProps) => <TeamView routeProps={routeProps}/>
   }
 ];
 

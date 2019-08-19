@@ -7,7 +7,7 @@ import AppTheme from "../../AppTheme";
 import MatchCardModule from "../../modules/MatchCardModule";
 import OceanOpportunitiesDetailCard from "../../components/game-specific/OceanOpportunitiesDetailCard";
 
-import {ApplicationActions, ISetMatches, setMatches} from "../../store/Actions";
+import {ApplicationActions, ISetCompleteMatch, setCompleteMatch} from "../../store/Actions";
 import {IApplicationState} from "../../store/Models";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
@@ -23,8 +23,8 @@ const styles = {
 
 interface IProps {
   routeProps: RouteComponentProps;
-  matches: Match[];
-  setMatches: (matches: Match[]) => ISetMatches;
+  completeMatch: Match;
+  setCompleteMatch: (match: Match) => ISetCompleteMatch;
 }
 
 class MatchView extends React.Component<IProps> {
@@ -33,27 +33,26 @@ class MatchView extends React.Component<IProps> {
   }
 
   public componentDidMount() {
-    const {routeProps, setMatches} = this.props;
+    const {routeProps, setCompleteMatch} = this.props;
     if (typeof (routeProps.match.params as any).match_key !== "undefined") {
       FGCProvider.getCompleteMatch((routeProps.match.params as any).match_key).then((match: Match) => {
-        setMatches([match]);
+        setCompleteMatch(match);
       });
     }
   }
 
   public render() {
-    const {matches} = this.props;
-    const match = matches.length === 1 ? matches[0] : new Match();
+    const {completeMatch} = this.props;
     return (
       <Container maxWidth={false} style={styles.container}>
         <Typography variant={'h3'}>Qualification Match 1</Typography>
         <Typography variant={'h4'}>FIRST Global Championship 2019</Typography>
         <Grid container={true} spacing={3}>
           <Grid item={true} xs={12} sm={12} md={6}>
-            <MatchCardModule match={match}/>
+            <MatchCardModule match={completeMatch}/>
           </Grid>
           <Grid item={true} xs={12} sm={12} md={6}>
-            <OceanOpportunitiesDetailCard match={match}/>
+            <OceanOpportunitiesDetailCard match={completeMatch}/>
           </Grid>
         </Grid>
       </Container>
@@ -63,13 +62,13 @@ class MatchView extends React.Component<IProps> {
 
 export function mapStateToProps(state: IApplicationState) {
   return {
-    matches: state.matches
+    completeMatch: state.completeMatch
   };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
   return {
-    setMatches: (matches: Match[]) => dispatch(setMatches(matches))
+    setCompleteMatch: (match: Match) => dispatch(setCompleteMatch(match))
   };
 }
 

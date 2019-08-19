@@ -12,3 +12,6 @@ export type SET_MATCHES = typeof SET_MATCHES;
 
 export const SET_RANKINGS = "SET_RANKINGS";
 export type SET_RANKINGS = typeof SET_RANKINGS;
+
+export const SET_COMPLETE_MATCH = "SET_COMPLETE_MATCH";
+export type SET_COMPLETE_MATCH =typeof SET_COMPLETE_MATCH;

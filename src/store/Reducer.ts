@@ -1,16 +1,17 @@
 import {IApplicationState} from "./Models";
 import {Reducer} from "redux";
 import {ApplicationActions} from "./Actions";
-import {SET_EVENT, SET_MATCHES, SET_RANKINGS, SET_SEASONS, SET_TEAMS} from "./Types";
+import {SET_COMPLETE_MATCH, SET_EVENT, SET_MATCHES, SET_RANKINGS, SET_SEASONS, SET_TEAMS} from "./Types";
 
-import {Event} from "@the-orange-alliance/lib-ems";
+import {Event, Match} from "@the-orange-alliance/lib-ems";
 
 export const initialState: IApplicationState = {
   seasons: [],
   teams: [],
   event: new Event(),
   matches: [],
-  rankings: []
+  rankings: [],
+  completeMatch: new Match()
 };
 
 const reducer: Reducer<IApplicationState> = (state: IApplicationState = initialState, action) => {
@@ -25,6 +26,8 @@ const reducer: Reducer<IApplicationState> = (state: IApplicationState = initialS
       return {...state, matches: action.payload.matches};
     case SET_RANKINGS:
       return {...state, rankings: action.payload.rankings};
+    case SET_COMPLETE_MATCH:
+      return {...state, completeMatch: action.payload.completeMatch};
     default:
       return state;
   }

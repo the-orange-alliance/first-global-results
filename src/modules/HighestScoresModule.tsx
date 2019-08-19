@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import AppTheme from "../AppTheme";
 import MatchTable from "../components/MatchTable";
 
+import {Match} from "@the-orange-alliance/lib-ems";
+
 const styles = {
   card: {
     padding: AppTheme.spacing(2)
@@ -28,11 +30,11 @@ class HighestScoresModule extends React.Component {
         {/* Highest Scoring Qualification Match */}
         <Typography display={"block"} variant={"h6"}>Highest Scoring Ranking Match</Typography>
         <Typography display={"block"} variant={"body2"}>Ranking Match 1</Typography>
-        {/*<MatchTable/>*/}
+        <MatchTable match={new Match()}/>
         <Divider style={styles.divider}/>
         <Typography display={"block"} variant={"h6"}>Highest Scoring Playoffs Match</Typography>
         <Typography display={"block"} variant={"body2"}>Round 1 Match 3</Typography>
-        {/*<MatchTable/>*/}
+        <MatchTable match={new Match()}/>
       </Card>
     );
   }

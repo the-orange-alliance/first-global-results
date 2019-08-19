@@ -49,7 +49,7 @@ class EventsView extends React.Component<IProps, IState> {
   }
 
   public componentWillMount() {
-    const {routeProps, event, setEvent, setMatches, setRankings} = this.props;
+    const {routeProps, matches, event, teams, setEvent, setMatches, setRankings} = this.props;
     const {seasonKey} = this.state;
     if (event.eventCode.length <= 0) {
       const routeKey: string = (routeProps.match.params as any).seasonKey;
@@ -65,6 +65,14 @@ class EventsView extends React.Component<IProps, IState> {
         FGCProvider.getRankingTeams(event.eventKey, getEventTypeFromKey(event.season.seasonKey.toString())).then((rankings: Ranking[]) => {
           setRankings(rankings);
         });
+      });
+    } else if (matches.length <= 0) {
+      FGCProvider.getAllEventMatches(event.eventKey).then((matches: Match[]) => {
+        setMatches(matches);
+      });
+    } else if (teams.length <= 0) {
+      FGCProvider.getTeams(event.eventKey).then((teams: Team[]) => {
+        setTeams(teams);
       });
     }
   }
