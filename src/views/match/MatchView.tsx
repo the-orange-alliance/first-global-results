@@ -34,8 +34,8 @@ class MatchView extends React.Component<IProps> {
 
   public componentDidMount() {
     const {routeProps, setCompleteMatch} = this.props;
-    if (typeof (routeProps.match.params as any).match_key !== "undefined") {
-      FGCProvider.getCompleteMatch((routeProps.match.params as any).match_key).then((match: Match) => {
+    if (typeof (routeProps.match.params as any).matchKey !== "undefined") {
+      FGCProvider.getCompleteMatch((routeProps.match.params as any).matchKey).then((match: Match) => {
         setCompleteMatch(match);
       });
     }

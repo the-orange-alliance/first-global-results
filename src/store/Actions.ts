@@ -1,6 +1,14 @@
-import {SET_COMPLETE_MATCH, SET_EVENT, SET_MATCHES, SET_RANKINGS, SET_SEASONS, SET_TEAMS} from "./Types";
+import {
+  SET_COMPLETE_MATCH,
+  SET_COMPLETE_TEAM,
+  SET_EVENT,
+  SET_MATCHES,
+  SET_RANKINGS,
+  SET_SEASONS,
+  SET_TEAMS
+} from "./Types";
 import {ActionCreator} from "redux";
-import {Event, Match, Ranking, Team} from "@the-orange-alliance/lib-ems";
+import {Event, ICompleteTeamResponse, Match, Ranking, Team} from "@the-orange-alliance/lib-ems";
 
 export interface ISetSeasons {
   type: SET_SEASONS,
@@ -41,6 +49,13 @@ export interface ISetCompleteMatch {
   type: SET_COMPLETE_MATCH,
   payload: {
     completeMatch: Match
+  }
+}
+
+export interface ISetCompleteTeam {
+  type: SET_COMPLETE_TEAM,
+  payload: {
+    completeTeam: ICompleteTeamResponse
   }
 }
 
@@ -86,4 +101,11 @@ export const setCompleteMatch: ActionCreator<ISetCompleteMatch> = (completeMatch
   }
 });
 
-export type ApplicationActions = ISetSeasons | ISetTeams | ISetEvent | ISetMatches | ISetRankings | ISetCompleteMatch;
+export const setCompleteTeam: ActionCreator<ISetCompleteTeam> = (completeTeam: ICompleteTeamResponse) => ({
+  type: SET_COMPLETE_TEAM,
+  payload: {
+    completeTeam: completeTeam
+  }
+});
+
+export type ApplicationActions = ISetSeasons | ISetTeams | ISetEvent | ISetMatches | ISetRankings | ISetCompleteMatch | ISetCompleteTeam;

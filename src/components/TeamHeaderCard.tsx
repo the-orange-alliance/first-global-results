@@ -10,6 +10,8 @@ import PlaceIcon from "@material-ui/icons/Place";
 import VideoGameController from "@material-ui/icons/VideogameAsset";
 import Grid from "@material-ui/core/Grid";
 
+import {Team} from "@the-orange-alliance/lib-ems";
+
 const styles = {
   card: {
     padding: AppTheme.spacing(1)
@@ -19,12 +21,16 @@ const styles = {
   }
 };
 
+interface IProps {
+  team: Team;
+}
+
 interface IState {
   loading: boolean;
 }
 
-class TeamHeaderCard extends React.Component<{}, IState> {
-  constructor(props: any) {
+class TeamHeaderCard extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
 
     this.state = {
@@ -33,10 +39,11 @@ class TeamHeaderCard extends React.Component<{}, IState> {
   }
 
   public render() {
+    const {team} = this.props;
     return (
       <Card style={styles.card}>
         <CardContent>
-          <Typography variant={'h5'}>Team Afghanistan</Typography>
+          <Typography variant={'h5'}>{team.teamNameShort}</Typography>
         </CardContent>
         <Divider/>
         <CardContent>
@@ -53,7 +60,7 @@ class TeamHeaderCard extends React.Component<{}, IState> {
               <PlaceIcon style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              Afghanistan, AFG
+              {team.city}, {team.country}
             </Grid>
             {/* Event Game */}
             <Grid item={true} xs={1}>

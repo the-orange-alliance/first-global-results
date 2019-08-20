@@ -1,4 +1,4 @@
-import {Event, Match, Ranking, Team} from "@the-orange-alliance/lib-ems/";
+import {Event, ICompleteTeamResponse, Match, Ranking, Team} from "@the-orange-alliance/lib-ems/";
 
 export interface IApplicationState {
   seasons: any[];
@@ -7,4 +7,5 @@ export interface IApplicationState {
   matches: Match[];
   rankings: Ranking[];
   completeMatch: Match;
+  completeTeam: ICompleteTeamResponse;
 }

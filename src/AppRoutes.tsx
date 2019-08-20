@@ -51,13 +51,13 @@ const appRoutes: AppRoute[] = [
   },
   {
     name: "Match",
-    path: '/match/:match_key',
+    path: '/match/:matchKey',
     exact: false,
     component: (routeProps: RouteComponentProps) => <MatchView routeProps={routeProps}/>
   },
   {
     name: "Tea",
-    path: '/team/:team_key',
+    path: '/team/:teamKey',
     component: (routeProps: RouteComponentProps) => <TeamView routeProps={routeProps}/>
   }
 ];
