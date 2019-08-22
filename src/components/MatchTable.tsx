@@ -116,14 +116,14 @@ class MatchTable extends React.Component<IProps, IState> {
         {loading ? redLoadingView : redAllianceView}
         <Grid item={true} xs={3}>
           <Paper square={true} style={styles.redItem}>
-            <Typography align={"center"} variant={"body1"}>{loading ? "--" : match.redScore}</Typography>
+            <Typography align={"center"} variant={"body1"}>{loading ? "--" : match.result === -1 ? <i>NOT PLAYED</i> : match.redScore}</Typography>
           </Paper>
         </Grid>
         {/* Blue Alliance */}
         {loading ? blueLoadingView : blueAllianceView}
         <Grid item={true} xs={3}>
           <Paper square={true} style={styles.blueItem}>
-            <Typography align={"center"} variant={"body1"}>{loading ? "--" : match.blueScore}</Typography>
+            <Typography align={"center"} variant={"body1"}>{loading ? "--" : match.result === -1 ? <i>NOT PLAYED</i> : match.blueScore}</Typography>
           </Paper>
         </Grid>
       </Grid>

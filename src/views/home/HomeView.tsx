@@ -12,7 +12,15 @@ import HighestScoresModule from "../../modules/HighestScoresModule";
 // Redux imports
 import {IApplicationState} from "../../store/Models";
 import {connect} from "react-redux";
-import {ApplicationActions, ISetMatches, ISetTeams, setMatches, setTeams} from "../../store/Actions";
+import {
+  ApplicationActions,
+  ISetCompleteMatch,
+  ISetMatches,
+  ISetTeams,
+  setCompleteMatch,
+  setMatches,
+  setTeams
+} from "../../store/Actions";
 import {Dispatch} from "redux";
 
 // EMS imports
@@ -27,8 +35,10 @@ const styles = {
 interface IProps {
   teams: Team[];
   matches: Match[];
+  completeMatch: Match;
   setTeams: (teams: Team[]) => ISetTeams;
   setMatches: (matches: Match[]) => ISetMatches;
+  setCompleteMatch: (match: Match) => ISetCompleteMatch;
 }
 
 class HomeView extends React.Component<IProps> {
@@ -37,7 +47,7 @@ class HomeView extends React.Component<IProps> {
   }
 
   public componentWillMount() {
-    const {teams, setTeams, setMatches} = this.props;
+    const {teams, setTeams, setMatches, setCompleteMatch} = this.props;
     if (teams.length <= 0) {
       FGCProvider.getTeamsBySeason(CURRENT_SEASON).then((teams: Team[]) => {
         setTeams(teams);
@@ -46,11 +56,13 @@ class HomeView extends React.Component<IProps> {
     FGCProvider.getUpcomingMatches(CURRENT_SEASON, 10).then((matches: Match[]) => {
       setMatches(matches);
     }).catch(() => setMatches([]));
+    FGCProvider.getHighestScoringMatch(CURRENT_SEASON, "quals", false).then((match: Match) => {
+      setCompleteMatch(match);
+    });
   }
 
   public render() {
-    const {matches, teams} = this.props;
-
+    const {completeMatch, matches, teams} = this.props;
     return (
       <div>
         <Banner/>
@@ -68,7 +80,7 @@ class HomeView extends React.Component<IProps> {
                   <MatchesPlayedModule count={100}/>
                 </Grid>
                 <Grid item={true} xs={12} sm={12}>
-                  <UpcomingMatchesModule matches={matches} length={5}/>
+                  <UpcomingMatchesModule matches={matches}/>
                 </Grid>
               </Grid>
             </Grid>
@@ -76,7 +88,7 @@ class HomeView extends React.Component<IProps> {
               {/* Right Grid Content */}
               <Grid container={true} spacing={1}>
                 <Grid item={true} xs={12}>
-                  <HighestScoresModule/>
+                  <HighestScoresModule match={completeMatch}/>
                 </Grid>
               </Grid>
             </Grid>
@@ -90,14 +102,16 @@ class HomeView extends React.Component<IProps> {
 export function mapStateToProps(state: IApplicationState) {
   return {
     teams: state.teams,
-    matches: state.matches
+    matches: state.matches,
+    completeMatch: state.completeMatch
   };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
   return {
     setTeams: (teams: Team[]) => dispatch(setTeams(teams)),
-    setMatches: (matches: Match[]) => dispatch(setMatches(matches))
+    setMatches: (matches: Match[]) => dispatch(setMatches(matches)),
+    setCompleteMatch: (match: Match) => dispatch(setCompleteMatch(match))
   };
 }
 

@@ -22,7 +22,6 @@ const styles = {
 
 interface IProps {
   matches: Match[];
-  length?: number;
 }
 
 class UpcomingMatchesModule extends React.Component<IProps> {

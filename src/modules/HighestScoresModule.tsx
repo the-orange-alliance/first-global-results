@@ -6,6 +6,7 @@ import AppTheme from "../AppTheme";
 import MatchTable from "../components/MatchTable";
 
 import {Match} from "@the-orange-alliance/lib-ems";
+import {Link} from "react-router-dom";
 
 const styles = {
   card: {
@@ -16,12 +17,17 @@ const styles = {
   }
 };
 
-class HighestScoresModule extends React.Component {
-  constructor(props: any) {
+interface IProps {
+  match: Match;
+}
+
+class HighestScoresModule extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props);
   }
 
   public render() {
+    const {match} = this.props;
     return (
       <Card style={styles.card}>
         <Typography display={"block"} variant={"body1"}><b>Leaderboards</b></Typography>
@@ -29,12 +35,12 @@ class HighestScoresModule extends React.Component {
         <Divider style={styles.divider}/>
         {/* Highest Scoring Qualification Match */}
         <Typography display={"block"} variant={"h6"}>Highest Scoring Ranking Match</Typography>
-        <Typography display={"block"} variant={"body2"}>Ranking Match 1</Typography>
-        <MatchTable match={new Match()}/>
-        <Divider style={styles.divider}/>
-        <Typography display={"block"} variant={"h6"}>Highest Scoring Playoffs Match</Typography>
-        <Typography display={"block"} variant={"body2"}>Round 1 Match 3</Typography>
-        <MatchTable match={new Match()}/>
+        <Typography display={"block"} variant={"body2"}><Link to={`/match/${match.matchKey}`}>{match.matchName}</Link></Typography>
+        <MatchTable match={match}/>
+        {/*<Divider style={styles.divider}/>*/}
+        {/*<Typography display={"block"} variant={"h6"}>Highest Scoring Playoffs Match</Typography>*/}
+        {/*<Typography display={"block"} variant={"body2"}>Round 1 Match 3</Typography>*/}
+        {/*<MatchTable match={new Match()}/>*/}
       </Card>
     );
   }
