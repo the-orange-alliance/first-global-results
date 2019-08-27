@@ -49,9 +49,9 @@ class EventsView extends React.Component<IProps, IState> {
   }
 
   public componentWillMount() {
-    const {routeProps, matches, event, teams, setEvent, setMatches, setRankings} = this.props;
+    const {routeProps, matches, event, teams, setTeams, setEvent, setMatches, setRankings} = this.props;
     const {seasonKey} = this.state;
-    if (event.eventCode.length <= 0) {
+    if (typeof event.eventCode === "undefined" || event.eventCode.length <= 0) {
       const routeKey: string = (routeProps.match.params as any).seasonKey;
       const key: string = routeKey ? routeKey : seasonKey;
       FGCProvider.getEventBySeason(key).then((event: Event) => {
@@ -78,7 +78,7 @@ class EventsView extends React.Component<IProps, IState> {
   }
 
   public componentDidUpdate(prevProps: IProps, prevState: IState) {
-    const {event, setEvent, setMatches, setRankings} = this.props;
+    const {event, setTeams, setEvent, setMatches, setRankings} = this.props;
     const {seasonKey} = this.state;
     if (seasonKey !== prevState.seasonKey && event.eventKey.length <= 0) {
       FGCProvider.getEventBySeason(seasonKey).then((event: Event) => {
@@ -121,7 +121,7 @@ class EventsView extends React.Component<IProps, IState> {
   }
 }
 
-function getEventTypeFromKey(seasonKey: string): EventType | undefined {
+export function getEventTypeFromKey(seasonKey: string): EventType | undefined {
   switch (seasonKey) {
     case "2018":
       return "fgc_2018";

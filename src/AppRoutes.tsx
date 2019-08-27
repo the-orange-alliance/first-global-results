@@ -56,7 +56,7 @@ const appRoutes: AppRoute[] = [
     component: (routeProps: RouteComponentProps) => <MatchView routeProps={routeProps}/>
   },
   {
-    name: "Tea",
+    name: "Team",
     path: '/team/:teamKey',
     component: (routeProps: RouteComponentProps) => <TeamView routeProps={routeProps}/>
   }
