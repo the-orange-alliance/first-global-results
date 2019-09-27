@@ -1,0 +1,29 @@
+/* Styles to be applied to all elements */
+a, a:visited {
+  text-decoration: none !important;
+  color: rgba(0,0,0,.6) !important;
+}
+
+.nav-active {
+  color: rgb(1, 155, 66) !important;
+}
+
+.nav-active > div {
+  background-color: rgba(1, 155, 66, 0.2) !important;
+}
+
+.nav-active > .MuiListItemIcon-root {
+  color: rgb(1, 155, 66) !important;
+}
+
+.MuiTypography-body1 > a, .MuiTypography-body2 > a:link {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.MuiTypography-body1 > a:hover, .MuiTypography-body2 > a:hover {
+  color: rgb(1, 155, 66) !important;
+}

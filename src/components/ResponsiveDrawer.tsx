@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1
-    },
+    }
   }),
 );
 
@@ -82,7 +82,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const menuItems = appRoutes.filter((route: AppRoute) => typeof route.menuIcon !== "undefined").map((route: AppRoute) => {
     return (
-      <NavLink to={route.path}>
+      <NavLink key={route.name} to={route.path} exact={route.exact} activeClassName={"nav-active"}>
         <ListItem button key={route.path}>
           <ListItemIcon>{route.menuIcon ? route.menuIcon : <MenuIcon/>}</ListItemIcon>
           <ListItemText primary={route.name} />
