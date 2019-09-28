@@ -2,6 +2,7 @@
 a, a:visited {
   text-decoration: none !important;
   color: rgba(0,0,0,.6) !important;
+  width: 100%;
 }
 
 .nav-active {
@@ -25,5 +26,13 @@ a, a:visited {
 }
 
 .MuiTypography-body1 > a:hover, .MuiTypography-body2 > a:hover {
+  color: rgb(1, 155, 66) !important;
+}
+
+.MuiButtonBase-root, .MuiPaper-root {
+  width: 100%;
+}
+
+a:hover > .MuiButtonBase-root, a:hover > .MuiButtonBase-root > .MuiPaper-root {
   color: rgb(1, 155, 66) !important;
 }

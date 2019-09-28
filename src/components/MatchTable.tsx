@@ -6,6 +6,9 @@ import AppTheme from "../AppTheme";
 import Skeleton from "@material-ui/lab/Skeleton/Skeleton";
 
 import {Match, MatchParticipant} from "@the-orange-alliance/lib-ems";
+import Button from "@material-ui/core/Button";
+import {Link} from "react-router-dom";
+import ButtonBase from "@material-ui/core/ButtonBase";
 
 const styles = {
   headerItem: {
@@ -65,9 +68,14 @@ class MatchTable extends React.Component<IProps, IState> {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
         <Grid key={p.matchParticipantKey} item={true} xs={3}>
-          <Paper square={true} style={styles.redItem}>
-            <Typography align={"center"} variant={"body1"}>{name}</Typography>
-          </Paper>
+          <Link to={`/team/${p.teamKey}`}>
+            <ButtonBase focusRipple={true}>
+              <Paper square={true} style={styles.redItem}>
+                {!p.team && <Typography align={"center"} variant={"body1"}>{name}</Typography>}
+                {p.team && <Typography align={"center"} variant={'body1'}><span className={`flag-icon flag-icon-${p.team.countryCode}`}/> {name}</Typography>}
+              </Paper>
+            </ButtonBase>
+          </Link>
         </Grid>
       );
     });
@@ -76,9 +84,14 @@ class MatchTable extends React.Component<IProps, IState> {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
         <Grid key={p.matchParticipantKey} item={true} xs={3}>
-          <Paper square={true} style={styles.blueItem}>
-            <Typography align={"center"} variant={"body1"}>{name}</Typography>
-          </Paper>
+          <Link to={`/team/${p.teamKey}`}>
+            <ButtonBase focusRipple={true}>
+              <Paper square={true} style={styles.blueItem}>
+                {!p.team && <Typography align={"center"} variant={"body1"}>{name}</Typography>}
+                {p.team && <Typography align={"center"} variant={'body1'}><span className={`flag-icon flag-icon-${p.team.countryCode}`}/> {name}</Typography>}
+              </Paper>
+            </ButtonBase>
+          </Link>
         </Grid>
       );
     });
