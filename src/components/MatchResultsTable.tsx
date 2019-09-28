@@ -4,9 +4,11 @@ import Typography from "@material-ui/core/Typography";
 import PlayCircleIcon from "@material-ui/icons/PlayCircleOutlineOutlined";
 import AppTheme from "../AppTheme";
 import Divider from "@material-ui/core/Divider";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 import {Match, MatchParticipant} from "@the-orange-alliance/lib-ems";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import Paper from "@material-ui/core/Paper";
 
 interface IProps {
   matches: Match[];
@@ -122,7 +124,12 @@ class MatchResultsTable extends React.Component<IProps> {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
         <Grid key={p.matchParticipantKey} item={true} xs={4} sm={4} md={2} style={styles.redItem}>
-          <Typography variant={"body1"}>{name}</Typography>
+          <Link to={`/team/${p.teamKey}`}>
+            <ButtonBase focusRipple={true}>
+              {!p.team && <Typography align={"center"} variant={"body1"}>{name}</Typography>}
+              {p.team && <Typography align={"center"} variant={'body1'}><span className={`flag-icon flag-icon-${p.team.countryCode}`}/> {name}</Typography>}
+            </ButtonBase>
+          </Link>
         </Grid>
       );
     });
@@ -131,7 +138,12 @@ class MatchResultsTable extends React.Component<IProps> {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
         <Grid key={p.matchParticipantKey} item={true} xs={4} sm={4} md={2} style={styles.blueItem}>
-          <Typography variant={"body1"}>{name}</Typography>
+          <Link to={`/team/${p.teamKey}`}>
+            <ButtonBase focusRipple={true}>
+              {!p.team && <Typography align={"center"} variant={"body1"}>{name}</Typography>}
+              {p.team && <Typography align={"center"} variant={'body1'}><span className={`flag-icon flag-icon-${p.team.countryCode}`}/> {name}</Typography>}
+            </ButtonBase>
+          </Link>
         </Grid>
       );
     });

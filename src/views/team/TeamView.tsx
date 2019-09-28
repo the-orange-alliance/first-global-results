@@ -45,6 +45,17 @@ class TeamView extends React.Component<IProps> {
     });
   }
 
+  public componentDidUpdate(prevProps: IProps) {
+    const {routeProps, setCompleteTeam} = this.props;
+    const teamKey = (routeProps.match.params as any).teamKey;
+    const oldTeamKey = (prevProps.routeProps.match.params as any).teamKey;
+    if (!teamKey != oldTeamKey) {
+      FGCProvider.getCompleteTeam(teamKey, CURRENT_SEASON).then((completeTeam: ICompleteTeamResponse) => {
+        setCompleteTeam(completeTeam);
+      });
+    }
+  }
+
   public render() {
     const {completeTeam} = this.props;
     return (
