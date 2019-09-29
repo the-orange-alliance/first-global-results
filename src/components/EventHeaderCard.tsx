@@ -59,7 +59,7 @@ class EventHeaderCard extends React.Component<IProps> {
               <VideoGameController style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              {this.getGameName(event.season.seasonKey)}
+              {event.season && this.getGameName(event.season.seasonKey)}
             </Grid>
           </Grid>
         </CardContent>

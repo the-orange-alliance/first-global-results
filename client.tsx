@@ -37,13 +37,13 @@ if (stateCache.length > 0 && stateCache[0] === "__REDUX__") {
     });
     state.completeTeam.rankings = state.completeTeam.rankings.map((r: any) => getRankingBySeasonKey(r.rank_key.split("-")[0]).fromJSON(r));
   }
-  if (state.teams) {
+  if (state.teams && state.teams.length > 0) {
     state.teams = state.teams.map((t: any) => new Team().fromJSON(t));
   }
-  if (state.rankings) {
+  if (state.rankings && state.rankings.length > 0) {
     state.rankings = state.rankings.map((r: any) => getRankingBySeasonKey(r.rank_key.split("-")[0]).fromJSON(r));
   }
-  if (state.matches) {
+  if (state.matches && state.matches.length > 0) {
     state.matches = state.matches.map((matchJSON: any) => {
       const participants: MatchParticipant[] = typeof matchJSON.participants !== "undefined" ? matchJSON.participants.map((p: any) => new MatchParticipant().fromJSON(p)) : [];
       const match: Match = new Match().fromJSON(matchJSON);
