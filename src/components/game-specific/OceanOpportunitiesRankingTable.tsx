@@ -6,6 +6,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 
 import {Ranking, OceanOpportunitiesRank} from "@the-orange-alliance/lib-ems";
+import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
+import {Link} from "react-router-dom";
 
 const styles = {
   header: {
@@ -13,6 +15,9 @@ const styles = {
   },
   headerCell: {
     color: '#495057'
+  },
+  buttonLink: {
+    justifyContent: 'flex-start'
   }
 };
 
@@ -33,7 +38,13 @@ class OceanOpportunitiesRankingTable extends React.Component<IProps> {
       return (
         <TableRow key={rank.rankKey}>
           <TableCell>#{rank.rank}</TableCell>
-          <TableCell>{name}</TableCell>
+          <TableCell>
+            <Link to={`/team/${ranking.teamKey}`}>
+              <ButtonBase focusRipple={true} style={styles.buttonLink}>
+                {name}
+              </ButtonBase>
+            </Link>
+            </TableCell>
           <TableCell>{rank.rankingPoints}</TableCell>
           <TableCell>{rank.wins}-{rank.losses}-{rank.ties}</TableCell>
           <TableCell>{rank.totalPoints}</TableCell>

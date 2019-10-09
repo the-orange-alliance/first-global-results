@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import AppTheme from "../AppTheme";
+import moment from "moment";
 
 import {NavLink} from "react-router-dom";
 
@@ -47,7 +48,7 @@ class UpcomingMatchesModule extends React.Component<IProps> {
     return (
       <Card style={styles.card}>
         <Typography display={"block"} variant={"body1"}><b>Upcoming Matches</b></Typography>
-        <Typography display={"block"} variant={"body2"}>August 6th, 2019</Typography>
+        <Typography display={"block"} variant={"body2"}>{moment().format("MMMM Do, YYYY")}</Typography>
         <Divider style={styles.divider}/>
         <List>
           {matchesView}

@@ -36,3 +36,13 @@ a, a:visited {
 a:hover > .MuiButtonBase-root, a:hover > .MuiButtonBase-root > .MuiPaper-root {
   color: rgb(1, 155, 66) !important;
 }
+
+@media screen and (max-width: 960px) {
+  .makeStyles-menuButton-6 {
+    width: 25%;
+  }
+
+  .makeStyles-menuButton-6 > .MuiIconButton-label {
+    width: auto;
+  }
+}
