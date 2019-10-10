@@ -39,7 +39,7 @@ class UpcomingMatchesModule extends React.Component<IProps> {
       matchesView = matches.map((m: Match) => {
         return (
           <ListItem key={m.matchKey} button>
-            <ListItemText primary={<NavLink to={`/match/${m.matchKey}`}>{m.matchName}</NavLink>} />
+            <ListItemText primary={<NavLink to={`/match/${m.matchKey}`}>{m.matchName}</NavLink>} secondary={<Typography variant={"body2"}>{m.scheduledStartTime.format('ddd HH:mm')} - Field {m.fieldNumber}</Typography>} />
           </ListItem>
         );
       });

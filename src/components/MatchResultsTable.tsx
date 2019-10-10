@@ -8,7 +8,6 @@ import {Link, NavLink} from "react-router-dom";
 
 import {Match, MatchParticipant} from "@the-orange-alliance/lib-ems";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import Paper from "@material-ui/core/Paper";
 
 interface IProps {
   matches: Match[];
@@ -32,14 +31,14 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ffdddd',
-    padding: AppTheme.spacing(1)
+    padding: AppTheme.spacing(1),
   },
   blueItem: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ddddff',
-    padding: AppTheme.spacing(1)
+    padding: AppTheme.spacing(1),
   },
   noVideo: {
     color: '#e6e6e6'
@@ -123,7 +122,7 @@ class MatchResultsTable extends React.Component<IProps> {
     const redTeamsView = redTeams.map((p: MatchParticipant) => {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
-        <Grid key={p.matchParticipantKey} item={true} xs={4} sm={4} md={2} style={styles.redItem}>
+        <Grid key={p.matchParticipantKey} item={true} xs={redTeams.length <= 3 ? 4 : 3} sm={redTeams.length <= 3 ? 4 : 3} md={redTeams.length <= 3 ? 2 : 'auto'} style={styles.redItem} className={'expandedTeamItem'}>
           <Link to={`/team/${p.teamKey}`}>
             <ButtonBase focusRipple={true}>
               {!p.team && <Typography align={"center"} variant={"body1"}>{name}</Typography>}
@@ -137,7 +136,7 @@ class MatchResultsTable extends React.Component<IProps> {
     const blueTeamsView = blueTeams.map((p: MatchParticipant) => {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
-        <Grid key={p.matchParticipantKey} item={true} xs={4} sm={4} md={2} style={styles.blueItem}>
+        <Grid key={p.matchParticipantKey} item={true} xs={blueTeams.length <= 3 ? 4 : 3} sm={blueTeams.length <= 3 ? 4 : 3} md={blueTeams.length <= 3 ? 2 : 'auto'} style={styles.blueItem} className={'expandedTeamItem'}>
           <Link to={`/team/${p.teamKey}`}>
             <ButtonBase focusRipple={true}>
               {!p.team && <Typography align={"center"} variant={"body1"}>{name}</Typography>}
@@ -159,6 +158,9 @@ class MatchResultsTable extends React.Component<IProps> {
   }
 
   private renderScores(m: Match) {
+    const participants: MatchParticipant[] = m.participants;
+    const redTeams = participants.filter((m: MatchParticipant) => m.station < MatchParticipant.BLUE_ALLIANCE_ONE);
+    const blueTeams = participants.filter((m: MatchParticipant) => m.station >= MatchParticipant.BLUE_ALLIANCE_ONE);
     let view;
     if (m.result === Match.RESULT_NOT_PLAYED) {
       view = (
@@ -171,10 +173,10 @@ class MatchResultsTable extends React.Component<IProps> {
     } else {
       view = (
         <Grid container={true} spacing={0}>
-          <Grid item={true} xs={12} sm={12} md={6} style={styles.redItem}>
+          <Grid item={true} xs={12} sm={12} md={redTeams.length <= 3 ? 6 : 4} style={styles.redItem}>
             <Typography variant={"body1"}>{m.redScore}</Typography>
           </Grid>
-          <Grid item={true} xs={12} sm={12} md={6} style={styles.blueItem}>
+          <Grid item={true} xs={12} sm={12} md={blueTeams.length <= 3 ? 6 : 4} style={styles.blueItem}>
             <Typography variant={"body1"}>{m.blueScore}</Typography>
           </Grid>
         </Grid>

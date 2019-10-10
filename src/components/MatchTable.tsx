@@ -67,7 +67,7 @@ class MatchTable extends React.Component<IProps, IState> {
     const redAllianceView = redTeams.map((p: MatchParticipant) => {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
-        <Grid key={p.matchParticipantKey} item={true} xs={3}>
+        <Grid key={p.matchParticipantKey} item={true} xs={redTeams.length <= 3 ? 3 : 2}>
           <Link to={`/team/${p.teamKey}`}>
             <ButtonBase focusRipple={true}>
               <Paper square={true} style={styles.redItem}>
@@ -83,7 +83,7 @@ class MatchTable extends React.Component<IProps, IState> {
     const blueAllianceView = blueTeams.map((p: MatchParticipant) => {
       const name = typeof p.team !== "undefined" ? p.team.country : p.teamKey;
       return (
-        <Grid key={p.matchParticipantKey} item={true} xs={3}>
+        <Grid key={p.matchParticipantKey} item={true} xs={blueTeams.length <= 3 ? 3 : 2}>
           <Link to={`/team/${p.teamKey}`}>
             <ButtonBase focusRipple={true}>
               <Paper square={true} style={styles.blueItem}>
@@ -127,14 +127,14 @@ class MatchTable extends React.Component<IProps, IState> {
         </Grid>
         {/* Red Alliance */}
         {loading ? redLoadingView : redAllianceView}
-        <Grid item={true} xs={3}>
+        <Grid item={true} xs={redTeams.length <= 3 ? 3 : 3}>
           <Paper square={true} style={styles.redItem}>
             <Typography align={"center"} variant={"body1"}>{loading ? "--" : match.result === -1 ? <i>NOT PLAYED</i> : match.redScore}</Typography>
           </Paper>
         </Grid>
         {/* Blue Alliance */}
         {loading ? blueLoadingView : blueAllianceView}
-        <Grid item={true} xs={3}>
+        <Grid item={true} xs={blueTeams.length <= 3 ? 3 : 4}>
           <Paper square={true} style={styles.blueItem}>
             <Typography align={"center"} variant={"body1"}>{loading ? "--" : match.result === -1 ? <i>NOT PLAYED</i> : match.blueScore}</Typography>
           </Paper>

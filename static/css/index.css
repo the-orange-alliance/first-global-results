@@ -46,3 +46,9 @@ a:hover > .MuiButtonBase-root, a:hover > .MuiButtonBase-root > .MuiPaper-root {
     width: auto;
   }
 }
+
+@media screen and (min-width: 960px) {
+  .expandedTeamItem {
+    width: 12.5% !important;
+  }
+}

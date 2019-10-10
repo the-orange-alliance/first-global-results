@@ -57,7 +57,7 @@ class EventsView extends React.Component<IProps, IState> {
       FGCProvider.getEventBySeason(key).then((event: Event) => {
         setEvent(event);
         FGCProvider.getAllEventMatches(event.eventKey).then((matches: Match[]) => {
-          setMatches(matches);
+          setMatches(matches.filter((m: Match) => m.tournamentLevel > Match.PRACTICE_LEVEL));
         });
         FGCProvider.getTeams(event.eventKey).then((teams: Team[]) => {
           setTeams(teams);
