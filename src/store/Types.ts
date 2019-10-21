@@ -10,6 +10,9 @@ export type SET_EVENT = typeof SET_EVENT;
 export const SET_MATCHES = "SET_MATCHES";
 export type SET_MATCHES = typeof SET_MATCHES;
 
+export const SET_MATCH_SIZE = "SET_MATCH_SIZE";
+export type SET_MATCH_SIZE = typeof SET_MATCH_SIZE;
+
 export const SET_RANKINGS = "SET_RANKINGS";
 export type SET_RANKINGS = typeof SET_RANKINGS;
 

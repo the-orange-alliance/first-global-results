@@ -15,10 +15,10 @@ import {connect} from "react-redux";
 import {
   ApplicationActions,
   ISetCompleteMatch,
-  ISetMatches,
+  ISetMatches, ISetMatchSize,
   ISetTeams,
   setCompleteMatch,
-  setMatches,
+  setMatches, setMatchSize,
   setTeams
 } from "../../store/Actions";
 import {Dispatch} from "redux";
@@ -35,9 +35,11 @@ const styles = {
 interface IProps {
   teams: Team[];
   matches: Match[];
+  matchSize: number,
   completeMatch: Match;
   setTeams: (teams: Team[]) => ISetTeams;
   setMatches: (matches: Match[]) => ISetMatches;
+  setMatchSize: (size: number) => ISetMatchSize;
   setCompleteMatch: (match: Match) => ISetCompleteMatch;
 }
 
@@ -47,7 +49,7 @@ class HomeView extends React.Component<IProps> {
   }
 
   public componentWillMount() {
-    const {teams, setTeams, setMatches, setCompleteMatch} = this.props;
+    const {teams, setTeams, setMatches, setCompleteMatch, setMatchSize} = this.props;
     if (teams.length <= 0) {
       FGCProvider.getTeamsBySeason(CURRENT_SEASON).then((teams: Team[]) => {
         setTeams(teams);
@@ -59,10 +61,13 @@ class HomeView extends React.Component<IProps> {
     FGCProvider.getHighestScoringMatch(CURRENT_SEASON, "quals", false).then((match: Match) => {
       setCompleteMatch(match);
     });
+    FGCProvider.getPlayedMatchCount(CURRENT_SEASON).then((size: number) => {
+      setMatchSize(size);
+    });
   }
 
   public render() {
-    const {completeMatch, matches, teams} = this.props;
+    const {completeMatch, matches, matchSize, teams} = this.props;
     return (
       <div>
         <Banner/>
@@ -77,7 +82,7 @@ class HomeView extends React.Component<IProps> {
                   <ActiveTeamsModule count={teams.length}/>
                 </Grid>
                 <Grid item={true} xs={6} sm={12} md={6}>
-                  <MatchesPlayedModule count={100}/>
+                  <MatchesPlayedModule count={matchSize}/>
                 </Grid>
                 <Grid item={true} xs={12} sm={12}>
                   <UpcomingMatchesModule matches={matches}/>
@@ -103,6 +108,7 @@ export function mapStateToProps(state: IApplicationState) {
   return {
     teams: state.teams,
     matches: state.matches,
+    matchSize: state.matchSize,
     completeMatch: state.completeMatch
   };
 }
@@ -111,6 +117,7 @@ export function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
   return {
     setTeams: (teams: Team[]) => dispatch(setTeams(teams)),
     setMatches: (matches: Match[]) => dispatch(setMatches(matches)),
+    setMatchSize: (size: number) => dispatch(setMatchSize(size)),
     setCompleteMatch: (match: Match) => dispatch(setCompleteMatch(match))
   };
 }

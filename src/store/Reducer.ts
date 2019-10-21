@@ -4,7 +4,7 @@ import {ApplicationActions} from "./Actions";
 import {
   SET_COMPLETE_MATCH,
   SET_COMPLETE_TEAM,
-  SET_EVENT,
+  SET_EVENT, SET_MATCH_SIZE,
   SET_MATCHES,
   SET_RANKINGS,
   SET_SEASONS,
@@ -18,6 +18,7 @@ export const initialState: IApplicationState = {
   teams: [],
   event: new Event(),
   matches: [],
+  matchSize: 0,
   rankings: [],
   completeMatch: new Match(),
   completeTeam: {team: new Team(), matches: [], rankings: []}
@@ -33,6 +34,8 @@ const reducer: Reducer<IApplicationState> = (state: IApplicationState = initialS
       return {...state, event: action.payload.event};
     case SET_MATCHES:
       return {...state, matches: action.payload.matches};
+    case SET_MATCH_SIZE:
+      return {...state, matchSize: action.payload.size};
     case SET_RANKINGS:
       return {...state, rankings: action.payload.rankings};
     case SET_COMPLETE_MATCH:

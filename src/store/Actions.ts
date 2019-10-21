@@ -1,7 +1,7 @@
 import {
   SET_COMPLETE_MATCH,
   SET_COMPLETE_TEAM,
-  SET_EVENT,
+  SET_EVENT, SET_MATCH_SIZE,
   SET_MATCHES,
   SET_RANKINGS,
   SET_SEASONS,
@@ -42,6 +42,13 @@ export interface ISetRankings {
   type: SET_RANKINGS,
   payload: {
     rankings: Ranking[]
+  }
+}
+
+export interface ISetMatchSize {
+  type: SET_MATCH_SIZE,
+  payload: {
+    size: number
   }
 }
 
@@ -87,6 +94,13 @@ export const setMatches: ActionCreator<ISetMatches> = (matches: Match[]) => ({
   }
 });
 
+export const setMatchSize: ActionCreator<ISetMatchSize> = (size: number) => ({
+  type: SET_MATCH_SIZE,
+  payload: {
+    size: size
+  }
+});
+
 export const setRankings: ActionCreator<ISetRankings> = (rankings: Ranking[]) => ({
   type: SET_RANKINGS,
   payload: {
@@ -108,4 +122,4 @@ export const setCompleteTeam: ActionCreator<ISetCompleteTeam> = (completeTeam: I
   }
 });
 
-export type ApplicationActions = ISetSeasons | ISetTeams | ISetEvent | ISetMatches | ISetRankings | ISetCompleteMatch | ISetCompleteTeam;
+export type ApplicationActions = ISetSeasons | ISetTeams | ISetEvent | ISetMatches | ISetMatchSize | ISetRankings | ISetCompleteMatch | ISetCompleteTeam;

@@ -18,7 +18,8 @@ const stateCache = (window as any).__REDUX_STATE_CACHE__;
 delete (window as any).__REDUX_STATE_CACHE__;
 const isDev: boolean = true;
 
-FGCProvider.initialize("173.231.247.208", 8088);
+// FGCProvider.initialize("173.231.247.208", 8088);
+FGCProvider.initialize("127.0.0.1", 8088);
 
 let state: IApplicationState = stateCache;
 if (stateCache.length > 0 && stateCache[0] === "__REDUX__") {

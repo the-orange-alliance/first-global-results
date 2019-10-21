@@ -88,7 +88,8 @@ async function loadPageData(req: any, params?: any): Promise<IApplicationState> 
       const homeTeams: Team[] = await FGCProvider.getTeamsBySeason(CURRENT_SEASON);
       const upcomingMatches: Match[] = await FGCProvider.getUpcomingMatches(CURRENT_SEASON, 10);
       const highestScoringMatch: Match = await FGCProvider.getHighestScoringMatch(CURRENT_SEASON, "quals", false);
-      return {...initialState, teams: homeTeams, matches: upcomingMatches, completeMatch: highestScoringMatch};
+      const matchSize: number = await FGCProvider.getPlayedMatchCount(CURRENT_SEASON);
+      return {...initialState, teams: homeTeams, matches: upcomingMatches, completeMatch: highestScoringMatch, matchSize: matchSize};
     case "/teams":
       const teams: Team[] = await FGCProvider.getTeamsBySeason(CURRENT_SEASON);
       return {...initialState, teams: teams};
@@ -114,6 +115,7 @@ function prepareState(state: IApplicationState): any {
     completeMatch: prepareCompleteMatch(state.completeMatch),
     completeTeam: prepareCompleteTeam(state.completeTeam),
     seasons: [],
+    matchSize: state.matchSize,
     event: state.event.toJSON(),
     matches: state.matches.map((m: Match) => prepareCompleteMatch(m)),
     rankings: state.rankings.map((r: Ranking) => r.toJSON()),

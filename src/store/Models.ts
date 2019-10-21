@@ -5,6 +5,7 @@ export interface IApplicationState {
   teams: Team[];
   event: Event;
   matches: Match[];
+  matchSize: number;
   rankings: Ranking[];
   completeMatch: Match;
   completeTeam: ICompleteTeamResponse;
