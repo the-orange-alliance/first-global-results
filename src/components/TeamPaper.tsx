@@ -14,7 +14,7 @@ const styles = {
   avatar: {
     margin: AppTheme.spacing(1),
     padding: AppTheme.spacing(1),
-    backgroundColor: AppTheme.palette.secondary.main
+    border: `1px solid ${AppTheme.palette.secondary.main}`
   },
   text: {
     margin: AppTheme.spacing(1)
