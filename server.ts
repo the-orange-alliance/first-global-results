@@ -47,6 +47,7 @@ app.get("/team/:teamKey", render);
 app.get("/events", render);
 app.get("/events/:seasonKey", render);
 app.get("/match/:matchKey", render);
+app.get("/rankings", render);
 app.get("/streams", render);
 
 async function render(req: any, res: any, next: any) {
