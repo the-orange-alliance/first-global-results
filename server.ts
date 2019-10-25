@@ -28,8 +28,8 @@ import appReducer, {initialState} from "./src/store/Reducer";
 
 const app: Application = express();
 
-// FGCProvider.initialize("173.231.247.208", 8088);
-FGCProvider.initialize("127.0.0.1", 8088);
+FGCProvider.initialize("173.231.247.208", 8088);
+// FGCProvider.initialize("127.0.0.1", 8088);
 
 // app.use('/api/*', (req: any, res: any) => {
 //   req.pipe()
