@@ -28,7 +28,8 @@ import appReducer, {initialState} from "./src/store/Reducer";
 
 const app: Application = express();
 
-FGCProvider.initialize("173.231.247.208", 8088);
+// FGCProvider.initialize("173.231.247.208", 8088);
+FGCProvider.initialize("127.0.0.1", 8088);
 
 // app.use('/api/*', (req: any, res: any) => {
 //   req.pipe()
@@ -105,7 +106,10 @@ async function loadPageData(req: any, params?: any): Promise<IApplicationState> 
     case `/match/${req.params.matchKey}`:
       const completeMatch: Match = await FGCProvider.getCompleteMatch(req.params.matchKey);
       return {...initialState, completeMatch: completeMatch};
-    default:
+    case `/rankings`:
+      const rankings: Ranking[] = await FGCProvider.getRankingTeams("2019-FGC-DUB", getEventTypeFromKey("2019"));
+      return {...initialState, rankings: rankings};
+      default:
       return initialState;
   }
 }

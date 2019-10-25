@@ -4,6 +4,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from "@material-ui/icons/People";
 import CalendarTodayIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import CameraIcon from "@material-ui/icons/VideocamRounded";
+import ListIcon from '@material-ui/icons/List';
 
 import HomeView from "./views/home/HomeView"
 import TeamsView from "./views/teams/TeamsView";
@@ -11,6 +12,7 @@ import EventsView from "./views/events/EventsView";
 import StreamingView from "./views/streaming/StreamingView";
 import MatchView from "./views/match/MatchView";
 import TeamView from "./views/team/TeamView";
+import RankingsView from "./views/rankings/RankingsView"
 
 export interface AppRoute {
   name: string;
@@ -34,6 +36,12 @@ const appRoutes: AppRoute[] = [
     exact: true,
     component: () => <TeamsView/>,
     menuIcon: <PeopleIcon/>
+  },
+  {
+    name: "Rankings",
+    path: '/rankings',
+    component: () => <RankingsView/>,
+    menuIcon: <ListIcon/>
   },
   {
     name: "Events",

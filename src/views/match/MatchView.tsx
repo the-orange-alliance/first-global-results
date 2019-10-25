@@ -45,7 +45,7 @@ class MatchView extends React.Component<IProps> {
     const {completeMatch} = this.props;
     return (
       <Container maxWidth={false} style={styles.container}>
-        <Typography variant={'h3'}>Qualification Match 1</Typography>
+        <Typography variant={'h3'}>{completeMatch.matchName}</Typography>
         <Typography variant={'h4'}>FIRST Global Championship 2019</Typography>
         <Grid container={true} spacing={3}>
           <Grid item={true} xs={12} sm={12} md={6}>

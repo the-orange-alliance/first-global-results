@@ -54,7 +54,7 @@ class OceanOpportunitiesRankingTable extends React.Component<IProps> {
       );
     });
     return (
-      <Table>
+      <Table size={'small'}>
         <TableHead style={styles.header}>
           <TableRow>
             <TableCell style={styles.headerCell}>Rank</TableCell>
