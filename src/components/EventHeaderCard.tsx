@@ -45,7 +45,7 @@ class EventHeaderCard extends React.Component<IProps> {
               <CalendarIcon style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              August 6th, 2019 - August 11th, 2019
+              October 25th, 2019 - October 27th, 2019
             </Grid>
             {/* Event Location/Venue */}
             <Grid item={true} xs={1}>
