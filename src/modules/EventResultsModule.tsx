@@ -33,7 +33,7 @@ class EventResultsModule extends React.Component<IProps, IState> {
     const {index} = this.state;
     return (
       <Card>
-        <Tabs value={index} onChange={this.onChange} indicatorColor={"primary"} textColor={"primary"} centered={true}>
+        <Tabs value={index} onChange={this.onChange} indicatorColor={"primary"} textColor={"primary"} variant={'fullWidth'} centered={true}>
           <Tab label={"Rankings"}/>
           <Tab label={"Match Results"}/>
           <Tab label={"Teams"}/>

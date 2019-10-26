@@ -32,6 +32,7 @@ const styles = {
     justifyContent: 'center',
     backgroundColor: '#ffdddd',
     padding: AppTheme.spacing(1),
+    height: '100%'
   },
   blueItem: {
     display: 'flex',
@@ -39,6 +40,7 @@ const styles = {
     justifyContent: 'center',
     backgroundColor: '#ddddff',
     padding: AppTheme.spacing(1),
+    height: '100%'
   },
   noVideo: {
     color: '#e6e6e6'
@@ -103,10 +105,10 @@ class MatchResultsTable extends React.Component<IProps> {
           <PlayCircleIcon style={styles.noVideo} fontSize={"large"}/>
         </Grid>
         <Grid item={true} xs={6} style={styles.item}>
-          {this.renderAlliances(m.participants)}
+          {m.participants && this.renderAlliances(m.participants)}
         </Grid>
         <Grid item={true} xs={2} style={styles.item}>
-          {this.renderScores(m)}
+          {m.participants && this.renderScores(m)}
         </Grid>
         <Grid item={true} xs={12}>
           <Divider/>

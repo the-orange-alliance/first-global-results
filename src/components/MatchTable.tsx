@@ -17,11 +17,19 @@ const styles = {
   },
   redItem: {
     backgroundColor: '#ffdddd',
-    padding: AppTheme.spacing(1)
+    padding: AppTheme.spacing(1),
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   blueItem: {
     backgroundColor: '#ddddff',
-    padding: AppTheme.spacing(1)
+    padding: AppTheme.spacing(1),
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 };
 

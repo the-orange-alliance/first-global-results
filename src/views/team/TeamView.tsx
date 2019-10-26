@@ -14,7 +14,7 @@ import {IApplicationState} from "../../store/Models";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 
-import {FGCProvider, Team, ICompleteTeamResponse} from "@the-orange-alliance/lib-ems";
+import {FGCProvider, Team, ICompleteTeamResponse, Match} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   container: {
@@ -41,7 +41,11 @@ class TeamView extends React.Component<IProps> {
     const {routeProps, setCompleteTeam} = this.props;
     const teamKey = (routeProps.match.params as any).teamKey;
     FGCProvider.getCompleteTeam(teamKey, CURRENT_SEASON).then((completeTeam: ICompleteTeamResponse) => {
-      setCompleteTeam(completeTeam);
+      setCompleteTeam({
+        rankings: completeTeam.rankings,
+        matches: completeTeam.matches.filter((m: Match) => m.tournamentLevel > Match.PRACTICE_LEVEL),
+        team: completeTeam.team
+      });
     });
   }
 
@@ -49,9 +53,13 @@ class TeamView extends React.Component<IProps> {
     const {routeProps, setCompleteTeam} = this.props;
     const teamKey = (routeProps.match.params as any).teamKey;
     const oldTeamKey = (prevProps.routeProps.match.params as any).teamKey;
-    if (!teamKey != oldTeamKey) {
+    if (teamKey != oldTeamKey) {
       FGCProvider.getCompleteTeam(teamKey, CURRENT_SEASON).then((completeTeam: ICompleteTeamResponse) => {
-        setCompleteTeam(completeTeam);
+        setCompleteTeam({
+          rankings: completeTeam.rankings,
+          matches: completeTeam.matches.filter((m: Match) => m.tournamentLevel > Match.PRACTICE_LEVEL),
+          team: completeTeam.team
+        });
       });
     }
   }

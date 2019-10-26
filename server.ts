@@ -100,10 +100,14 @@ async function loadPageData(req: any, params?: any): Promise<IApplicationState> 
       const eventMatches: Match[] = await FGCProvider.getAllEventMatches(event.eventKey);
       const eventTeams: Team[] = await FGCProvider.getTeams(event.eventKey);
       const eventRanks: Ranking[] = await FGCProvider.getRankingTeams(event.eventKey, getEventTypeFromKey(event.season.seasonKey.toString()));
-      return {...initialState, event: event, matches: eventMatches, teams: eventTeams, rankings: eventRanks};
+      return {...initialState, event: event, matches: eventMatches.filter((m: Match) => m.tournamentLevel > Match.PRACTICE_LEVEL), teams: eventTeams, rankings: eventRanks};
     case `/team/${req.params.teamKey}`:
       const completeTeam: ICompleteTeamResponse = await FGCProvider.getCompleteTeam(req.params.teamKey, CURRENT_SEASON);
-      return {...initialState, completeTeam: completeTeam};
+      return {...initialState, completeTeam: {
+        rankings: completeTeam.rankings,
+        matches: completeTeam.matches.filter((m: Match) => m.tournamentLevel > Match.PRACTICE_LEVEL),
+        team: completeTeam.team
+      }};
     case `/match/${req.params.matchKey}`:
       const completeMatch: Match = await FGCProvider.getCompleteMatch(req.params.matchKey);
       return {...initialState, completeMatch: completeMatch};
