@@ -77,7 +77,10 @@ class TeamHeaderCard extends React.Component<IProps, IState> {
               <ListIcon style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              Rank {rank.rank} with a record of {`${rank.wins}-${rank.losses}-${rank.ties}`}
+              {
+                rank.teamKey > 0 &&
+                <span>Rank {rank.rank} with a record of {`${rank.wins}-${rank.losses}-${rank.ties}`}</span>
+              }
             </Grid>
           </Grid>
         </CardContent>

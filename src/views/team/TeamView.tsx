@@ -14,7 +14,7 @@ import {IApplicationState} from "../../store/Models";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 
-import {FGCProvider, Team, ICompleteTeamResponse, Match} from "@the-orange-alliance/lib-ems";
+import {FGCProvider, Ranking, ICompleteTeamResponse, Match} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   container: {
@@ -66,11 +66,12 @@ class TeamView extends React.Component<IProps> {
 
   public render() {
     const {completeTeam} = this.props;
+    const rank: Ranking = completeTeam.rankings && completeTeam.rankings.length > 0 ? completeTeam.rankings[0] : new Ranking();
     return (
       <Container maxWidth={false} style={styles.container}>
         <Grid container={true} spacing={3} style={styles.grid}>
           <Grid item={true} xs={12} sm={12} md={8}>
-            <TeamHeaderCard team={completeTeam.team}/>
+            <TeamHeaderCard team={completeTeam.team} rank={rank}/>
           </Grid>
           <Grid item={true} xs={12} sm={12} md={4}>
             <EventSelectorCard/>
