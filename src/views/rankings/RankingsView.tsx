@@ -26,7 +26,7 @@ class RankingsView extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this._itemsPerCycle = Math.round((window.innerHeight - 64 - 32) / 32);
+    this._itemsPerCycle = 20;
     this._start = 0;
     this.state = {
       index: 0
