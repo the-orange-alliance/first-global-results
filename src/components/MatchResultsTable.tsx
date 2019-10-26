@@ -168,13 +168,13 @@ class MatchResultsTable extends React.Component<IProps> {
       view = (
         <Grid container={true}>
           <Grid item={true} xs={12}>
-            <Typography align={'center'} variant={'body1'}><i>{m.scheduledStartTime.format('ddd HH:mm')}</i></Typography>
+            <Typography align={'center'} variant={'body1'}><i>{m.scheduledStartTime.subtract(8, 'hour').format('ddd HH:mm')}</i></Typography>
           </Grid>
         </Grid>
       );
     } else {
       view = (
-        <Grid container={true} spacing={0}>
+        <Grid container={true} spacing={0} style={{height: '100%'}}>
           <Grid item={true} xs={12} sm={12} md={redTeams.length <= 3 ? 6 : 4} style={styles.redItem}>
             <Typography variant={"body1"}>{m.redScore}</Typography>
           </Grid>

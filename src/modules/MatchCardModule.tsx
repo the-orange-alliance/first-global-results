@@ -41,7 +41,7 @@ class MatchCardModule extends React.Component<IProps> {
             <Typography variant={'body1'}><AVTimer/></Typography>
           </Grid>
           <Grid item={true} xs={10} sm={11} md={11}>
-            <Typography variant={'body2'}>{match.scheduledStartTime.format("dddd, MMMM Do YYYY, h:mm a")}</Typography>
+            <Typography variant={'body2'}>{match.scheduledStartTime.subtract(8, 'hour').format("dddd, MMMM Do YYYY, h:mm a")}</Typography>
           </Grid>
           <Grid item={true} xs={2} sm={1} md={1}>
             <Typography variant={'body1'}><VideoGameController/></Typography>
