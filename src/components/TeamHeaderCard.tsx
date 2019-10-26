@@ -8,9 +8,11 @@ import Divider from "@material-ui/core/Divider";
 import CalendarIcon from "@material-ui/icons/CalendarToday";
 import PlaceIcon from "@material-ui/icons/Place";
 import VideoGameController from "@material-ui/icons/VideogameAsset";
+import ListIcon from '@material-ui/icons/List';
+
 import Grid from "@material-ui/core/Grid";
 
-import {Team} from "@the-orange-alliance/lib-ems";
+import {Team, Ranking} from "@the-orange-alliance/lib-ems";
 
 const styles = {
   card: {
@@ -23,6 +25,7 @@ const styles = {
 
 interface IProps {
   team: Team;
+  rank: Ranking;
 }
 
 interface IState {
@@ -39,7 +42,7 @@ class TeamHeaderCard extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const {team} = this.props;
+    const {team, rank} = this.props;
     return (
       <Card style={styles.card}>
         <CardContent>
@@ -53,7 +56,7 @@ class TeamHeaderCard extends React.Component<IProps, IState> {
               <CalendarIcon style={styles.icon}/>
             </Grid>
             <Grid item={true} xs={11}>
-              August 6th, 2019 - August 11th, 2019
+              October 25th, 2019 - October 27th, 2019
             </Grid>
             {/* Event Location/Venue */}
             <Grid item={true} xs={1}>
@@ -68,6 +71,13 @@ class TeamHeaderCard extends React.Component<IProps, IState> {
             </Grid>
             <Grid item={true} xs={11}>
               Ocean Opportunities
+            </Grid>
+            {/* Team Ranking */}
+            <Grid item={true} xs={1}>
+              <ListIcon style={styles.icon}/>
+            </Grid>
+            <Grid item={true} xs={11}>
+              Rank {rank.rank} with a record of {`${rank.wins}-${rank.losses}-${rank.ties}`}
             </Grid>
           </Grid>
         </CardContent>
