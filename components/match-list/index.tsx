@@ -8,12 +8,12 @@ const MatchList = ({ matches }: { matches: any[] }) => {
       {matches.map((match) => (
         <Stack
           direction="row"
-          key={match.match_key}
+          key={match.matchKey}
           justifyContent="flex-end"
           alignItems="center"
         >
           <Typography fontSize="0.75rem" px={1.5} textAlign="center">
-            {match.match_name}
+            {match.matchName}
           </Typography>
           <Stack direction="row">
             <Stack
@@ -24,17 +24,17 @@ const MatchList = ({ matches }: { matches: any[] }) => {
             >
               <MatchTeams
                 alliance="red"
-                isWinner={match.red_score > match.blue_score}
+                isWinner={match.redScore > match.blueScore}
                 participants={match.participants.filter((p) => p.station < 20)}
               />
               <MatchTeams
                 alliance="blue"
-                isWinner={match.blue_score > match.red_score}
+                isWinner={match.blueScore > match.redScore}
                 participants={match.participants.filter((p) => p.station > 20)}
               />
             </Stack>
           </Stack>
-          <MatchScores red={match.red_score} blue={match.blue_score} />
+          <MatchScores red={match.redScore} blue={match.blueScore} />
         </Stack>
       ))}
     </Stack>

@@ -21,7 +21,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
     >
       {participants.map((participant) => (
         <Stack
-          key={participant.match_participant_key}
+          key={participant.station}
           direction="row"
           justifyContent="center"
           px={1.5}
@@ -34,7 +34,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
         >
           <Box>
             <img
-              src={`/static/flags/4x3/${participant.team.country_code}.svg`}
+              src={`/static/flags/4x3/${participant.team.countryCode}.svg`}
               style={{ height: "0.75rem" }}
               alt=""
             />

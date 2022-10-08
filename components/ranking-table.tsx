@@ -26,18 +26,18 @@ import { Link } from "@mui/material";
 type Order = "asc" | "desc";
 
 interface Rank {
-  rank_key: string;
-  team_key: number;
+  rankKey: string;
+  teamKey: number;
   rank: number;
-  rank_change: number;
+  rankChange: number;
   played: number;
   wins: number;
   losses: number;
   ties: number;
-  ranking_points: number;
-  total_points: number;
-  coopertition_points: number;
-  alliance_key: string;
+  rankingScore: number;
+  highestScore: number;
+  carbonPoints: number;
+  allianceKey: string;
   team: any;
 }
 type ColumnKey = keyof Rank | string;
@@ -49,15 +49,15 @@ const columns: {
 }[] = [
   { key: "rank", label: "Rank", isSortable: true },
   { key: "team", label: "Team" },
-  { key: "ranking_points", label: "Ranking Points", isSortable: true },
+  { key: "rankingScore", label: "Ranking Score", isSortable: true },
   { key: "record", label: "Record (W-L-T)", isSortable: true },
-  { key: "total_points", label: "Total Points", isSortable: true },
+  { key: "highestScore", label: "Highest Points", isSortable: true },
   {
-    key: "coopertition_points",
-    label: "Coopertition Bonuses",
+    key: "carbonPoints",
+    label: "Carbon Points",
     isSortable: true,
   },
-  { key: "played", label: "Matches Played", isSortable: true },
+  { key: "played", label: "Played", isSortable: true },
 ];
 
 const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
@@ -139,21 +139,23 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
         <TableBody>
           {sortedRankings.map((ranking) => {
             return (
-              <TableRow key={ranking.rank_key}>
+              <TableRow key={ranking.rankKey}>
                 <TableCell>#{ranking.rank}</TableCell>
                 <TableCell>
-                  <NextLink href={`/team/${ranking.team_key}`}>
+                  <NextLink href={`/team/${ranking.teamKey}`}>
                     <Link underline="hover">
-                      {ranking.team.team_name_short || ranking.team_key}
+                      {ranking.team.shortName ||
+                        ranking.team.name ||
+                        ranking.teamKey}
                     </Link>
                   </NextLink>
                 </TableCell>
-                <TableCell>{ranking.ranking_points}</TableCell>
+                <TableCell>{ranking.rankingScore}</TableCell>
                 <TableCell>
                   {ranking.wins}-{ranking.losses}-{ranking.ties}
                 </TableCell>
-                <TableCell>{ranking.total_points}</TableCell>
-                <TableCell>{ranking.coopertition_points}</TableCell>
+                <TableCell>{ranking.highestScore}</TableCell>
+                <TableCell>{ranking.carbonPoints}</TableCell>
                 <TableCell>{ranking.played}</TableCell>
               </TableRow>
             );

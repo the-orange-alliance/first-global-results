@@ -14,9 +14,8 @@ import StreamIcon from "@mui/icons-material/PlayCircleOutlined";
 import RankingTable from "@/components/ranking-table";
 import Navigation from "@/components/navigation";
 import MatchList from "@/components/match-list";
-import data from "../data.json";
 
-export default function Home() {
+export default function Home({ data }) {
   const [tab, setTab] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -76,7 +75,7 @@ export default function Home() {
             <TabPanel value="2" sx={{ p: { xs: 0, md: 2 } }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <MatchList
-                  matches={data.matches.filter((m) => m.tournament_level === 1)}
+                  matches={data.matches.filter((m) => m.tournamentLevel === 0)}
                 />
               </Box>
             </TabPanel>
@@ -86,4 +85,17 @@ export default function Home() {
       </Container>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch("http://localhost:3005/v1");
+  const data = await res.json();
+
+  return {
+    props: { data },
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every 10 seconds
+    revalidate: 10, // In seconds
+  };
 }
