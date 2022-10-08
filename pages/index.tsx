@@ -70,10 +70,10 @@ export default function Home() {
                 <Tab label="Awards" value="3" />
               </TabList>
             </Box>
-            <TabPanel value="1">
+            <TabPanel value="1" sx={{ p: { xs: 0, md: 2 } }}>
               <RankingTable rankings={data.rankings} />
             </TabPanel>
-            <TabPanel value="2">
+            <TabPanel value="2" sx={{ p: { xs: 0, md: 2 } }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <MatchList
                   matches={data.matches.filter((m) => m.tournament_level === 1)}
