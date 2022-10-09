@@ -16,7 +16,10 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
   return (
     <Stack
       direction="row"
-      spacing={1}
+      spacing={{
+        xs: 0.25,
+        md: 1,
+      }}
       bgcolor={alliance === "red" ? "#FFEEEE" : "#EEEEFF"}
     >
       {participants.map((participant) => (

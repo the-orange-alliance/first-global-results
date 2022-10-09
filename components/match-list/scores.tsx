@@ -1,18 +1,14 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, StackTypeMap } from "@mui/material";
 
 interface MatchScoresProps {
+  direction: StackTypeMap["props"]["direction"];
   red: number;
   blue: number;
 }
 
-const MatchScores: React.FC<MatchScoresProps> = ({ red, blue }) => {
+const MatchScores: React.FC<MatchScoresProps> = ({ red, blue, direction }) => {
   return (
-    <Stack
-      direction={{
-        xs: "column",
-        md: "row",
-      }}
-    >
+    <Stack direction={direction}>
       <Box
         bgcolor="#FFDDDD"
         px={1.5}

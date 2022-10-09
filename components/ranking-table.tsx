@@ -1,27 +1,16 @@
-import * as React from "react";
-import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
+import { useMemo, useState } from "react";
 import NextLink from "next/link";
-import { Link } from "@mui/material";
+import {
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Tooltip,
+} from "@mui/material";
 
 type Order = "asc" | "desc";
 
@@ -61,8 +50,8 @@ const columns: {
 ];
 
 const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<ColumnKey>("rank");
+  const [order, setOrder] = useState<Order>("asc");
+  const [orderBy, setOrderBy] = useState<ColumnKey>("rank");
 
   const handleRequestSort = (key: ColumnKey) => {
     const isAsc = orderBy === key && order === "asc";
@@ -74,7 +63,7 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
       handleRequestSort(key);
     };
 
-  const sortedRankings = React.useMemo(() => {
+  const sortedRankings = useMemo(() => {
     const sorted = [...rankings];
     sorted.sort((rank1, rank2) => {
       let a = rank1[orderBy];
@@ -142,7 +131,11 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
               <TableRow key={ranking.rankKey}>
                 <TableCell>#{ranking.rank}</TableCell>
                 <TableCell>
-                  <NextLink href={`/team/${ranking.teamKey}`}>
+                  <NextLink
+                    href={`/team/${ranking.team.country}`}
+                    shallow
+                    passHref
+                  >
                     <Link underline="hover">
                       {ranking.team.shortName ||
                         ranking.team.name ||

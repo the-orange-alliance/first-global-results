@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import {
   Box,
@@ -14,21 +14,39 @@ import StreamIcon from "@mui/icons-material/PlayCircleOutlined";
 import RankingTable from "@/components/ranking-table";
 import Navigation from "@/components/navigation";
 import MatchList from "@/components/match-list";
+import { useRouter } from "next/router";
+import TeamModel from "@/components/team-model";
 
 export default function Home({ data }) {
+  const router = useRouter();
   const [tab, setTab] = useState("1");
+  const [teamModal, setTeamModal] = useState<string | null>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
 
-  console.log(data);
+  const handleModalClose = () => {
+    router.push("/", undefined, { shallow: true });
+    setTeamModal(null);
+  };
+
+  useEffect(() => {
+    if (typeof router.query.country === "string") {
+      setTeamModal(router.query.country);
+    }
+  }, [router.query.country]);
+
   return (
     <div>
       <Head>
         <title>2022 FIRST Global Challenge Event Results</title>
       </Head>
       <Navigation />
+      {teamModal && (
+        <TeamModel country={teamModal} data={data} onClose={handleModalClose} />
+      )}
+
       <Container sx={{ pb: 4 }}>
         <Stack
           direction={{
