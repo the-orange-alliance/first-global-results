@@ -1,4 +1,5 @@
-import { Box, Stack } from "@mui/material";
+import NextLink from "next/link";
+import { Box, Link, Stack } from "@mui/material";
 
 type Alliance = "red" | "blue";
 
@@ -42,7 +43,19 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
               alt=""
             />
           </Box>
-          <span>{participant.team.country}</span>
+          <NextLink href={`/team/${participant.team.country}`} shallow passHref>
+            <Link
+              underline="hover"
+              sx={{
+                color: "inherit",
+                "&:hover": {
+                  color: "inherit",
+                },
+              }}
+            >
+              {participant.team.country}
+            </Link>
+          </NextLink>
         </Stack>
       ))}
     </Stack>
