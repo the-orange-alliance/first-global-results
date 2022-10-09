@@ -34,6 +34,8 @@ export default function Home({ data }) {
   useEffect(() => {
     if (typeof router.query.country === "string") {
       setTeamModal(router.query.country);
+    } else {
+      setTeamModal(null);
     }
   }, [router.query.country]);
 
