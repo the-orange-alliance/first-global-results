@@ -45,9 +45,7 @@ export default function Home({ data }) {
         <title>2022 FIRST Global Challenge Event Results</title>
       </Head>
       <Navigation />
-      {teamModal && (
-        <TeamModel country={teamModal} data={data} onClose={handleModalClose} />
-      )}
+      <TeamModel country={teamModal} data={data} onClose={handleModalClose} />
 
       <Container sx={{ pb: 4 }}>
         <Stack

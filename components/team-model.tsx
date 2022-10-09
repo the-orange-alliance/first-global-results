@@ -1,5 +1,13 @@
 import { useRouter } from "next/router";
-import { Box, Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  useMediaQuery,
+} from "@mui/material";
 import {
   AlphaCBoxOutline,
   ChevronTripleUp,
@@ -10,6 +18,8 @@ import HighestScoreIcon from "mdi-material-ui/Shimmer";
 import MatchesPlayedIcon from "mdi-material-ui/CheckDecagramOutline";
 import MatchList from "@/components/match-list";
 import DetailsList from "./details-list";
+import { forwardRef, useEffect, useState } from "react";
+import { TransitionProps } from "@mui/material/transitions";
 
 interface TeamModelProps {
   country: string;
@@ -17,18 +27,40 @@ interface TeamModelProps {
   onClose?: () => void;
 }
 
-const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
-  const { team, ...rank } = data.rankings.find(
-    (rank) => rank.team.country === country
-  );
+const MobileTransition = forwardRef(function Transition(
+  props: TransitionProps & { children: React.ReactElement<any, any> },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
-  const matches = data.matches.filter((match) =>
-    match.participants.some((p) => p.teamKey === rank.teamKey)
-  );
+const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
+  const [countryData, setCountryData] = useState<any>(null);
+  const isMobile = useMediaQuery("(max-width: 899px)");
+
+  useEffect(() => {
+    if (country) {
+      const ranking = data.rankings.find(
+        (rank) => rank.team.country === country
+      );
+      if (!ranking) return;
+
+      const { team, ...rank } = ranking;
+      const matches = data.matches.filter((match) =>
+        match.participants.some((p) => p.teamKey === rank.teamKey)
+      );
+      setCountryData({ team, rank, matches });
+    }
+  }, [country, data]);
+
+  if (!countryData) return;
+
+  const { team, rank, matches } = countryData;
 
   return (
     <Dialog
-      open
+      open={!!country}
+      TransitionComponent={isMobile ? MobileTransition : undefined}
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
