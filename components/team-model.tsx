@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { forwardRef, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,18 +8,15 @@ import {
   Slide,
   useMediaQuery,
 } from "@mui/material";
-import {
-  AlphaCBoxOutline,
-  ChevronTripleUp,
-  FlagOutline,
-} from "mdi-material-ui";
-import CloseIcon from "mdi-material-ui/Close";
-import HighestScoreIcon from "mdi-material-ui/Shimmer";
-import MatchesPlayedIcon from "mdi-material-ui/CheckDecagramOutline";
-import MatchList from "@/components/match-list";
-import DetailsList from "./details-list";
-import { forwardRef, useEffect, useState } from "react";
 import { TransitionProps } from "@mui/material/transitions";
+import CloseIcon from "mdi-material-ui/Close";
+import RankIcon from "mdi-material-ui/ChevronTripleUp";
+import RecordIcon from "mdi-material-ui/FlagOutline";
+import HighestScoreIcon from "mdi-material-ui/Shimmer";
+import CarbonIcon from "mdi-material-ui/AlphaCBoxOutline";
+import MatchesPlayedIcon from "mdi-material-ui/CheckDecagramOutline";
+import DetailsList from "@/components/details-list";
+import MatchList from "@/components/match-list";
 
 interface TeamModelProps {
   country: string;
@@ -131,16 +128,16 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
         </Box>
 
         <DetailsList>
-          <DetailsList.Item icon={<ChevronTripleUp />} title="Ranking Score">
+          <DetailsList.Item icon={<RankIcon />} title="Ranking Score">
             {rank.rankingScore}
           </DetailsList.Item>
-          <DetailsList.Item icon={<FlagOutline />} title="Win-Lose-Tie">
+          <DetailsList.Item icon={<RecordIcon />} title="Record (W-L-T)">
             {rank.wins}-{rank.losses}-{rank.ties}
           </DetailsList.Item>
           <DetailsList.Item icon={<HighestScoreIcon />} title="Highest Score">
             {rank.highestScore}
           </DetailsList.Item>
-          <DetailsList.Item icon={<AlphaCBoxOutline />} title="Carbon Points">
+          <DetailsList.Item icon={<CarbonIcon />} title="Carbon Points">
             {rank.carbonPoints}
           </DetailsList.Item>
           <DetailsList.Item icon={<MatchesPlayedIcon />} title="Matches Played">

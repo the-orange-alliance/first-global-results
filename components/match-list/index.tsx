@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import MatchScores from "@/components/match-list/scores";
 import MatchTeams from "@/components/match-list/teams";
+import MatchTime from "@/components/match-list/time";
 
 interface MatchListProps {
   matches: any[];
@@ -21,8 +22,8 @@ const MatchList: React.FC<MatchListProps> = ({
       <Stack direction="column" spacing={0.25} alignItems="flex-end">
         {matches.map((match) => (
           <Stack
-            direction="row"
             key={match.matchKey}
+            direction="row"
             justifyContent="flex-end"
             alignItems="center"
           >
@@ -52,14 +53,24 @@ const MatchList: React.FC<MatchListProps> = ({
                 />
               </Stack>
             </Stack>
-            <MatchScores
-              red={match.redScore}
-              blue={match.blueScore}
-              direction={{
-                xs: "column",
-                md: type === "column" ? "column" : "row",
-              }}
-            />
+            {match.redScore ? (
+              <MatchScores
+                red={match.redScore}
+                blue={match.blueScore}
+                direction={{
+                  xs: "column",
+                  md: type === "column" ? "column" : "row",
+                }}
+              />
+            ) : (
+              <MatchTime
+                startTime={match.startTime}
+                width={{
+                  xs: "4rem",
+                  md: type === "column" ? "4rem" : "8rem",
+                }}
+              />
+            )}
           </Stack>
         ))}
       </Stack>

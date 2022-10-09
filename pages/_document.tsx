@@ -40,8 +40,8 @@ export default class FIRSTDocument extends Document {
     const emotionStyles = extractCriticalToChunks(initialProps.html);
     const emotionStyleTags = emotionStyles.styles.map((style) => (
       <style
-        data-emotion={`${style.key} ${style.ids.join(" ")}`}
         key={style.key}
+        data-emotion={`${style.key} ${style.ids.join(" ")}`}
         dangerouslySetInnerHTML={{ __html: style.css }}
       />
     ));

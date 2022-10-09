@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -14,8 +15,8 @@ import StreamIcon from "@mui/icons-material/PlayCircleOutlined";
 import RankingTable from "@/components/ranking-table";
 import Navigation from "@/components/navigation";
 import MatchList from "@/components/match-list";
-import { useRouter } from "next/router";
 import TeamModel from "@/components/team-model";
+import { getApiBase } from "@/lib";
 
 export default function Home({ data }) {
   const router = useRouter();
@@ -106,7 +107,7 @@ export default function Home({ data }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch("http://localhost:3005/v1");
+  const res = await fetch(getApiBase() + "/v1");
   const data = await res.json();
 
   return {
