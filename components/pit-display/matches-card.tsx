@@ -34,15 +34,17 @@ const MatchesCard: React.FC<MatchesCardProps> = ({ matches }) => {
             style={{
               animation: shouldScroll ? marquee(matches.length) : "none",
             }}
-            children={matchesView}
-          />
+          >
+            {matchesView}
+          </div>
           <div
             style={{
               display: shouldScroll ? undefined : "none",
               animation: shouldScroll ? marquee(matches.length) : "none",
             }}
-            children={matchesView}
-          />
+          >
+            {matchesView}
+          </div>
         </div>
       </div>
 

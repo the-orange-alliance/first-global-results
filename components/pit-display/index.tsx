@@ -1,5 +1,5 @@
-import RankingCard from "./ranking-card";
-import MatchesCard from "./matches-card";
+import RankingCard from "@/components/pit-display/ranking-card";
+import MatchesCard from "@/components/pit-display/matches-card";
 
 interface PitDisplayProps {
   data: any;
@@ -33,7 +33,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
           ) : (
             <div className="error-message">
               <h1>No data available yet</h1>
-              <h3>Hold tight, the matches haven't begun yet</h3>
+              <h3>Hold tight, the matches haven’t begun yet</h3>
             </div>
           )}
         </div>

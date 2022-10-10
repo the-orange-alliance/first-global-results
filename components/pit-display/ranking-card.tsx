@@ -40,15 +40,17 @@ const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
             style={{
               animation: shouldScroll ? marquee(rankings.length) : "none",
             }}
-            children={rankingsView}
-          />
+          >
+            {rankingsView}
+          </div>
           <div
             style={{
               display: shouldScroll ? undefined : "none",
               animation: shouldScroll ? marquee(rankings.length) : "none",
             }}
-            children={rankingsView}
-          />
+          >
+            {rankingsView}
+          </div>
         </div>
       </div>
 
