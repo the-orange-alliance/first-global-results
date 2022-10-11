@@ -38,7 +38,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
         >
           <Box>
             <img
-              src={`/static/flags/4x3/${participant.team.countryCode}.svg`}
+              src={`/static/flags/4x3/${participant.team.countryCode.toLowerCase()}.svg`}
               style={{ height: "0.75rem" }}
               alt=""
             />
