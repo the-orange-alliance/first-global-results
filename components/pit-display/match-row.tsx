@@ -3,7 +3,6 @@ interface MatchRowProps {
 }
 
 const MatchRow: React.FC<MatchRowProps> = ({ match }) => {
-  const isPlayed = match.redScore > 0 || match.blueScore > 0;
   const winner =
     match.redScore > match.blueScore
       ? "R"
@@ -12,12 +11,12 @@ const MatchRow: React.FC<MatchRowProps> = ({ match }) => {
       : "T";
 
   return (
-    <div className="pd-card__row" data-win={isPlayed ? winner : null}>
+    <div className="pd-card__row" data-win={match.played ? winner : null}>
       <div className="pd-card__col" data-type="match">
         {match.matchName}
       </div>
       <div className="pd-card__col" data-type="score">
-        {isPlayed && (
+        {match.played && (
           <>
             <span className="red-score">{match.redScore}</span>
             &nbsp;-&nbsp;

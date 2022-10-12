@@ -8,6 +8,7 @@ interface MatchListProps {
   type?: "column" | "responsive";
   align?: "start" | "center";
 }
+
 const MatchList: React.FC<MatchListProps> = ({
   matches,
   align = "center",
@@ -53,7 +54,7 @@ const MatchList: React.FC<MatchListProps> = ({
                 />
               </Stack>
             </Stack>
-            {match.redScore ? (
+            {match.played ? (
               <MatchScores
                 red={match.redScore}
                 blue={match.blueScore}
