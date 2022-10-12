@@ -20,7 +20,7 @@ import { getApiBase } from "@/lib";
 
 export default function Home({ data }) {
   const router = useRouter();
-  const [tab, setTab] = useState("1");
+  const [tab, setTab] = useState("rankings");
   const [teamModal, setTeamModal] = useState<string | null>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -83,22 +83,56 @@ export default function Home({ data }) {
                 onChange={handleChange}
                 aria-label="lab API tabs example"
               >
-                <Tab label="Rankings" value="1" />
-                <Tab label="Matches Results" value="2" />
-                <Tab label="Awards" value="3" />
+                <Tab label="Rankings" value="rankings" />
+                <Tab label="Matches Results" value="matches" />
+                <Tab label="Awards" value="awards" />
               </TabList>
             </Box>
-            <TabPanel value="1" sx={{ p: { xs: 0, md: 2 } }}>
-              <RankingTable rankings={data.rankings} />
+            <TabPanel value="rankings" sx={{ p: { xs: 0, md: 2 } }}>
+              {data.rankings.length > 0 ? (
+                <RankingTable rankings={data.rankings} />
+              ) : (
+                <Stack
+                  direction="column"
+                  alignItems="center"
+                  py={8}
+                  spacing={0.5}
+                >
+                  <Typography
+                    component="h2"
+                    fontSize="1.5rem"
+                    fontWeight={700}
+                    align="center"
+                  >
+                    No rankings available yet
+                  </Typography>
+                  <Typography
+                    fontSize="1.125rem"
+                    fontWeight={500}
+                    align="center"
+                    color="text.secondary"
+                  >
+                    Hold tight, the matches haven’t begun yet
+                  </Typography>
+                  <Box pt={1.5}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      size="small"
+                      onClick={() => setTab("matches")}
+                    >
+                      View Schedule
+                    </Button>
+                  </Box>
+                </Stack>
+              )}
             </TabPanel>
-            <TabPanel value="2" sx={{ p: { xs: 0, md: 2 } }}>
+            <TabPanel value="matches" sx={{ p: { xs: 0, md: 2 } }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <MatchList
-                  matches={data.matches.filter((m) => m.tournamentLevel === 0)}
-                />
+                <MatchList matches={data.matches} />
               </Box>
             </TabPanel>
-            <TabPanel value="3">TBD</TabPanel>
+            <TabPanel value="awards">TBD</TabPanel>
           </TabContext>
         </Paper>
       </Container>

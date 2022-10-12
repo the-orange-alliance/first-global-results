@@ -38,12 +38,12 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
         >
           <Box>
             <img
-              src={`/static/flags/4x3/${participant.team.countryCode.toLowerCase()}.svg`}
+              src={`/static/flags/4x3/${participant.countryCode.toLowerCase()}.svg`}
               style={{ height: "0.75rem" }}
               alt=""
             />
           </Box>
-          <NextLink href={`/team/${participant.team.country}`} shallow passHref>
+          <NextLink href={`/team/${participant.country}`} shallow passHref>
             <Link
               underline="hover"
               sx={{
@@ -53,7 +53,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
                 },
               }}
             >
-              {participant.team.country}
+              {participant.country}
             </Link>
           </NextLink>
         </Stack>

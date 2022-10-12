@@ -40,7 +40,7 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
       const ranking = data.rankings.find(
         (rank) => rank.team.country === country
       );
-      if (!ranking) return;
+      if (!ranking) return onClose?.();
 
       const { team, ...rank } = ranking;
       const matches = data.matches.filter((match) =>

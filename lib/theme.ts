@@ -214,7 +214,7 @@ export const getThemedComponents = (
             fontWeight: 700,
           },
           sizeSmall: {
-            padding: theme.spacing(0.5, 1),
+            padding: theme.spacing(0.5, 1.25),
             marginLeft: theme.spacing(-1),
           },
           containedPrimary: {
