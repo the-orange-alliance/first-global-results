@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import Image from "next/future/image";
 import { Box, Link, Stack } from "@mui/material";
 
 type Alliance = "red" | "blue";
@@ -37,10 +38,12 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
           fontWeight={isWinner ? 700 : undefined}
         >
           <Box>
-            <img
+            <Image
               src={`/static/flags/4x3/${participant.countryCode.toLowerCase()}.svg`}
-              style={{ height: "0.75rem" }}
-              alt=""
+              width={16}
+              height={12}
+              style={{ backgroundColor: "#ffffff" }}
+              alt={`${participant.countryCode} flag`}
             />
           </Box>
           <NextLink href={`/team/${participant.country}`} shallow passHref>
