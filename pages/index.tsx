@@ -71,7 +71,12 @@ export default function Home({ data }) {
             </Typography>
           </Stack>
 
-          <Button variant="contained" startIcon={<StreamIcon />}>
+          <Button
+            variant="contained"
+            startIcon={<StreamIcon />}
+            href="https://www.youtube.com/playlist?list=PL-RL-gR4GAffgbkM4fIChO3EpT2hrixXl"
+            target="_blank"
+          >
             Watch Live
           </Button>
         </Stack>
@@ -112,7 +117,7 @@ export default function Home({ data }) {
                     align="center"
                     color="text.secondary"
                   >
-                    Hold tight, the matches haven’t begun yet
+                    Hold tight, ranking matches haven’t begun yet
                   </Typography>
                   <Box pt={1.5}>
                     <Button
