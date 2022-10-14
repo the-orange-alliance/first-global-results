@@ -30,7 +30,7 @@ const MatchRow: React.FC<MatchRowProps> = ({ match }) => {
           className="pd-card__col"
           data-type={p.station > 20 ? "blue" : "red"}
         >
-          {p.team.country}
+          {p.country}
           {p.surrogate ? "*" : null}
         </div>
       ))}
