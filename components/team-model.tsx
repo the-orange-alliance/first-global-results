@@ -48,7 +48,7 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
       );
       setCountryData({ team, rank, matches });
     }
-  }, [country, data]);
+  }, [country, data, onClose]);
 
   if (!countryData) return;
 

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import MatchRow from "@/components/pit-display/match-row";
 import { marquee } from "@/lib";
 
@@ -6,7 +7,15 @@ interface MatchesCardProps {
 }
 
 const MatchesCard: React.FC<MatchesCardProps> = ({ matches }) => {
-  const shouldScroll = true;
+  const [shouldScroll, setShouldScroll] = useState(false);
+
+  useEffect(() => {
+    const matchesScroll = document.querySelector("#matches-scroll");
+    setShouldScroll(
+      matchesScroll.clientHeight > matchesScroll.parentElement.clientHeight
+    );
+  }, [matches]);
+
   const matchesView = matches.map((match) => (
     <MatchRow key={match.matchKey} match={match} />
   ));
@@ -30,7 +39,7 @@ const MatchesCard: React.FC<MatchesCardProps> = ({ matches }) => {
         </div>
         <div className="pd-marquee">
           <div
-            id="rankings-scroll"
+            id="matches-scroll"
             style={{
               animation: shouldScroll ? marquee(matches.length) : "none",
             }}

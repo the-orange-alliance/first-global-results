@@ -37,6 +37,7 @@ const Navigation = () => {
         <img
           src="https://first.global/wp-content/uploads/2017/11/FG-header-black.png"
           height={56}
+          alt="FIRST Global"
         />
         <Stack
           direction="row"

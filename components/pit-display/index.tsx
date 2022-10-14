@@ -39,7 +39,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
           {data.rankings.length > 0 && matches.length > 0 ? (
             <>
               <RankingCard rankings={data.rankings} />
-              <MatchesCard matches={matches} />
+              <MatchesCard matches={matches.filter((m) => m.played)} />
             </>
           ) : (
             <div className="error-message">

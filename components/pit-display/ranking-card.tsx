@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import RankingRow from "@/components/pit-display/ranking-row";
 import { marquee } from "@/lib";
 
@@ -6,7 +7,15 @@ interface RankingCardProps {
 }
 
 const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
-  const shouldScroll = true;
+  const [shouldScroll, setShouldScroll] = useState(false);
+
+  useEffect(() => {
+    const rankingsScroll = document.querySelector("#rankings-scroll");
+    setShouldScroll(
+      rankingsScroll.clientHeight > rankingsScroll.parentElement.clientHeight
+    );
+  }, [rankings]);
+
   const rankingsView = rankings.map((ranking) => (
     <RankingRow key={ranking.rankKey} ranking={ranking} />
   ));
