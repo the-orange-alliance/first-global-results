@@ -69,7 +69,21 @@ const MatchList: React.FC<MatchListProps> = ({
               alignItems="center"
               bgcolor={index % 2 === 0 ? "white" : "rgba(0, 0, 0, 0.02)"}
             >
-              <Typography fontSize="0.75rem" px={1.5} textAlign="center">
+              <Typography
+                fontSize="0.75rem"
+                px={1.5}
+                textAlign="center"
+                fontWeight={match.played ? 500 : undefined}
+                color={
+                  match.played
+                    ? match.redScore > match.blueScore
+                      ? "var(--red)"
+                      : match.blueScore > match.redScore
+                      ? "var(--blue)"
+                      : "var(--green)"
+                    : "text.secondary"
+                }
+              >
                 {match.matchName}
               </Typography>
               <Stack direction="row">
