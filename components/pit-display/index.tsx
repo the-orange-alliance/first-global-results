@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import RankingCard from "@/components/pit-display/ranking-card";
 import MatchesCard from "@/components/pit-display/matches-card";
 
@@ -5,6 +6,16 @@ interface PitDisplayProps {
   data: any;
 }
 const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
+  const matches = useMemo(() => {
+    const matches = data.matches;
+    const latestTournamentLevel = Math.max(
+      ...matches.map((match) => match.tournamentLevel)
+    );
+    return matches.filter(
+      (match) => match.tournamentLevel === latestTournamentLevel
+    );
+  }, [data]);
+
   return (
     <>
       <main className="pd-container">
@@ -25,10 +36,10 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
           </div>
         </div>
         <div className="pd-content">
-          {data.rankings.length > 0 && data.matches.length > 0 ? (
+          {data.rankings.length > 0 && matches.length > 0 ? (
             <>
-              <RankingCard rankings={data.rankings.slice(0, 20)} />
-              <MatchesCard matches={data.matches.slice(0, 20)} />
+              <RankingCard rankings={data.rankings} />
+              <MatchesCard matches={matches} />
             </>
           ) : (
             <div className="error-message">
