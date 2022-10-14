@@ -21,7 +21,7 @@ const MatchList: React.FC<MatchListProps> = ({
         const matchNumber1 = parseInt(a.matchName.split(" ")[2]);
         const matchNumber2 = parseInt(b.matchName.split(" ")[2]);
         return (
-          matchNumber1 - matchNumber2 || a.tournamentLevel - b.tournamentLevel
+          a.tournamentLevel * 1000 - b.tournamentLevel * 1000|| matchNumber1 - matchNumber2;
         );
       }),
     [matches]
