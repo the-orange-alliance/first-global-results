@@ -18,19 +18,21 @@ import MatchList from "@/components/match-list";
 import TeamModel from "@/components/team-model";
 import { getApiBase } from "@/lib";
 
-export default function Home({ data }) {
-  const router = useRouter();
+export default function Home({ data: initialData }) {
+  const [data, setData] = useState(initialData);
   const [tab, setTab] = useState("rankings");
   const [teamModal, setTeamModal] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setTab(newValue);
-  };
-
-  const handleModalClose = () => {
-    router.push("/", undefined, { shallow: true });
-    setTeamModal(null);
-  };
+  useEffect(() => {
+    // Auto refresh data every 1 minute
+    const interval = setInterval(async () => {
+      const res = await fetch(getApiBase() + "/v1");
+      const data = await res.json();
+      setData(data);
+    }, 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (typeof router.query.country === "string") {
@@ -39,6 +41,15 @@ export default function Home({ data }) {
       setTeamModal(null);
     }
   }, [router.query.country]);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    setTab(newValue);
+  };
+
+  const handleModalClose = () => {
+    router.push("/", undefined, { shallow: true });
+    setTeamModal(null);
+  };
 
   return (
     <div>
@@ -85,7 +96,7 @@ export default function Home({ data }) {
           <TabContext value={tab}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <TabList
-                onChange={handleChange}
+                onChange={handleTabChange}
                 aria-label="lab API tabs example"
               >
                 <Tab label="Rankings" value="rankings" />
