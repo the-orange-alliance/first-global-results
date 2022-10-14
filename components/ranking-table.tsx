@@ -133,6 +133,7 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
                 <TableCell>
                   <NextLink
                     href={`/team/${ranking.team.country}`}
+                    prefetch={false}
                     shallow
                     passHref
                   >

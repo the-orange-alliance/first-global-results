@@ -46,7 +46,11 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
               alt={`${participant.countryCode} flag`}
             />
           </Box>
-          <NextLink href={`/team/${participant.country}`} shallow passHref>
+          <NextLink
+            href={`/team/${participant.country}`}
+            shallow
+            prefetch={false}
+          >
             <Link
               underline="hover"
               sx={{
