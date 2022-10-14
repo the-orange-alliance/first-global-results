@@ -137,6 +137,9 @@ export default function Home({ data }) {
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <MatchList matches={data.matches} />
               </Box>
+              <Typography variant="body2" color="text.secondary" mt={2}>
+                All times are displayed in your local timezone.
+              </Typography>
             </TabPanel>
             <TabPanel value="awards">TBD</TabPanel>
           </TabContext>

@@ -17,7 +17,7 @@ const MatchTime: React.FC<MatchTimeProps> = ({ startTime, width }) => {
     } else {
       setTime(null);
     }
-  }, []);
+  }, [startTime]);
 
   return (
     <Box
