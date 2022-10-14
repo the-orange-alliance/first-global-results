@@ -116,8 +116,9 @@ export default function Home({ data }) {
                     fontWeight={500}
                     align="center"
                     color="text.secondary"
+                    px={1}
                   >
-                    Hold tight, ranking matches haven’t begun yet
+                    Hold tight, ranking matches haven’t begun yet.
                   </Typography>
                   <Box pt={1.5}>
                     <Button
@@ -132,7 +133,7 @@ export default function Home({ data }) {
                 </Stack>
               )}
             </TabPanel>
-            <TabPanel value="matches" sx={{ p: { xs: 0, md: 2 } }}>
+            <TabPanel value="matches" sx={{ py: 1, px: { xs: 0, md: 2 } }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <MatchList matches={data.matches} />
               </Box>
