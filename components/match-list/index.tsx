@@ -104,7 +104,7 @@ const MatchList: React.FC<MatchListProps> = ({
                 />
               ) : (
                 <MatchTime
-                  startTime={match.startTime}
+                  match={match}
                   width={{
                     xs: "4rem",
                     md: type === "column" ? "4rem" : "8rem",

@@ -1,27 +1,43 @@
-import { Box, BoxTypeMap } from "@mui/material";
+import { watchLinks } from "@/lib/data";
+import { Box, BoxTypeMap, Button, Link } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
 interface MatchTimeProps {
-  startTime: string;
+  match: any;
   width: BoxTypeMap["props"]["width"];
 }
 
-const MatchTime: React.FC<MatchTimeProps> = ({ startTime, width }) => {
+const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
   const [time, setTime] = useState<string | null>("");
+  const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
-    if (startTime) {
-      const formatted = moment(startTime).format("ddd, HH:mm");
+    if (match.startTime) {
+      const start = moment(match.startTime);
+      const formatted = start.format("ddd, HH:mm");
       setTime(formatted);
+      const checkLive = () => {
+        setIsLive(
+          start.isBetween(
+            moment().subtract(3.5, "minutes"),
+            moment().add(3.5, "minutes")
+          )
+        );
+      };
+      checkLive();
+      const interval = setInterval(checkLive, 30 * 1000);
+      return () => clearInterval(interval);
     } else {
       setTime(null);
     }
-  }, [startTime]);
+  }, [match.startTime]);
 
   return (
     <Box
-      bgcolor={(theme) => theme.palette.grey[50]}
+      bgcolor={(theme) =>
+        isLive ? theme.palette.primary.main : theme.palette.grey[50]
+      }
       px={1.5}
       py={0.5}
       fontSize="0.875rem"
@@ -30,8 +46,28 @@ const MatchTime: React.FC<MatchTimeProps> = ({ startTime, width }) => {
       display="flex"
       alignSelf="stretch"
       alignItems="center"
+      justifyContent="center"
     >
-      {time || "TBD"}
+      {isLive ? (
+        <Link
+          href={watchLinks["field" + match.field] || watchLinks.main}
+          target="_blank"
+          sx={{
+            fontWeight: 500,
+            px: 1,
+            color: "#fff",
+            lineHeight: 1.2,
+            "&:hover": {
+              color: "#ffffffbf",
+              textDecoration: "none",
+            },
+          }}
+        >
+          Watch Live
+        </Link>
+      ) : (
+        time || "TBD"
+      )}
     </Box>
   );
 };
