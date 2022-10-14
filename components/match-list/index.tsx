@@ -34,7 +34,7 @@ const MatchList: React.FC<MatchListProps> = ({
       spacing={0.25}
       alignItems={align === "center" ? "center" : "flex-start"}
     >
-      <Stack direction="column" spacing={0.25} alignItems="flex-end">
+      <Stack direction="column" spacing={0.25} alignItems="stretch">
         {sortedMatches.map((match, index) => (
           <React.Fragment key={match.matchKey}>
             {(index === 0 ||
@@ -44,7 +44,6 @@ const MatchList: React.FC<MatchListProps> = ({
                 direction="row"
                 justifyContent="center"
                 alignItems="center"
-                alignSelf="stretch"
                 py={0.75}
                 bgcolor="rgba(0, 0, 0, 0.02)"
               >
@@ -66,6 +65,7 @@ const MatchList: React.FC<MatchListProps> = ({
               direction="row"
               justifyContent="flex-end"
               alignItems="center"
+              bgcolor={index % 2 === 0 ? "white" : "rgba(0, 0, 0, 0.02)"}
             >
               <Typography fontSize="0.75rem" px={1.5} textAlign="center">
                 {match.matchName}

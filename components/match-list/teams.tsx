@@ -22,7 +22,9 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
         xs: 0.25,
         md: 1,
       }}
-      bgcolor={alliance === "red" ? "#FFEEEE" : "#EEEEFF"}
+      bgcolor={
+        alliance === "red" ? "var(--lighter-red)" : "var(--lighter-blue)"
+      }
     >
       {participants.map((participant) => (
         <Stack

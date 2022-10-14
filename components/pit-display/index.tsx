@@ -65,13 +65,6 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
 
           --table-row-height: 2.5rem;
           --table-row-padding: 0.5rem;
-          --green: #00701a;
-          --red: rgb(255, 82, 82);
-          --light-red: rgba(255, 82, 82, 0.12);
-          --lighter-red: rgba(255, 82, 82, 0.1);
-          --blue: rgb(68, 138, 255);
-          --light-blue: rgba(68, 138, 255, 0.12);
-          --lighter-blue: rgba(68, 138, 255, 0.1);
         }
         .pd-header__wrapper {
           display: flex;

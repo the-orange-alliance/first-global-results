@@ -10,7 +10,7 @@ const MatchScores: React.FC<MatchScoresProps> = ({ red, blue, direction }) => {
   return (
     <Stack direction={direction}>
       <Box
-        bgcolor="#FFDDDD"
+        bgcolor="var(--light-red)"
         px={1.5}
         py={0.5}
         fontSize="0.875rem"
@@ -21,7 +21,7 @@ const MatchScores: React.FC<MatchScoresProps> = ({ red, blue, direction }) => {
         {red}
       </Box>
       <Box
-        bgcolor="#DDDDFF"
+        bgcolor="var(--light-blue)"
         px={1.5}
         py={0.5}
         fontSize="0.875rem"
