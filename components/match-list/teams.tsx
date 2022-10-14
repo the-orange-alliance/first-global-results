@@ -8,12 +8,14 @@ interface MatchTeamsProps {
   alliance: Alliance;
   participants: any[];
   isWinner: boolean;
+  selectedTeamKey?: string;
 }
 
 const MatchTeams: React.FC<MatchTeamsProps> = ({
   alliance,
   participants,
   isWinner,
+  selectedTeamKey,
 }) => {
   return (
     <Stack
@@ -38,6 +40,14 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
           textAlign="center"
           spacing={0.75}
           fontWeight={isWinner ? 700 : undefined}
+          color={selectedTeamKey === participant.teamKey ? "white" : undefined}
+          bgcolor={
+            selectedTeamKey === participant.teamKey
+              ? alliance === "red"
+                ? "var(--red)"
+                : "var(--blue)"
+              : undefined
+          }
         >
           <Box>
             <Image

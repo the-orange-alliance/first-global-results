@@ -8,12 +8,14 @@ interface MatchListProps {
   matches: any[];
   type?: "column" | "responsive";
   align?: "start" | "center";
+  selectedTeamKey?: string;
 }
 
 const MatchList: React.FC<MatchListProps> = ({
   matches,
   align = "center",
   type = "responsive",
+  selectedTeamKey,
 }) => {
   const sortedMatches = useMemo(
     () =>
@@ -80,6 +82,7 @@ const MatchList: React.FC<MatchListProps> = ({
                   <MatchTeams
                     alliance="red"
                     isWinner={match.redScore > match.blueScore}
+                    selectedTeamKey={selectedTeamKey}
                     participants={match.participants.filter(
                       (p) => p.station < 20
                     )}
@@ -87,6 +90,7 @@ const MatchList: React.FC<MatchListProps> = ({
                   <MatchTeams
                     alliance="blue"
                     isWinner={match.blueScore > match.redScore}
+                    selectedTeamKey={selectedTeamKey}
                     participants={match.participants.filter(
                       (p) => p.station > 20
                     )}

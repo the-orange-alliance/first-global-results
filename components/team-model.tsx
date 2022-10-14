@@ -145,7 +145,11 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
           </DetailsList.Item>
         </DetailsList>
 
-        <MatchList matches={matches} type="column" />
+        <MatchList
+          matches={matches}
+          type="column"
+          selectedTeamKey={team.teamKey}
+        />
       </DialogContent>
     </Dialog>
   );
