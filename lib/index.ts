@@ -14,5 +14,5 @@ export const getApiBase = (forceClient = false) => {
   }
 };
 
-export const marquee = (items: number, speed: number = 64) =>
+export const marquee = (items: number, speed: number = 50) =>
   `${(items * 48) / speed}s linear 0s infinite normal none running marquee`;

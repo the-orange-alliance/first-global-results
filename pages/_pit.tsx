@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PitDisplay from "@/components/pit-display";
 import { getApiBase } from "@/lib";
 
-export default function Home({ data: initialData }) {
+export default function Pit({ data: initialData }) {
   const [data, setData] = useState(initialData);
   const [isError, setIsError] = useState<boolean>(false);
 
