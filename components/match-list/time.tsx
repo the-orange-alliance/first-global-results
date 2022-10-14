@@ -27,7 +27,9 @@ const MatchTime: React.FC<MatchTimeProps> = ({ startTime, width }) => {
       fontSize="0.875rem"
       width={width}
       textAlign="center"
+      display="flex"
       alignSelf="stretch"
+      alignItems="center"
     >
       {time || "TBD"}
     </Box>
