@@ -38,7 +38,6 @@ const columns: {
 }[] = [
   { key: "rank", label: "Rank", isSortable: true },
   { key: "team", label: "Team" },
-  { key: "played", label: "Played", isSortable: true },
   { key: "rankingScore", label: "Ranking Score", isSortable: true },
   { key: "highestScore", label: "Highest Points", isSortable: true },
   {
@@ -46,6 +45,7 @@ const columns: {
     label: "Carbon Points",
     isSortable: true,
   },
+  { key: "played", label: "Played", isSortable: true },
 ];
 
 const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
@@ -129,7 +129,17 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
             return (
               <TableRow key={ranking.rankKey}>
                 <TableCell>#{ranking.rank}</TableCell>
-                <TableCell>
+                <TableCell
+                  sx={{
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    maxWidth: {
+                      xs: "10.5rem",
+                      md: "unset",
+                    },
+                  }}
+                >
                   <NextLink
                     href={`/team/${ranking.team.country}`}
                     prefetch={false}
@@ -143,10 +153,10 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
                     </Link>
                   </NextLink>
                 </TableCell>
-                <TableCell>{ranking.played}</TableCell>
                 <TableCell>{ranking.rankingScore}</TableCell>
                 <TableCell>{ranking.highestScore}</TableCell>
                 <TableCell>{ranking.carbonPoints}</TableCell>
+                <TableCell>{ranking.played}</TableCell>
               </TableRow>
             );
           })}
