@@ -17,6 +17,7 @@ import Navigation from "@/components/navigation";
 import MatchList from "@/components/match-list";
 import TeamModel from "@/components/team-model";
 import { getApiBase } from "@/lib";
+import { watchLinks } from "@/lib/data";
 
 export default function Home({ data: initialData }) {
   const [data, setData] = useState(initialData);
@@ -85,7 +86,7 @@ export default function Home({ data: initialData }) {
           <Button
             variant="contained"
             startIcon={<StreamIcon />}
-            href="https://www.youtube.com/playlist?list=PL-RL-gR4GAffgbkM4fIChO3EpT2hrixXl"
+            href={watchLinks.main}
             target="_blank"
           >
             Watch Live
