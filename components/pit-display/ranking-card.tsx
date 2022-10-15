@@ -30,9 +30,6 @@ const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
           <div className="pd-card__col" data-type="team">
             Team
           </div>
-          <div className="pd-card__col" data-type="wlt">
-            W-L-T
-          </div>
           <div className="pd-card__col" data-type="number">
             Ranking Score
           </div>
