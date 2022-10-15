@@ -14,7 +14,7 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
 
   useEffect(() => {
     if (match.startTime) {
-      const start = moment(match.startTime);
+      const start = moment(match.scheduledTime);
       const formatted = start.format("ddd, HH:mm");
       setTime(formatted);
       const checkLive = () => {

@@ -22,8 +22,9 @@ interface ItemProps {
   icon: React.ReactNode;
   title: React.ReactNode;
   children: React.ReactNode;
+  font?: "normal" | "monospace";
 }
-const Item: React.FC<ItemProps> = ({ icon, title, children }) => {
+const Item: React.FC<ItemProps> = ({ icon, title, font, children }) => {
   return (
     <>
       <Box
@@ -58,9 +59,10 @@ const Item: React.FC<ItemProps> = ({ icon, title, children }) => {
         component="dd"
         sx={{
           flex: "0 0 calc(100% - 11rem)",
-          padding: "0.375em 0",
+          padding: "0.375em 0.25rem 0.375em 0",
           margin: 0,
-          fontFamily: '"Roboto Mono", monospace',
+          fontFamily:
+            font === "monospace" ? '"Roboto Mono", monospace' : "inherit",
           fontWeight: 700,
           ":not(:last-of-type)": {
             borderBottom: "1px solid rgba(0, 0, 0, 0.08)",

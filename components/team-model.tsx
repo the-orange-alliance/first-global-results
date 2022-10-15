@@ -5,18 +5,23 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Link,
   Slide,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import CloseIcon from "mdi-material-ui/Close";
 import RankIcon from "mdi-material-ui/ChevronTripleUp";
 import RecordIcon from "mdi-material-ui/FlagOutline";
-import HighestScoreIcon from "mdi-material-ui/Shimmer";
+import HighestScoreIcon from "mdi-material-ui/ChartTimelineVariantShimmer";
 import CarbonIcon from "mdi-material-ui/AlphaCBoxOutline";
 import MatchesPlayedIcon from "mdi-material-ui/CheckDecagramOutline";
+import NextMatchIcon from "mdi-material-ui/ClockOutline";
+import moment from "moment";
 import DetailsList from "@/components/details-list";
 import MatchList from "@/components/match-list";
+import { watchLinks } from "@/lib/data";
 
 interface TeamModelProps {
   country: string;
@@ -53,6 +58,8 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
   if (!countryData) return;
 
   const { team, rank, matches } = countryData;
+
+  const nextMatch = matches.find((match) => !match.played);
 
   return (
     <Dialog
@@ -140,6 +147,47 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
           <DetailsList.Item icon={<MatchesPlayedIcon />} title="Matches Played">
             {rank.played}
           </DetailsList.Item>
+          {nextMatch?.scheduledTime && (
+            <DetailsList.Item
+              icon={<NextMatchIcon />}
+              title="Next Match"
+              font="normal"
+            >
+              {moment(nextMatch.scheduledTime).format("HH:mm")}{" "}
+              <Typography
+                component="span"
+                sx={{
+                  color: (theme) => theme.palette.text.secondary,
+                  display: {
+                    xs: "block",
+                    md: "inline-block",
+                  },
+                  fontSize: {
+                    xs: "0.875rem",
+                    md: "1rem",
+                  },
+                  fontWeight: "normal",
+                  lineHeight: 1.2,
+                  "&:before": {
+                    md: { content: '"("' },
+                  },
+                  "&:after": {
+                    md: { content: '")"' },
+                  },
+                }}
+              >
+                {nextMatch.matchName},{" "}
+                <Link
+                  href={
+                    watchLinks["field" + nextMatch.field] || watchLinks.main
+                  }
+                  target="_blank"
+                >
+                  Field {nextMatch.field}
+                </Link>
+              </Typography>
+            </DetailsList.Item>
+          )}
         </DetailsList>
 
         <MatchList
