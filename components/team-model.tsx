@@ -131,9 +131,6 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
           <DetailsList.Item icon={<RankIcon />} title="Ranking Score">
             {rank.rankingScore}
           </DetailsList.Item>
-          <DetailsList.Item icon={<RecordIcon />} title="Record (W-L-T)">
-            {rank.wins}-{rank.losses}-{rank.ties}
-          </DetailsList.Item>
           <DetailsList.Item icon={<HighestScoreIcon />} title="Highest Score">
             {rank.highestScore}
           </DetailsList.Item>
