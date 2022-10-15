@@ -13,7 +13,7 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
   const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
-    if (match.startTime) {
+    if (match.scheduledTime) {
       const start = moment(match.scheduledTime);
       const formatted = start.format("ddd, HH:mm");
       setTime(formatted);
@@ -31,7 +31,7 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
     } else {
       setTime(null);
     }
-  }, [match.startTime]);
+  }, [match.scheduledTime]);
 
   return (
     <Box
