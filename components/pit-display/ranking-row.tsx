@@ -12,6 +12,9 @@ const RankingRow: React.FC<RankingRowProps> = ({ ranking }) => {
         {ranking.team.name.replace("Team ", "")}
       </div>
       <div className="pd-card__col" data-type="number">
+        {ranking.played}
+      </div>
+      <div className="pd-card__col" data-type="number">
         {ranking.rankingScore}
       </div>
       <div className="pd-card__col" data-type="number">
@@ -19,9 +22,6 @@ const RankingRow: React.FC<RankingRowProps> = ({ ranking }) => {
       </div>
       <div className="pd-card__col" data-type="number">
         {ranking.carbonPoints}
-      </div>
-      <div className="pd-card__col" data-type="number">
-        {ranking.played}
       </div>
     </div>
   );
