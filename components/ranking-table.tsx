@@ -39,7 +39,6 @@ const columns: {
   { key: "rank", label: "Rank", isSortable: true },
   { key: "team", label: "Team" },
   { key: "rankingScore", label: "Ranking Score", isSortable: true },
-  { key: "record", label: "Record (W-L-T)", isSortable: true },
   { key: "highestScore", label: "Highest Points", isSortable: true },
   {
     key: "carbonPoints",
@@ -145,9 +144,6 @@ const RankingTable = ({ rankings }: { rankings: Rank[] }) => {
                   </NextLink>
                 </TableCell>
                 <TableCell>{ranking.rankingScore}</TableCell>
-                <TableCell>
-                  {ranking.wins}-{ranking.losses}-{ranking.ties}
-                </TableCell>
                 <TableCell>{ranking.highestScore}</TableCell>
                 <TableCell>{ranking.carbonPoints}</TableCell>
                 <TableCell>{ranking.played}</TableCell>
