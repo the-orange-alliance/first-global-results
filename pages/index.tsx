@@ -21,7 +21,13 @@ import { watchLinks } from "@/lib/data";
 
 export default function Home({ data: initialData }) {
   const [data, setData] = useState(initialData);
-  const [tab, setTab] = useState("rankings");
+  const [tab, setTab] = useState(
+    initialData.finals?.length > 0
+      ? "finals"
+      : initialData.round_robin?.length > 0
+      ? "round_robin"
+      : "rankings"
+  );
   const [teamModal, setTeamModal] = useState<string | null>(null);
   const router = useRouter();
 
@@ -100,50 +106,29 @@ export default function Home({ data: initialData }) {
                 onChange={handleTabChange}
                 aria-label="lab API tabs example"
               >
+                {data.finals?.length > 0 && (
+                  <Tab label="Finals" value="finals" />
+                )}
+                {data.round_robin?.length > 0 && (
+                  <Tab label="Round Robin" value="round_robin" />
+                )}
                 <Tab label="Rankings" value="rankings" />
                 <Tab label="Matches Results" value="matches" />
                 <Tab label="Awards" value="awards" />
               </TabList>
             </Box>
+            {data.finals?.length > 0 && (
+              <TabPanel value="finals" sx={{ p: { xs: 0, md: 2 } }}>
+                <RankingTable rankings={data.finals} type="PLAYOFF" />
+              </TabPanel>
+            )}
+            {data.round_robin?.length > 0 && (
+              <TabPanel value="round_robin" sx={{ p: { xs: 0, md: 2 } }}>
+                <RankingTable rankings={data.round_robin} type="PLAYOFF" />
+              </TabPanel>
+            )}
             <TabPanel value="rankings" sx={{ p: { xs: 0, md: 2 } }}>
-              {data.rankings.length > 0 ? (
-                <RankingTable rankings={data.rankings} />
-              ) : (
-                <Stack
-                  direction="column"
-                  alignItems="center"
-                  py={8}
-                  spacing={0.5}
-                >
-                  <Typography
-                    component="h2"
-                    fontSize="1.5rem"
-                    fontWeight={700}
-                    align="center"
-                  >
-                    No rankings available yet
-                  </Typography>
-                  <Typography
-                    fontSize="1.125rem"
-                    fontWeight={500}
-                    align="center"
-                    color="text.secondary"
-                    px={1}
-                  >
-                    Hold tight, ranking matches haven’t begun yet.
-                  </Typography>
-                  <Box pt={1.5}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      size="small"
-                      onClick={() => setTab("matches")}
-                    >
-                      View Schedule
-                    </Button>
-                  </Box>
-                </Stack>
-              )}
+              <RankingTable rankings={data.rankings} type="RANKING" />
             </TabPanel>
             <TabPanel value="matches" sx={{ py: 1, px: { xs: 0, md: 2 } }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
