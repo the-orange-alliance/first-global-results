@@ -17,12 +17,6 @@ const RankingRow: React.FC<RankingRowProps> = ({ ranking }) => {
       <div className="pd-card__col" data-type="number">
         {ranking.rankingScore}
       </div>
-      <div className="pd-card__col" data-type="number">
-        {ranking.highestScore}
-      </div>
-      <div className="pd-card__col" data-type="number">
-        {ranking.carbonPoints}
-      </div>
     </div>
   );
 };
