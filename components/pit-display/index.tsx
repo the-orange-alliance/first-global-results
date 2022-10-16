@@ -36,7 +36,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
           </div>
         </div>
         <div className="pd-content">
-          {data.rankings.length > 0 && matches.length > 0 ? (
+          {data.rankings.length > 0 || matches.length > 0 ? (
             <>
               <RankingCard rankings={data.round_robin} />
               <MatchesCard matches={matches.filter((m) => m.played)} />
