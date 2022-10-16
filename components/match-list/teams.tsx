@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import Image from "next/future/image";
-import { Box, Link, Stack } from "@mui/material";
+import { Box, Link, Stack, Tooltip } from "@mui/material";
 
 type Alliance = "red" | "blue";
 
@@ -30,7 +30,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
           key={participant.station}
           direction="row"
           justifyContent="center"
-          px="1em"
+          px="0.5em"
           py="0.375em"
           fontSize="0.875em"
           width="4.75em"
@@ -74,7 +74,22 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
                 },
               }}
             >
-              {participant.country}
+              <Tooltip
+                title={
+                  participant.cardStatus === 2 ? "Disqualified (Red Card)" : ""
+                }
+                placement="top"
+                arrow
+              >
+                <span
+                  style={{
+                    textDecoration:
+                      participant.cardStatus === 2 ? "line-through" : undefined,
+                  }}
+                >
+                  {participant.country}
+                </span>
+              </Tooltip>
             </Link>
           </NextLink>
         </Stack>

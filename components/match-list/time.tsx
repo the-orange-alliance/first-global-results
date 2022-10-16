@@ -38,9 +38,9 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
       bgcolor={(theme) =>
         isLive ? theme.palette.primary.main : theme.palette.grey[50]
       }
-      px={1.5}
-      py={0.5}
-      fontSize="0.875rem"
+      px="0.5em"
+      py="0.375em"
+      fontSize="0.875em"
       width={width}
       textAlign="center"
       display="flex"
@@ -54,7 +54,7 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
           target="_blank"
           sx={{
             fontWeight: 500,
-            px: 1,
+            px: "0.5em",
             color: "#fff",
             lineHeight: 1.2,
             "&:hover": {

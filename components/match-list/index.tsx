@@ -151,8 +151,8 @@ const MatchList: React.FC<MatchListProps> = ({
                 <MatchTime
                   match={match}
                   width={{
-                    xs: "4rem",
-                    md: type === "column" ? "4rem" : "8rem",
+                    xs: "4em",
+                    md: type === "column" ? "4em" : "8em",
                   }}
                 />
               )}
