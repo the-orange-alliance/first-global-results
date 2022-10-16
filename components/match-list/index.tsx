@@ -22,23 +22,29 @@ const MatchList: React.FC<MatchListProps> = ({
       matches.sort((a, b) => {
         const matchNumber1 = parseInt(a.matchName.split(" ")[2]);
         const matchNumber2 = parseInt(b.matchName.split(" ")[2]);
-        return (
-          b.tournamentLevel * 1000 - a.tournamentLevel * 1000 ||
-          matchNumber1 - matchNumber2
-        );
+        return matchNumber1 - matchNumber2;
       }),
     [matches]
   );
 
   const groupByTournamentLevel = useMemo(() => {
-    const groups: any = {};
+    const groups: { [key: number]: any[] } = {};
     sortedMatches.forEach((match) => {
       if (!groups[match.tournamentLevel]) {
         groups[match.tournamentLevel] = [];
       }
       groups[match.tournamentLevel].push(match);
     });
-    return Object.entries<any[]>(groups);
+
+    const result = Object.entries<any[]>(groups).map(
+      ([tournamentLevel, matches]) => ({
+        key: parseInt(tournamentLevel),
+        title: matches[0].matchName.match(/(.*) Match .*/)[1],
+        matches,
+      })
+    );
+    result.sort((a, b) => b.key - a.key);
+    return result;
   }, [sortedMatches]);
 
   return (
@@ -47,13 +53,13 @@ const MatchList: React.FC<MatchListProps> = ({
       spacing={0.25}
       alignItems={align === "center" ? "center" : "flex-start"}
     >
-      {groupByTournamentLevel.map(([tournamentLevel, matches], index) => (
+      {groupByTournamentLevel.map((level, index) => (
         <Stack
           direction="column"
           spacing={0.25}
           alignItems="stretch"
           mb={2}
-          key={tournamentLevel}
+          key={level.key}
         >
           <Stack
             direction="row"
@@ -72,10 +78,10 @@ const MatchList: React.FC<MatchListProps> = ({
               fontSize="0.875rem"
               fontWeight={500}
             >
-              {matches[0].matchName.match(/(.*) Match .*/)[1]} Matches
+              {level.title} Matches
             </Box>
           </Stack>
-          {matches.map((match, index) => (
+          {level.matches.map((match, index) => (
             <Stack
               key={match.matchKey}
               direction="row"
