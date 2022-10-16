@@ -38,7 +38,7 @@ const MatchList: React.FC<MatchListProps> = ({
       }
       groups[match.tournamentLevel].push(match);
     });
-    return Object.values(groups) as any[][];
+    return Object.entries<any[]>(groups);
   }, [sortedMatches]);
 
   return (
@@ -47,8 +47,14 @@ const MatchList: React.FC<MatchListProps> = ({
       spacing={0.25}
       alignItems={align === "center" ? "center" : "flex-start"}
     >
-      {groupByTournamentLevel.map((matches) => (
-        <Stack direction="column" spacing={0.25} alignItems="stretch" mb={2}>
+      {groupByTournamentLevel.map(([tournamentLevel, matches], index) => (
+        <Stack
+          direction="column"
+          spacing={0.25}
+          alignItems="stretch"
+          mb={2}
+          key={tournamentLevel}
+        >
           <Stack
             direction="row"
             justifyContent="center"
@@ -71,6 +77,7 @@ const MatchList: React.FC<MatchListProps> = ({
           </Stack>
           {matches.map((match, index) => (
             <Stack
+              key={match.matchKey}
               direction="row"
               justifyContent="flex-end"
               alignItems="center"
