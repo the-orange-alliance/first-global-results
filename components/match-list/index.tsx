@@ -30,48 +30,68 @@ const MatchList: React.FC<MatchListProps> = ({
     [matches]
   );
 
+  const groupByTournamentLevel = useMemo(() => {
+    const groups: any = {};
+    sortedMatches.forEach((match) => {
+      if (!groups[match.tournamentLevel]) {
+        groups[match.tournamentLevel] = [];
+      }
+      groups[match.tournamentLevel].push(match);
+    });
+    return Object.values(groups) as any[][];
+  }, [sortedMatches]);
+
   return (
     <Stack
       direction="column"
       spacing={0.25}
       alignItems={align === "center" ? "center" : "flex-start"}
     >
-      <Stack direction="column" spacing={0.25} alignItems="stretch">
-        {sortedMatches.map((match, index) => (
-          <React.Fragment key={match.matchKey}>
-            {(index === 0 ||
-              sortedMatches[index - 1].tournamentLevel !==
-                match.tournamentLevel) && (
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                py={0.75}
-                bgcolor="rgba(0, 0, 0, 0.02)"
-              >
-                <Box
-                  bgcolor="white"
-                  border={1}
-                  borderColor="divider"
-                  py={0.675}
-                  px={1.75}
-                  borderRadius={4}
-                  fontSize="0.875rem"
-                  fontWeight={500}
-                >
-                  {match.matchName.split(" ")[0]} Matches
-                </Box>
-              </Stack>
-            )}
+      {groupByTournamentLevel.map((matches) => (
+        <Stack direction="column" spacing={0.25} alignItems="stretch" mb={2}>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            py={0.75}
+            bgcolor="rgba(0, 0, 0, 0.02)"
+          >
+            <Box
+              bgcolor="white"
+              border={1}
+              borderColor="divider"
+              py={0.675}
+              px={1.75}
+              borderRadius={4}
+              fontSize="0.875rem"
+              fontWeight={500}
+            >
+              {matches[0].matchName.match(/(.*) Match .*/)[1]} Matches
+            </Box>
+          </Stack>
+          {matches.map((match, index) => (
             <Stack
               direction="row"
               justifyContent="flex-end"
               alignItems="center"
               bgcolor={index % 2 === 0 ? "white" : "rgba(0, 0, 0, 0.02)"}
+              sx={
+                match.participants.length > 4
+                  ? {
+                      fontSize: "1rem",
+                      "@media (max-width: 500px)": {
+                        fontSize: "0.875rem",
+                      },
+                      "@media (max-width: 400px)": {
+                        fontSize: "0.75rem",
+                      },
+                    }
+                  : undefined
+              }
             >
               <Typography
-                fontSize="0.75rem"
-                px={1.5}
+                fontSize="0.75em"
+                px="1em"
                 textAlign="center"
                 fontWeight={match.played ? 500 : undefined}
                 color={
@@ -130,9 +150,9 @@ const MatchList: React.FC<MatchListProps> = ({
                 />
               )}
             </Stack>
-          </React.Fragment>
-        ))}
-      </Stack>
+          ))}
+        </Stack>
+      ))}
     </Stack>
   );
 };

@@ -20,10 +20,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
   return (
     <Stack
       direction="row"
-      spacing={{
-        xs: 0.25,
-        md: 1,
-      }}
+      spacing={0}
       bgcolor={
         alliance === "red" ? "var(--lighter-red)" : "var(--lighter-blue)"
       }
@@ -33,12 +30,12 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
           key={participant.station}
           direction="row"
           justifyContent="center"
-          px={1.5}
-          py={0.5}
-          fontSize="0.875rem"
-          width="4.5rem"
+          px="1em"
+          py="0.375em"
+          fontSize="0.875em"
+          width="4.75em"
           textAlign="center"
-          spacing={0.75}
+          spacing="0.5em"
           fontWeight={isWinner ? 700 : undefined}
           color={selectedTeamKey === participant.teamKey ? "white" : undefined}
           bgcolor={
@@ -54,7 +51,11 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
               src={`/static/flags/4x3/${participant.countryCode.toLowerCase()}.svg`}
               width={16}
               height={12}
-              style={{ backgroundColor: "#ffffff" }}
+              style={{
+                backgroundColor: "#ffffff",
+                width: "1em",
+                height: "0.75em",
+              }}
               alt={`${participant.countryCode} flag`}
             />
           </Box>
