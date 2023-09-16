@@ -61,7 +61,7 @@ export default function Home({ data: initialData }) {
   return (
     <div>
       <Head>
-        <title>2022 FIRST Global Challenge Event Results</title>
+        <title>2023 FIRST Global Challenge Event Results</title>
       </Head>
       <Navigation />
       <TeamModel country={teamModal} data={data} onClose={handleModalClose} />
@@ -82,10 +82,10 @@ export default function Home({ data: initialData }) {
         >
           <Stack>
             <Typography variant="h1">
-              2022 <em>FIRST</em> Global Challenge Event Results
+              2023 <em>FIRST</em> Global Challenge Event Results
             </Typography>
             <Typography variant="subtitle1">
-              13-16 October 2022 in Geneva, Switzerland
+              7-10 October 2023 in Singapore
             </Typography>
           </Stack>
 
