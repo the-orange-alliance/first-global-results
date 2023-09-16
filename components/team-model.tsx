@@ -11,13 +11,13 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import CloseIcon from "mdi-material-ui/Close";
-import RankIcon from "mdi-material-ui/ChevronTripleUp";
-import RecordIcon from "mdi-material-ui/FlagOutline";
-import HighestScoreIcon from "mdi-material-ui/ChartTimelineVariantShimmer";
-import HydrogenIcon from "mdi-material-ui/Molecule";
-import MatchesPlayedIcon from "mdi-material-ui/CheckDecagramOutline";
-import NextMatchIcon from "mdi-material-ui/ClockOutline";
+import CloseIcon from "@mui/icons-material/CloseRounded";
+import RankIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
+import RecordIcon from "@mui/icons-material/FlagOutlined";
+import HighestScoreIcon from "@mui/icons-material/Insights";
+import HydrogenIcon from "@mui/icons-material/Fitbit";
+import MatchesPlayedIcon from "@mui/icons-material/VerifiedOutlined";
+import NextMatchIcon from "@mui/icons-material/ScheduleRounded";
 import moment from "moment";
 import DetailsList from "@/components/details-list";
 import MatchList from "@/components/match-list";

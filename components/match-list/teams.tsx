@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import { Box, Link, Stack, Tooltip } from "@mui/material";
 
 type Alliance = "red" | "blue";
@@ -64,6 +64,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
             prefetch={false}
             shallow
             passHref
+            legacyBehavior
           >
             <Link
               underline="hover"
