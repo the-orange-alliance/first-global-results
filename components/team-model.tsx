@@ -15,7 +15,7 @@ import CloseIcon from "mdi-material-ui/Close";
 import RankIcon from "mdi-material-ui/ChevronTripleUp";
 import RecordIcon from "mdi-material-ui/FlagOutline";
 import HighestScoreIcon from "mdi-material-ui/ChartTimelineVariantShimmer";
-import CarbonIcon from "mdi-material-ui/AlphaCBoxOutline";
+import HydrogenIcon from "mdi-material-ui/Molecule";
 import MatchesPlayedIcon from "mdi-material-ui/CheckDecagramOutline";
 import NextMatchIcon from "mdi-material-ui/ClockOutline";
 import moment from "moment";
@@ -141,8 +141,8 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
           <DetailsList.Item icon={<HighestScoreIcon />} title="Highest Score">
             {rank.highestScore}
           </DetailsList.Item>
-          <DetailsList.Item icon={<CarbonIcon />} title="Carbon Points">
-            {rank.carbonPoints}
+          <DetailsList.Item icon={<HydrogenIcon />} title="Hydrogen Points">
+            {rank.hydrogenPoints}
           </DetailsList.Item>
           <DetailsList.Item icon={<MatchesPlayedIcon />} title="Matches Played">
             {rank.played}

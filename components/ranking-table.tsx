@@ -47,8 +47,8 @@ const columns: {
     hideOnPlayoffs: true,
   },
   {
-    key: "carbonPoints",
-    label: "Carbon Points",
+    key: "hydrogenPoints",
+    label: "Hydrogen Points",
     isSortable: true,
     hideOnPlayoffs: true,
   },
