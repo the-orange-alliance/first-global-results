@@ -170,6 +170,7 @@ const RankingTable = ({
                           prefetch={false}
                           shallow
                           passHref
+                          legacyBehavior
                         >
                           <Link underline="hover">
                             {ranking.team.shortName ||
