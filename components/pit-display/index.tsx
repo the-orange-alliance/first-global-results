@@ -9,10 +9,10 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
   const matches = useMemo(() => {
     const matches = data.matches;
     const latestTournamentLevel = Math.max(
-      ...matches.map((match) => match.tournamentLevel)
+      ...matches.map((match) => parseInt(match.tournamentKey))
     );
     return matches.filter(
-      (match) => match.tournamentLevel === latestTournamentLevel
+      (match) => match.tournamentKey === "" + latestTournamentLevel
     );
   }, [data]);
 
@@ -38,7 +38,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
         <div className="pd-content">
           {data.rankings.length > 0 || matches.length > 0 ? (
             <>
-              <RankingCard rankings={data.round_robin} />
+              <RankingCard rankings={data.rankings} />
               <MatchesCard matches={matches.filter((m) => m.played)} />
             </>
           ) : (
