@@ -20,8 +20,8 @@ const MatchList: React.FC<MatchListProps> = ({
   const sortedMatches = useMemo(
     () =>
       matches.sort((a, b) => {
-        const matchNumber1 = parseInt(a.matchName.split(" ")[2]);
-        const matchNumber2 = parseInt(b.matchName.split(" ")[2]);
+        const matchNumber1 = parseInt(a.name.split(" ")[2]);
+        const matchNumber2 = parseInt(b.name.split(" ")[2]);
         return matchNumber1 - matchNumber2;
       }),
     [matches]
@@ -39,7 +39,7 @@ const MatchList: React.FC<MatchListProps> = ({
     const result = Object.entries<any[]>(groups).map(
       ([tournamentLevel, matches]) => ({
         key: parseInt(tournamentLevel),
-        title: matches[0].matchName.match(/(.*) Match .*/)[1],
+        title: matches[0].name.match(/(.*) Match .*/)[1],
         matches,
       })
     );
@@ -117,7 +117,7 @@ const MatchList: React.FC<MatchListProps> = ({
                     : "text.secondary"
                 }
               >
-                {match.matchName}
+                {match.name}
               </Typography>
               <Stack direction="row">
                 <Stack

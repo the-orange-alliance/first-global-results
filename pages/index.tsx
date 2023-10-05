@@ -21,6 +21,7 @@ import { watchLinks } from "@/lib/data";
 
 export default function Home({ data: initialData }) {
   const [data, setData] = useState(initialData);
+  console.log(initialData)
   const [tab, setTab] = useState(
     initialData.finals?.length > 0
       ? "finals"

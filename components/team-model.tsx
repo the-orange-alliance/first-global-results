@@ -141,8 +141,8 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
           <DetailsList.Item icon={<HighestScoreIcon />} title="Highest Score">
             {rank.highestScore}
           </DetailsList.Item>
-          <DetailsList.Item icon={<HydrogenIcon />} title="Hydrogen Points">
-            {rank.hydrogenPoints}
+          <DetailsList.Item icon={<HydrogenIcon />} title="Energy Points">
+            {rank.oxyHydroPoints}
           </DetailsList.Item>
           <DetailsList.Item icon={<MatchesPlayedIcon />} title="Matches Played">
             {rank.played}
@@ -176,7 +176,7 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
                   },
                 }}
               >
-                {nextMatch.matchName},{" "}
+                {nextMatch.name},{" "}
                 <Link
                   href={
                     watchLinks["field" + nextMatch.field] || watchLinks.main

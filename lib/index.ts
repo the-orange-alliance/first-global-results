@@ -5,6 +5,8 @@ export const getApiBase = (forceClient = false) => {
   const env = process.env.NEXT_PUBLIC_API_ENV;
   const isSsr = !forceClient && typeof window === "undefined";
 
+  return PUBLIC_API_BASE;
+
   if (env === "production") {
     return isSsr ? LOCAL_API_BASE : PUBLIC_API_BASE;
   } else if (env === "local") {
