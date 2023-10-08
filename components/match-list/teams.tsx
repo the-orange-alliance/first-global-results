@@ -77,7 +77,11 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
             >
               <Tooltip
                 title={
-                  participant.cardStatus === 2 ? "Disqualified (Red Card)" : ""
+                  participant.cardStatus === 2
+                    ? "Disqualified (Red Card)"
+                    : participant.noShow === 1
+                    ? "No Show"
+                    : ""
                 }
                 placement="top"
                 arrow
