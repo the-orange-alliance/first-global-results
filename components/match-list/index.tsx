@@ -30,15 +30,15 @@ const MatchList: React.FC<MatchListProps> = ({
   const groupByTournamentLevel = useMemo(() => {
     const groups: { [key: number]: any[] } = {};
     sortedMatches.forEach((match) => {
-      if (!groups[match.tournamentLevel]) {
-        groups[match.tournamentLevel] = [];
+      if (!groups[match.tournamentKey]) {
+        groups[match.tournamentKey] = [];
       }
-      groups[match.tournamentLevel].push(match);
+      groups[match.tournamentKey].push(match);
     });
 
     const result = Object.entries<any[]>(groups).map(
-      ([tournamentLevel, matches]) => ({
-        key: parseInt(tournamentLevel),
+      ([tournamentKey, matches]) => ({
+        key: parseInt(tournamentKey),
         title: matches[0].name.match(/(.*) Match .*/)[1],
         matches,
       })
@@ -52,6 +52,7 @@ const MatchList: React.FC<MatchListProps> = ({
       direction="column"
       spacing={0.25}
       alignItems={align === "center" ? "center" : "flex-start"}
+      key="toplevel"
     >
       {groupByTournamentLevel.map((level, index) => (
         <Stack
@@ -83,7 +84,7 @@ const MatchList: React.FC<MatchListProps> = ({
           </Stack>
           {level.matches.map((match, index) => (
             <Stack
-              key={match.matchKey}
+              key={match.tournamentKey + "-" + match.id}
               direction="row"
               justifyContent="flex-end"
               alignItems="center"

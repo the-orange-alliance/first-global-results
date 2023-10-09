@@ -100,8 +100,8 @@ const RankingTable = ({
   return (
     <TableContainer>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="small">
-        <TableHead>
-          <TableRow>
+        <TableHead key="tablehead">
+          <TableRow key="tableheadrow">
             {columns
               .filter((col) => type !== "PLAYOFF" || !col.hideOnPlayoffs)
               .map((col) => {
@@ -140,52 +140,50 @@ const RankingTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedRankings.map((ranking) => {
-            return (
-              <TableRow key={ranking.rankKey}>
-                {columns
-                  .filter((col) => type !== "PLAYOFF" || !col.hideOnPlayoffs)
-                  .map((col) => (
-                    <TableCell
-                      key={col.key}
-                      sx={
-                        col.key === "team"
-                          ? {
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              whiteSpace: "nowrap",
-                              maxWidth: {
-                                xs: "10.5rem",
-                                md: "unset",
-                              },
-                            }
-                          : {}
-                      }
-                    >
-                      {col.key === "rank" ? (
-                        `#${ranking.rank}`
-                      ) : col.key === "team" ? (
-                        <NextLink
-                          href={`/team/${ranking.team.country}`}
-                          prefetch={false}
-                          shallow
-                          passHref
-                          legacyBehavior
-                        >
-                          <Link underline="hover">
-                            {ranking.team.shortName ||
-                              ranking.team.name ||
-                              ranking.teamKey}
-                          </Link>
-                        </NextLink>
-                      ) : (
-                        ranking[col.key]
-                      )}
-                    </TableCell>
-                  ))}
-              </TableRow>
-            );
-          })}
+          {sortedRankings.map((ranking) => (
+            <TableRow key={ranking.rank}>
+              {columns
+                .filter((col) => type !== "PLAYOFF" || !col.hideOnPlayoffs)
+                .map((col) => (
+                  <TableCell
+                    key={col.key}
+                    sx={
+                      col.key === "team"
+                        ? {
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            maxWidth: {
+                              xs: "10.5rem",
+                              md: "unset",
+                            },
+                          }
+                        : {}
+                    }
+                  >
+                    {col.key === "rank" ? (
+                      `#${ranking.rank}`
+                    ) : col.key === "team" ? (
+                      <NextLink
+                        href={`/team/${ranking.team.country}`}
+                        prefetch={false}
+                        shallow
+                        passHref
+                        legacyBehavior
+                      >
+                        <Link underline="hover">
+                          {ranking.team.shortName ||
+                            ranking.team.name ||
+                            ranking.teamKey}
+                        </Link>
+                      </NextLink>
+                    ) : (
+                      ranking[col.key]
+                    )}
+                  </TableCell>
+                ))}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

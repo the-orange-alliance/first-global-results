@@ -17,7 +17,7 @@ const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
   }, [rankings]);
 
   const rankingsView = rankings.map((ranking) => (
-    <RankingRow key={ranking.rankKey} ranking={ranking} />
+    <RankingRow key={ranking.rank} ranking={ranking} />
   ));
 
   return (

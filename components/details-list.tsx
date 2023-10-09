@@ -67,6 +67,8 @@ const Item: React.FC<ItemProps> = ({ icon, title, font, children }) => {
           ":not(:last-of-type)": {
             borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
           },
+          display: "flex",
+          alignItems: "center",
         }}
       >
         {children}
