@@ -120,12 +120,13 @@ const MatchList: React.FC<MatchListProps> = ({
               >
                 {match.name}
               </Typography>
-              <Stack direction="row">
+              <Stack direction="row" height="100%">
                 <Stack
                   direction={{
                     xs: "column",
                     md: type === "column" ? "column" : "row",
                   }}
+                  height="100%"
                 >
                   <MatchTeams
                     alliance="red"

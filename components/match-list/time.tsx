@@ -15,7 +15,8 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
   useEffect(() => {
     if (match.scheduledTime) {
       const start = moment(match.scheduledTime);
-      const formatted = start.format("ddd, HH:mm");
+      let formatted = start.format("ddd, HH:mm");
+      if (match.field) formatted += `, Field #${match.field}`;
       setTime(formatted);
       const checkLive = () => {
         setIsLive(

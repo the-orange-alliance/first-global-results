@@ -13,7 +13,6 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import CloseIcon from "@mui/icons-material/CloseRounded";
 import RankIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
-import RecordIcon from "@mui/icons-material/FlagOutlined";
 import HighestScoreIcon from "@mui/icons-material/Insights";
 import HydrogenIcon from "@mui/icons-material/Fitbit";
 import MatchesPlayedIcon from "@mui/icons-material/VerifiedOutlined";

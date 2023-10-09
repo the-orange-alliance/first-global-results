@@ -24,6 +24,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
       bgcolor={
         alliance === "red" ? "var(--lighter-red)" : "var(--lighter-blue)"
       }
+      height="100%"
     >
       {participants.map((participant) => (
         <Stack
@@ -36,7 +37,9 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
           width="4.75em"
           textAlign="center"
           spacing="0.5em"
+          height="100%"
           fontWeight={isWinner ? 700 : undefined}
+          alignItems={"center"}
           color={selectedTeamKey === participant.teamKey ? "white" : undefined}
           bgcolor={
             selectedTeamKey === participant.teamKey
