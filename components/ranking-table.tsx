@@ -48,7 +48,7 @@ const columns: {
   },
   {
     key: "oxyHydroPoints",
-    label: "Energy Points",
+    label: "Total Hydrogen + Oxygen Points",
     isSortable: true,
     hideOnPlayoffs: true,
   },
