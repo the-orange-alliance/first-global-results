@@ -38,7 +38,7 @@ const columns: {
   hideOnPlayoffs?: boolean;
 }[] = [
   { key: "rank", label: "Rank", isSortable: true },
-  { key: "team", label: "Team" },
+  { key: "team", label: "Team", isSortable: true },
   { key: "rankingScore", label: "Ranking Score", isSortable: true },
   {
     key: "highestScore",
@@ -84,6 +84,9 @@ const RankingTable = ({
       if (orderBy === "record") {
         a = rank1.wins + 0.5 * rank1.ties;
         b = rank2.wins + 0.5 * rank2.ties;
+      } else if (orderBy === "team") {
+        a = rank1.team.shortName || rank1.team.name || rank1.teamKey;
+        b = rank2.team.shortName || rank2.team.name || rank2.teamKey;
       }
 
       if (a < b) {
