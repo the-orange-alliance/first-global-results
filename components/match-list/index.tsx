@@ -60,7 +60,7 @@ const MatchList: React.FC<MatchListProps> = ({
             direction="column"
             spacing={0.25}
             alignItems="stretch"
-            mb={level.key === 2 ? undefined : 2}
+            mb={level.key > 1 ? undefined : 2}
             key={level.key}
           >
             <Stack
@@ -169,9 +169,9 @@ const MatchList: React.FC<MatchListProps> = ({
             ))}
           </Stack>
 
-          {level.key === 2 && (
+          {level.key > 1 && (
             <Typography variant="caption" mb={2}>
-              <u>Underscore</u> shows teams who played during the match
+              <u>Underline</u> shows teams who played during the match
             </Typography>
           )}
         </>

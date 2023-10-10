@@ -50,7 +50,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
           }
           style={{
             textDecoration:
-              participant.tournamentKey === "2" &&
+              participant.tournamentKey !== "1" &&
               participant.station !== 14 &&
               participant.station !== 24
                 ? "underline"
@@ -92,7 +92,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
                     ? "Disqualified (Red Card)"
                     : participant.noShow === 1
                     ? "No Show"
-                    : participant.tournamentKey === "2" &&
+                    : participant.tournamentKey !== "1" &&
                       (participant.station === 14 || participant.station === 24)
                     ? "Did not play this during this match"
                     : ""
