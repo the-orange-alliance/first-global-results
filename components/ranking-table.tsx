@@ -165,7 +165,7 @@ const RankingTable = ({
                     }
                   >
                     {col.key === "rank" ? (
-                      `#${ranking.rank}`
+                      ranking.rank
                     ) : col.key === "team" ? (
                       <NextLink
                         href={`/team/${ranking.team.country}`}
