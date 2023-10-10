@@ -52,7 +52,7 @@ const columns: {
     isSortable: true,
     hideOnPlayoffs: true,
   },
-  { key: "played", label: "Played", isSortable: true },
+  { key: "played", label: "Played", isSortable: true, hideOnPlayoffs: true },
 ];
 
 const RankingTable = ({
