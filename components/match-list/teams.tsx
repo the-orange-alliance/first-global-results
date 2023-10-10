@@ -48,6 +48,14 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
                 : "var(--blue)"
               : undefined
           }
+          style={{
+            textDecoration:
+              participant.tournamentKey === "2" &&
+              participant.station !== 14 &&
+              participant.station !== 24
+                ? "underline"
+                : undefined,
+          }}
         >
           <Box>
             <Image
@@ -84,6 +92,9 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
                     ? "Disqualified (Red Card)"
                     : participant.noShow === 1
                     ? "No Show"
+                    : participant.tournamentKey === "2" &&
+                      (participant.station === 14 || participant.station === 24)
+                    ? "Did not play this during this match"
                     : ""
                 }
                 placement="top"
