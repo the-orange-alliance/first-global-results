@@ -1,5 +1,15 @@
-import { Box, Divider, Link, Stack } from "@mui/material";
+import { pastYears } from "@/lib/data";
+import {
+  Box,
+  Button,
+  Divider,
+  Link,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import { Container } from "@mui/system";
+import { useState } from "react";
 
 const links = [
   {
@@ -17,6 +27,18 @@ const links = [
 ];
 
 const Navigation = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  function handleClick(event) {
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget);
+    }
+  }
+
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
   return (
     <Box
       component="nav"
@@ -59,7 +81,36 @@ const Navigation = () => {
               {link.label}
             </Link>
           ))}
+          <Button
+            onClick={handleClick}
+            onMouseOver={handleClick}
+            sx={{
+              color: "inherit",
+              "&:hover": { color: "rgba(0, 0, 0, 0.75)" },
+              fontWeight: "inherit",
+            }}
+          >
+            History
+          </Button>
         </Stack>
+
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          MenuListProps={{ onMouseLeave: handleClose }}
+        >
+          {pastYears.map((year) => (
+            <MenuItem
+              key={year}
+              onClick={handleClose}
+              component={Link}
+              href={`/history/${year}`}
+            >
+              {year}
+            </MenuItem>
+          ))}
+        </Menu>
       </Container>
     </Box>
   );

@@ -31,36 +31,45 @@ interface Rank {
 }
 type ColumnKey = keyof Rank | string;
 
-const columns: {
+const makeColumns = (
+  customItemTitle: string,
+  customItemKey: string
+): {
   key: ColumnKey;
   label: string;
   isSortable?: boolean;
   hideOnPlayoffs?: boolean;
-}[] = [
-  { key: "rank", label: "Rank", isSortable: true },
-  { key: "team", label: "Team", isSortable: true },
-  { key: "rankingScore", label: "Ranking Score", isSortable: true },
-  {
-    key: "highestScore",
-    label: "Highest Points",
-    isSortable: true,
-    hideOnPlayoffs: true,
-  },
-  {
-    key: "oxyHydroPoints",
-    label: "Total Hydrogen + Oxygen Points",
-    isSortable: true,
-    hideOnPlayoffs: true,
-  },
-  { key: "played", label: "Played", isSortable: true, hideOnPlayoffs: true },
-];
+}[] => {
+  return [
+    { key: "rank", label: "Rank", isSortable: true },
+    { key: "team", label: "Team", isSortable: true },
+    { key: "rankingScore", label: "Ranking Score", isSortable: true },
+    {
+      key: "highestScore",
+      label: "Highest Points",
+      isSortable: true,
+      hideOnPlayoffs: true,
+    },
+    {
+      key: customItemKey,
+      label: customItemTitle,
+      isSortable: true,
+      hideOnPlayoffs: true,
+    },
+    { key: "played", label: "Played", isSortable: true, hideOnPlayoffs: true },
+  ];
+};
 
 const RankingTable = ({
   rankings,
   type,
+  extraRankingItemTitle,
+  extraRankingItemKey,
 }: {
   rankings: Rank[];
   type: "RANKING" | "PLAYOFF";
+  extraRankingItemTitle: string;
+  extraRankingItemKey: string;
 }) => {
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<ColumnKey>("rank");
@@ -99,6 +108,8 @@ const RankingTable = ({
     });
     return sorted;
   }, [order, orderBy, rankings]);
+
+  const columns = makeColumns(extraRankingItemTitle, extraRankingItemKey);
 
   return (
     <TableContainer>

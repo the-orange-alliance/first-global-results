@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
+import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { getApiBase } from "@/lib";
-import YearPage from "@/components/year-page";
 import { yearData } from "@/lib/data";
+import YearPage from "@/components/year-page";
 
-export default function Home({ data: initialData }) {
-  const [data, setData] = useState(initialData);
+type Props = {
+  data: any;
+};
+
+export default function PastYear({
+  data: initialData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [data] = useState(initialData);
   const [tab, setTab] = useState(
     initialData.finals?.length > 0
       ? "finals"
@@ -15,16 +22,7 @@ export default function Home({ data: initialData }) {
   );
   const [teamModal, setTeamModal] = useState<string | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    // Auto refresh data every 1 minute
-    const interval = setInterval(async () => {
-      const res = await fetch(getApiBase() + "/v1");
-      const data = await res.json();
-      setData(data);
-    }, 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const { year } = router.query;
 
   useEffect(() => {
     if (typeof router.query.country === "string") {
@@ -50,20 +48,32 @@ export default function Home({ data: initialData }) {
       handleModalClose={handleModalClose}
       tab={tab}
       handleTabChange={handleTabChange}
-      yearData={yearData[2024]}
+      yearData={yearData[parseInt(year as string)]}
     />
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch(getApiBase() + "/v1");
+export const getServerSideProps = (async (context) => {
+  const year = context.params?.year;
+  if (typeof year !== "string" || !yearData[year]) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  const res = await fetch(getApiBase() + "/v1?year=" + year, {
+    // Force cache because this data never changes.
+    cache: "force-cache",
+    next: {
+      // Cache for a year.  Basically forever.
+      revalidate: 365 * 24 * 60 * 60,
+    },
+  });
   const data = await res.json();
 
   return {
     props: { data },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
-    revalidate: 10, // In seconds
   };
-}
+}) satisfies GetServerSideProps<Props>;
