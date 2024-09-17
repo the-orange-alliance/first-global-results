@@ -20,8 +20,8 @@ export const yearData: { [key: number]: YearData } = {
   2024: {
     year: "2024",
     date: "26-29 September 2024 in Athens",
-    customRankingName: "2024 Extra Ranking Item",
-    customRankingKey: "placeholderKey",
+    customRankingName: "Total Food Secured Points",
+    customRankingKey: "foodSecuredPoints",
     watchLinks: {
       all: "https://first.global/live",
       main: "https://first.global/live",
