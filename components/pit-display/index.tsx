@@ -27,7 +27,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
           />
           <div className="pd-header__content">
             <h1 className="pd-header__title">
-              2023 <em>FIRST</em> Global Challenge
+              2024 <em>FIRST</em> Global Challenge
             </h1>
             <h2 className="pd-header__description">
               Real-time results are available at{" "}
