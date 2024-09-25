@@ -10,16 +10,17 @@ export default function Home({ data: initialData }) {
     initialData.finals?.length > 0
       ? "finals"
       : initialData.round_robin?.length > 0
-      ? "round_robin"
-      : "rankings"
+        ? "round_robin"
+        : "rankings"
   );
   const [teamModal, setTeamModal] = useState<string | null>(null);
   const router = useRouter();
+  const { year } = router.query;
 
   useEffect(() => {
     // Auto refresh data every 1 minute
     const interval = setInterval(async () => {
-      const res = await fetch(getApiBase() + "/v1");
+      const res = await fetch(getApiBase());
       const data = await res.json();
       setData(data);
     }, 60 * 1000);

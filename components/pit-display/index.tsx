@@ -4,8 +4,9 @@ import MatchesCard from "@/components/pit-display/matches-card";
 
 interface PitDisplayProps {
   data: any;
+  year?: string
 }
-const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
+const PitDisplay: React.FC<PitDisplayProps> = ({ data, year }) => {
   const matches = useMemo(() => {
     const matches = data.matches;
     const latestTournamentLevel = Math.max(
@@ -27,7 +28,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data }) => {
           />
           <div className="pd-header__content">
             <h1 className="pd-header__title">
-              2024 <em>FIRST</em> Global Challenge
+              {year ?? '2024'} <em>FIRST</em> Global Challenge
             </h1>
             <h2 className="pd-header__description">
               Real-time results are available at{" "}
