@@ -80,7 +80,7 @@ export const DetailsModal = create((match: any) => {
                             <Typography sx={{ textAlign: 'center' }}>Co-op Goals</Typography>
                             <Divider />
                             {Object.keys(coopBreakdown).map((k) => (
-                                <Typography key={k}>{coopBreakdown[k]}: {getPointName(k, match.details[k])}</Typography>
+                                <Typography key={k} sx={{ textAlign: 'center', width: '100%' }}>{coopBreakdown[k]}: {getPointName(k, match.details[k])}</Typography>
                             ))}
                         </>
                     )
