@@ -179,15 +179,15 @@ const RankingTable = ({
                       ranking.rank
                     ) : col.key === "team" ? (
                       <NextLink
-                        href={`/team/${ranking.team.country}`}
+                        href={`/team/${ranking.team?.country}`}
                         prefetch={false}
                         shallow
                         passHref
                         legacyBehavior
                       >
                         <Link underline="hover">
-                          {ranking.team.shortName ||
-                            ranking.team.name ||
+                          {ranking.team?.shortName ||
+                            ranking.team?.name ||
                             ranking.teamKey}
                         </Link>
                       </NextLink>
