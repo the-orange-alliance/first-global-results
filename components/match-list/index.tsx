@@ -3,6 +3,8 @@ import { Box, Stack, Typography } from "@mui/material";
 import MatchScores from "@/components/match-list/scores";
 import MatchTeams from "@/components/match-list/teams";
 import MatchTime from "@/components/match-list/time";
+import { DetailsModal } from "../match-details-modal";
+import { useModal } from "@ebay/nice-modal-react";
 
 interface MatchListProps {
   matches: any[];
@@ -46,6 +48,9 @@ const MatchList: React.FC<MatchListProps> = ({
     result.sort((a, b) => b.key - a.key);
     return result;
   }, [sortedMatches]);
+
+
+  const detailsDialog = useModal(DetailsModal);
 
   return (
     <Stack
@@ -93,19 +98,20 @@ const MatchList: React.FC<MatchListProps> = ({
                 sx={
                   match.participants.length > 4
                     ? {
-                        fontSize: "1rem",
-                        "@media (max-width: 500px)": {
-                          fontSize: "0.875rem",
-                        },
-                        "@media (max-width: 400px)": {
-                          fontSize: "0.75rem",
-                        },
-                      }
+                      fontSize: "1rem",
+                      "@media (max-width: 500px)": {
+                        fontSize: "0.875rem",
+                      },
+                      "@media (max-width: 400px)": {
+                        fontSize: "0.75rem",
+                      },
+                    }
                     : undefined
                 }
               >
                 <Typography
                   fontSize="0.75em"
+                  onClick={() => detailsDialog.show(match)}
                   px="1em"
                   textAlign="center"
                   fontWeight={match.played ? 500 : undefined}
@@ -114,8 +120,8 @@ const MatchList: React.FC<MatchListProps> = ({
                       ? match.redScore > match.blueScore
                         ? "var(--red)"
                         : match.blueScore > match.redScore
-                        ? "var(--blue)"
-                        : "var(--green)"
+                          ? "var(--blue)"
+                          : "var(--green)"
                       : "text.secondary"
                   }
                 >

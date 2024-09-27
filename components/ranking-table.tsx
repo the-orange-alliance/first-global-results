@@ -85,7 +85,7 @@ const RankingTable = ({
     };
 
   const sortedRankings = useMemo(() => {
-    const sorted = [...rankings];
+    const sorted = [...(rankings || [])];
     sorted.sort((rank1, rank2) => {
       let a = rank1[orderBy];
       let b = rank2[orderBy];
@@ -164,14 +164,14 @@ const RankingTable = ({
                     sx={
                       col.key === "team"
                         ? {
-                            textOverflow: "ellipsis",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            maxWidth: {
-                              xs: "10.5rem",
-                              md: "unset",
-                            },
-                          }
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          maxWidth: {
+                            xs: "10.5rem",
+                            md: "unset",
+                          },
+                        }
                         : {}
                     }
                   >

@@ -20,10 +20,10 @@ export default function Home({ data: initialData }) {
   useEffect(() => {
     // Auto refresh data every 1 minute
     const interval = setInterval(async () => {
-      const res = await fetch(getApiBase());
+      const res = await fetch(getApiBase() + "/v1");
       const data = await res.json();
       setData(data);
-    }, 60 * 1000);
+    }, 1 * 1000);
     return () => clearInterval(interval);
   }, []);
 
