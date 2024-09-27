@@ -90,7 +90,7 @@ const MatchList: React.FC<MatchListProps> = ({
             </Stack>
             {level.matches.map((match, index) => (
               <Stack
-                key={match.tournamentKey + "-" + match.id}
+                key={match.eventKey + "-" + match.tournamentKey + "-" + match.id}
                 direction="row"
                 justifyContent="flex-end"
                 alignItems="center"
@@ -124,6 +124,8 @@ const MatchList: React.FC<MatchListProps> = ({
                           : "var(--green)"
                       : "text.secondary"
                   }
+                  sx={match.played ? { cursor: 'pointer' } : undefined}
+                  title={match.played ? "View match breakdown" : undefined}
                 >
                   {match.name}
                 </Typography>
