@@ -41,14 +41,6 @@ export const DetailsModal = create((match: any) => {
         }
     }
 
-    const getScoreTitle = (key, breakdown) => {
-        if (breakdown[key]) {
-
-        } else {
-            return ""
-        }
-    }
-
     return (
         <Dialog {...muiDialogV5(modal)} onClose={handleClose} fullWidth maxWidth='sm'>
             <DialogTitle
@@ -77,7 +69,7 @@ export const DetailsModal = create((match: any) => {
                     ))}
                     {coopBreakdown && (
                         <>
-                            <Typography sx={{ textAlign: 'center', mt: 2 }}>Co-op Goals</Typography>
+                            <Typography sx={{ textAlign: 'center', mt: 2 }}><b>Co-op Goals</b></Typography>
                             <Divider />
                             {Object.keys(coopBreakdown).map((k) => (
                                 <Typography key={k} sx={{ textAlign: 'center', width: '100%' }}><b>{coopBreakdown[k]}:</b> {getPointName(k, match.details[k])}</Typography>
