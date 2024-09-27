@@ -7,7 +7,7 @@ export default function Pit({ data: initialData }) {
   const [data, setData] = useState(initialData);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
-  const { year } = router.query;
+  const { year, sort } = router.query;
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -25,7 +25,7 @@ export default function Pit({ data: initialData }) {
 
   return (
     <>
-      <PitDisplay data={data} year={Array.isArray(year) ? year.toString() : year} />
+      <PitDisplay data={data} year={Array.isArray(year) ? year.toString() : year} sort={Array.isArray(sort) ? sort.toString() : sort} />
       {isError && <div className="error">Disconnected</div>}
       <style jsx>{`
         .error {

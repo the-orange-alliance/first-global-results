@@ -4,9 +4,10 @@ import { marquee } from "@/lib";
 
 interface RankingCardProps {
   rankings: any[];
+  sort: string;
 }
 
-const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
+const RankingCard: React.FC<RankingCardProps> = ({ rankings, sort }) => {
   const [shouldScroll, setShouldScroll] = useState(false);
 
   useEffect(() => {
@@ -16,7 +17,9 @@ const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
     );
   }, [rankings]);
 
-  const rankingsView = rankings.filter(r => r.team).sort((a,b) => a.rank - b.rank).map((ranking) => (
+  const filterKey = sort ?? 'teamKey';
+
+  const rankingsView = rankings.filter(r => r.team).sort((a, b) => a[filterKey] - b[filterKey]).map((ranking) => (
     <RankingRow key={ranking.rank} ranking={ranking} />
   ));
 

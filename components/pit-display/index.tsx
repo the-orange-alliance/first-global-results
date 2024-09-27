@@ -4,9 +4,10 @@ import MatchesCard from "@/components/pit-display/matches-card";
 
 interface PitDisplayProps {
   data: any;
-  year?: string
+  year?: string;
+  sort?: string;
 }
-const PitDisplay: React.FC<PitDisplayProps> = ({ data, year }) => {
+const PitDisplay: React.FC<PitDisplayProps> = ({ data, year, sort }) => {
   const matches = useMemo(() => {
     const matches = data.matches;
     const latestTournamentLevel = Math.max(
@@ -40,7 +41,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data, year }) => {
         <div className="pd-content">
           {data.rankings.length > 0 || matches.length > 0 ? (
             <>
-              <RankingCard rankings={data.rankings} />
+              <RankingCard rankings={data.rankings} sort={sort} />
               <MatchesCard matches={matches.filter((m) => m.played)} />
             </>
           ) : (
