@@ -42,7 +42,7 @@ export const lookupKey = {
 export const coopBreakdown = {
     "foodSecured": "Food Secured",
     "coopertition": "Coopertition Achieved",
-    "fieldBalanced": "Field Balanced"
+    "fieldBalanced": "Ramp Balanced"
 }
 
 export default breakdown;
