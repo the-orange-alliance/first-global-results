@@ -154,7 +154,7 @@ const RankingTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedRankings.map((ranking) => (
+          {sortedRankings.filter((rank) => rank.team).map((ranking) => (
             <TableRow key={ranking.rank}>
               {columns
                 .filter((col) => type !== "PLAYOFF" || !col.hideOnPlayoffs)
