@@ -64,23 +64,23 @@ export const DetailsModal = create((match: any) => {
                 <Stack sx={{ width: '100%' }}>
                     <Stack direction={"row"} sx={{ justifyContent: 'space-between', width: '100%' }}>
                         <Typography sx={{ color: 'var(--red)' }}>Red</Typography>
-                        <Typography>Category</Typography>
+                        <Typography><b>Category</b></Typography>
                         <Typography sx={{ color: 'var(--blue)' }}>Blue</Typography>
                     </Stack>
                     <Divider />
                     {Object.keys(breakdown).map((k) => (
                         <Stack key={k} direction={"row"} sx={{ justifyContent: 'space-between', width: '100%' }}>
                             <Typography sx={{ color: 'var(--red)' }}>{getPointName(k, match.details[`red${k}`])}</Typography>
-                            <Typography>{breakdown[k]}</Typography>
+                            <Typography><b>{breakdown[k]}</b></Typography>
                             <Typography sx={{ color: 'var(--blue)' }}>{getPointName(k, match.details[`blue${k}`])}</Typography>
                         </Stack>
                     ))}
                     {coopBreakdown && (
                         <>
-                            <Typography sx={{ textAlign: 'center' }}>Co-op Goals</Typography>
+                            <Typography sx={{ textAlign: 'center', mt: 2 }}>Co-op Goals</Typography>
                             <Divider />
                             {Object.keys(coopBreakdown).map((k) => (
-                                <Typography key={k} sx={{ textAlign: 'center', width: '100%' }}>{coopBreakdown[k]}: {getPointName(k, match.details[k])}</Typography>
+                                <Typography key={k} sx={{ textAlign: 'center', width: '100%' }}><b>{coopBreakdown[k]}:</b> {getPointName(k, match.details[k])}</Typography>
                             ))}
                         </>
                     )
