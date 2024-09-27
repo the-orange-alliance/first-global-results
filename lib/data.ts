@@ -1,11 +1,11 @@
 export const watchLinks = {
   all: "https://first.global/live",
   main: "https://first.global/live",
-  field1: "https://www.youtube.com/watch?v=hQeEWxXgboc",
-  field2: "https://www.youtube.com/watch?v=96H0_qOIa84",
-  field3: "https://www.youtube.com/watch?v=jT_fh7fiG0c",
-  field4: "https://www.youtube.com/watch?v=1W5KtABbbGw",
-  field5: "https://first.global/live",
+  field1: "https://www.youtube.com/watch?v=w1gd4mlVGjI",
+  field2: "https://www.youtube.com/watch?v=V06dYpW1Yrw",
+  field3: "https://first.global/live",
+  field4: "https://www.youtube.com/watch?v=2PsVO_zptuk",
+  field5: "https://www.youtube.com/watch?v=Z5WmPlxVEeo",
 };
 
 export type YearData = {
@@ -25,11 +25,11 @@ export const yearData: { [key: number]: YearData } = {
     watchLinks: {
       all: "https://first.global/live",
       main: "https://first.global/live",
-      field1: "https://www.youtube.com/watch?v=hQeEWxXgboc",
-      field2: "https://www.youtube.com/watch?v=96H0_qOIa84",
-      field3: "https://www.youtube.com/watch?v=jT_fh7fiG0c",
-      field4: "https://www.youtube.com/watch?v=1W5KtABbbGw",
-      field5: "https://first.global/live",
+      field1: "https://www.youtube.com/watch?v=w1gd4mlVGjI",
+      field2: "https://www.youtube.com/watch?v=V06dYpW1Yrw",
+      field3: "https://first.global/live",
+      field4: "https://www.youtube.com/watch?v=2PsVO_zptuk",
+      field5: "https://www.youtube.com/watch?v=Z5WmPlxVEeo",
     },
   },
   2023: {
