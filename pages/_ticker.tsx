@@ -8,7 +8,7 @@ export default function Pit({ data: initialData }) {
   const [data, setData] = useState(initialData);
   const [isError, setIsError] = useState<boolean>(false);
   const router = useRouter();
-  const { year, multiplier } = router.query;
+  const { year, multiplier, sort } = router.query;
 
   const multParsed = multiplier ? parseFloat(`${multiplier}`) : 3;
 
@@ -28,7 +28,7 @@ export default function Pit({ data: initialData }) {
 
   return (
     <>
-      <TickerComponent rankings={data.rankings} multiplier={multParsed} />
+      <TickerComponent rankings={data.rankings} multiplier={multParsed} sort={Array.isArray(sort) ? sort.toString() : sort} />
     </>
   );
 }

@@ -4,16 +4,20 @@ import Image from "next/image";
 interface TickerProps {
   rankings: any[];
   multiplier?: number;
+  sort?: string;
 }
 
-const TickerComponent: React.FC<TickerProps> = ({ rankings, multiplier = 3 }) => {
+const TickerComponent: React.FC<TickerProps> = ({ rankings, multiplier = 3, sort }) => {
+
+  const filterKey = sort ?? 'teamKey';
+
   return (
     <>
       <main className={'main'} style={{ overflow: 'hidden', height: '100vh' }}>
         <div className="marquee">
           <div className="marquee-content">
             <Stack direction={"row"}>
-              {rankings.sort((a, b) => a.rank - b.rank).map((ranking) => {
+              {rankings.filter(r => r.team).sort((a, b) => a[filterKey] - b[filterKey]).map((ranking) => {
                 return (
                   <>
                     <Stack key={ranking.teamKey} direction={"row"} spacing={1} sx={{ whiteSpace: 'nowrap', alignItems: 'center', mx: 2 }}>
