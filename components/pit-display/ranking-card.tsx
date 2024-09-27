@@ -16,7 +16,7 @@ const RankingCard: React.FC<RankingCardProps> = ({ rankings }) => {
     );
   }, [rankings]);
 
-  const rankingsView = rankings.map((ranking) => (
+  const rankingsView = rankings.filter(r => r.team).sort((a,b) => a.rank - b.rank).map((ranking) => (
     <RankingRow key={ranking.rank} ranking={ranking} />
   ));
 

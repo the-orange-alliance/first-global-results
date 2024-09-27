@@ -10,10 +10,11 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data, year }) => {
   const matches = useMemo(() => {
     const matches = data.matches;
     const latestTournamentLevel = Math.max(
-      ...matches.map((match) => parseInt(match.tournamentKey))
+      ...matches.map((match) => parseInt(match.tournamentKey[1]))
     );
+    console.log('latestTournamentLevel', latestTournamentLevel)
     return matches.filter(
-      (match) => match.tournamentKey === "" + latestTournamentLevel
+      (match) => match.tournamentKey === "t" + latestTournamentLevel
     );
   }, [data]);
 
