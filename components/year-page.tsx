@@ -77,7 +77,6 @@ const YearPage = ({
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <TabList
                 onChange={handleTabChange}
-                aria-label="lab API tabs example"
               >
                 {data.finals?.length > 0 && (
                   <Tab label="Finals" value="finals" />

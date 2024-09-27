@@ -23,7 +23,7 @@ export default function Home({ data: initialData }) {
       const res = await fetch(getApiBase() + "/v1");
       const data = await res.json();
       setData(data);
-    }, 1 * 1000);
+    }, 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
