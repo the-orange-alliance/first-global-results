@@ -13,7 +13,7 @@ const MatchRow: React.FC<MatchRowProps> = ({ match }) => {
   return (
     <div className="pd-card__row" data-win={match.played ? winner : null}>
       <div className="pd-card__col" data-type="match">
-        {match.name.replace("Qualification", "Ranking")}
+        {match.name.replaceAll("Qualification", "Ranking")}
       </div>
       <div className="pd-card__col" data-type="score">
         {match.played && (

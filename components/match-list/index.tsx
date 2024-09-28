@@ -127,7 +127,7 @@ const MatchList: React.FC<MatchListProps> = ({
                   sx={match.played ? { cursor: 'pointer' } : undefined}
                   title={match.played ? "View match breakdown" : undefined}
                 >
-                  {match.name}
+                  {match.name.replace("Qualification", "Ranking")}
                 </Typography>
                 <Stack direction="row" height="100%">
                   <Stack

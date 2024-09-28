@@ -50,7 +50,7 @@ export const DetailsModal = create((match: any) => {
                     marginBottom: (theme) => theme.spacing(2)
                 }}
             >
-                {match.name} Breakdown
+                {match.name.replaceAll("Qualification", "Ranking")} Breakdown
             </DialogTitle>
             <DialogContentText sx={{ padding: (theme) => theme.spacing(2) }}>
                 <Stack sx={{ width: '100%' }}>
