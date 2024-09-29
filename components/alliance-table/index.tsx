@@ -10,22 +10,24 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
   alliances
 }) => {
 
+  const teamWidth = 1.75;
+
   return (
     <>
       <Grid container direction={"row"}>
-        <Grid item xs={1}>
+        <Grid item xs={.75}>
           <Typography>
             Rank
           </Typography>
         </Grid>
 
-        <Grid item xs={1}>
+        <Grid item xs={1.5}>
           <Typography>
             Alliance
           </Typography>
         </Grid>
 
-        <Grid item xs={1}>
+        <Grid item xs={1.5}>
           <Typography>
             Rank Score
           </Typography>
@@ -37,25 +39,25 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Typography>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={teamWidth}>
           <Typography>
             Team 1
           </Typography>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={teamWidth}>
           <Typography>
             Team 2
           </Typography>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={teamWidth}>
           <Typography>
             Team 3
           </Typography>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={teamWidth}>
           <Typography>
             Team 4
           </Typography>
@@ -65,17 +67,17 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
 
       {alliances.map((alliance) => (
         <Grid container key={alliance.rank} direction="row" sx={{ alignItems: 'center', my: 2 }}>
-          <Grid item xs={1}>
+          <Grid item xs={.75}>
             <Typography>
               {alliance.rank}
             </Typography>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={1.5}>
             <Typography>
               {alliance.name}
             </Typography>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={1.5}>
             <Typography>
               {alliance.rankingScore ?? 0}
             </Typography>
@@ -87,7 +89,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Captain */}
-          <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={`/static/flags/4x3/${alliance.captain.team?.countryCode.toLowerCase()}.svg`}
@@ -107,7 +109,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Pick 1 */}
-          <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={`/static/flags/4x3/${alliance.pick1.team?.countryCode.toLowerCase()}.svg`}
@@ -127,7 +129,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Pick 2 */}
-          <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={`/static/flags/4x3/${alliance.pick2.team?.countryCode.toLowerCase()}.svg`}
@@ -147,7 +149,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Pick 3 */}
-          <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={`/static/flags/4x3/${alliance.pick3.team?.countryCode.toLowerCase()}.svg`}
