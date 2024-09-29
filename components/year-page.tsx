@@ -1,4 +1,4 @@
-import { allianceData, YearData } from "@/lib/data";
+import { YearData } from "@/lib/data";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Container,
@@ -34,7 +34,6 @@ const YearPage = ({
   handleTabChange,
   yearData,
 }: IProps) => {
-  data.alliances = allianceData
   return (
     <div>
       <NextHeadSeo
