@@ -10,10 +10,11 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
   alliances
 }) => {
 
+  console.log(alliances)
   return (
     <>
       <Grid container direction={"row"}>
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <Typography>
             Rank
           </Typography>
@@ -25,27 +26,33 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Typography>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <Typography>
-            Captain
+            Rank Score
           </Typography>
         </Grid>
 
         <Grid item xs={2}>
           <Typography>
-            Pick 1
+            Team 1
           </Typography>
         </Grid>
 
         <Grid item xs={2}>
           <Typography>
-            Pick 2
+            Team 2
           </Typography>
         </Grid>
 
         <Grid item xs={2}>
           <Typography>
-            Pick 3
+            Team 3
+          </Typography>
+        </Grid>
+
+        <Grid item xs={2}>
+          <Typography>
+            Team 4
           </Typography>
         </Grid>
       </Grid>
@@ -53,7 +60,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
 
       {alliances.map((alliance) => (
         <Grid container key={alliance.rank} direction="row" sx={{ alignItems: 'center', my: 2 }}>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <Typography>
               {alliance.rank}
             </Typography>
@@ -61,6 +68,11 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           <Grid item xs={2}>
             <Typography>
               {alliance.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography>
+              {alliance.rankingScore ?? 0}
             </Typography>
           </Grid>
 
@@ -80,7 +92,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
               />
             </Box>
             <Typography>
-              {alliance.captain.team ? alliance.captain.team.teamNameShort : alliance.captain.teamKey}
+              {alliance.captain.team ? alliance.captain.team.country : alliance.captain.teamKey}
             </Typography>
           </Grid>
 
@@ -100,7 +112,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
               />
             </Box>
             <Typography>
-              {alliance.pick1.team ? alliance.pick1.team.teamNameShort : alliance.pick1.teamKey}
+              {alliance.pick1.team ? alliance.pick1.team.country : alliance.pick1.teamKey}
             </Typography>
           </Grid>
 
@@ -120,7 +132,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
               />
             </Box>
             <Typography>
-              {alliance.pick2.team ? alliance.pick2.team.teamNameShort : alliance.pick2.teamKey}
+              {alliance.pick2.team ? alliance.pick2.team.country : alliance.pick2.teamKey}
             </Typography>
           </Grid>
 
@@ -140,7 +152,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
               />
             </Box>
             <Typography>
-              {alliance.pick3.team ? alliance.pick3.team.teamNameShort : alliance.pick3.teamKey}
+              {alliance.pick3.team ? alliance.pick3.team.country : alliance.pick3.teamKey}
             </Typography>
           </Grid>
         </Grid>

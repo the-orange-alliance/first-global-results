@@ -34,6 +34,11 @@ const YearPage = ({
   handleTabChange,
   yearData,
 }: IProps) => {
+  const yearI = parseInt(yearData.year);
+
+  const showFinalsAlliances = Array.isArray(data.alliances_finals) && data.alliances_finals.length > 0;
+  const showRoundRobinAlliances = Array.isArray(data.alliances_round_robin) && data.alliances_round_robin.length > 0;
+
   return (
     <div>
       <NextHeadSeo
@@ -79,26 +84,45 @@ const YearPage = ({
               <TabList
                 onChange={handleTabChange}
               >
-                {data.finals?.length > 0 && (
+
+                {showFinalsAlliances && (
+                  <Tab label="Finals" value="alliance_finals" />
+                )}
+
+                {showRoundRobinAlliances && (
+                  <Tab label="Tournament" value="tournament" />
+                )}
+
+                {data.finals?.length > 0 && yearI < 2024 && (
                   <Tab label="Finals" value="finals" />
                 )}
-                {data.round_robin?.length > 0 && (
+
+                {data.round_robin?.length > 0 && yearI < 2024 && (
                   <Tab label="Round Robin" value="round_robin" />
                 )}
+
                 <Tab label="Rankings" value="rankings" />
-                {data.alliances && Object.keys(data.alliances).length > 0 && (
-                  <Tab label="Alliances" value="alliances" />
-                )}
                 <Tab label="Matches Results" value="matches" />
                 <Tab label="Awards" value="awards" />
               </TabList>
             </Box>
-            {data.alliances && Object.keys(data.alliances).length > 0 && (
-              <TabPanel value="alliances" sx={{ p: { xs: 0, md: 2 } }}>
-                <AllianceTable alliances={data.alliances} />
+
+            {/* Alliance Finals */}
+            {showFinalsAlliances && (
+              <TabPanel value="alliance_finals" sx={{ p: { xs: 0, md: 2 } }}>
+                <AllianceTable alliances={data.alliances_finals} />
               </TabPanel>
             )}
-            {data.finals?.length > 0 && (
+
+            {/* Alliance Round Robin aka "Tournament" */}
+            {showRoundRobinAlliances && (
+              <TabPanel value="tournament" sx={{ p: { xs: 0, md: 2 } }}>
+                <AllianceTable alliances={data.alliances_round_robin} />
+              </TabPanel>
+            )}
+
+            {/* Old Finals Page pre-2024 */}
+            {data.finals?.length > 0 && yearI < 2024 && (
               <TabPanel value="finals" sx={{ p: { xs: 0, md: 2 } }}>
                 <RankingTable
                   rankings={data.finals}
@@ -108,7 +132,9 @@ const YearPage = ({
                 />
               </TabPanel>
             )}
-            {data.round_robin?.length > 0 && (
+
+            {/* Old RR Page pre-2024 */}
+            {data.round_robin?.length > 0 && yearI < 2024 && (
               <TabPanel value="round_robin" sx={{ p: { xs: 0, md: 2 } }}>
                 <RankingTable
                   rankings={data.round_robin}
@@ -118,6 +144,8 @@ const YearPage = ({
                 />
               </TabPanel>
             )}
+
+            {/* Standard Rankings Table */}
             <TabPanel value="rankings" sx={{ p: { xs: 0, md: 2 } }}>
               <RankingTable
                 rankings={data.rankings}
@@ -126,6 +154,8 @@ const YearPage = ({
                 extraRankingItemTitle={yearData.customRankingName}
               />
             </TabPanel>
+
+            {/* Matches */}
             <TabPanel value="matches" sx={{ py: 1, px: { xs: 0, md: 2 } }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <MatchList matches={data.matches} />
