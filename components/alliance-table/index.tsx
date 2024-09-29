@@ -19,7 +19,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Typography>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <Typography>
             Alliance
           </Typography>
@@ -28,6 +28,12 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
         <Grid item xs={1}>
           <Typography>
             Rank Score
+          </Typography>
+        </Grid>
+
+        <Grid item xs={1}>
+          <Typography>
+            Played
           </Typography>
         </Grid>
 
@@ -64,7 +70,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
               {alliance.rank}
             </Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <Typography>
               {alliance.name}
             </Typography>
@@ -72,6 +78,11 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           <Grid item xs={1}>
             <Typography>
               {alliance.rankingScore ?? 0}
+            </Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <Typography>
+              {alliance.played ?? 0}
             </Typography>
           </Grid>
 
