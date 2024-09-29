@@ -86,14 +86,14 @@ const YearPage = ({
                   <Tab label="Round Robin" value="round_robin" />
                 )}
                 <Tab label="Rankings" value="rankings" />
-                {data.alliances && (
+                {data.alliances && Object.keys(data.alliances).length > 0 && (
                   <Tab label="Alliances" value="alliances" />
                 )}
                 <Tab label="Matches Results" value="matches" />
                 <Tab label="Awards" value="awards" />
               </TabList>
             </Box>
-            {data.alliances && (
+            {data.alliances && Object.keys(data.alliances).length > 0 && (
               <TabPanel value="alliances" sx={{ p: { xs: 0, md: 2 } }}>
                 <AllianceTable alliances={data.alliances} />
               </TabPanel>
