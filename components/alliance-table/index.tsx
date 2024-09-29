@@ -10,7 +10,6 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
   alliances
 }) => {
 
-  console.log(alliances)
   return (
     <>
       <Grid container direction={"row"}>
