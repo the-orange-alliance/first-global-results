@@ -40,7 +40,7 @@ const MatchList: React.FC<MatchListProps> = ({
 
     const result = Object.entries<any[]>(groups).map(
       ([tournamentKey, matches]) => ({
-        key: parseInt(tournamentKey),
+        key: parseInt(tournamentKey.replace('t', '')),
         title: matches[0].name.match(/(.*) Match .*/)[1],
         matches,
       })
