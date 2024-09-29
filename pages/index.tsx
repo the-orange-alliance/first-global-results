@@ -5,17 +5,21 @@ import YearPage from "@/components/year-page";
 import { yearData } from "@/lib/data";
 
 export default function Home({ data: initialData }) {
+  const router = useRouter();
+  const { year } = router.query;
+  const yearI = parseInt(year as string);
+  const finalsTab = yearI < 2024 ? "finals" : 'alliance_finals';
+  const roundRobinTab = yearI < 2024 ? "round_robin" : 'tournament';
+
   const [data, setData] = useState(initialData);
   const [tab, setTab] = useState(
     initialData.finals?.length > 0
-      ? "finals"
+      ? finalsTab
       : initialData.round_robin?.length > 0
-        ? "round_robin"
+        ? roundRobinTab
         : "rankings"
   );
   const [teamModal, setTeamModal] = useState<string | null>(null);
-  const router = useRouter();
-  const { year } = router.query;
 
   useEffect(() => {
     // Auto refresh data every 1 minute
