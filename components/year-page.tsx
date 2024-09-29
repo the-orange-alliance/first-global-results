@@ -1,4 +1,4 @@
-import { watchLinks, YearData } from "@/lib/data";
+import { allianceData, YearData } from "@/lib/data";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   Container,
@@ -15,6 +15,7 @@ import Navigation from "./navigation";
 import RankingTable from "./ranking-table";
 import TeamModel from "./team-model";
 import StreamIcon from "@mui/icons-material/PlayCircleOutlined";
+import AllianceTable from "./alliance-table";
 
 interface IProps {
   data: any;
@@ -33,6 +34,7 @@ const YearPage = ({
   handleTabChange,
   yearData,
 }: IProps) => {
+  data.alliances = allianceData
   return (
     <div>
       <NextHeadSeo
@@ -85,10 +87,18 @@ const YearPage = ({
                   <Tab label="Round Robin" value="round_robin" />
                 )}
                 <Tab label="Rankings" value="rankings" />
+                {data.alliances && (
+                  <Tab label="Alliances" value="alliances" />
+                )}
                 <Tab label="Matches Results" value="matches" />
                 <Tab label="Awards" value="awards" />
               </TabList>
             </Box>
+            {data.alliances && (
+              <TabPanel value="alliances" sx={{ p: { xs: 0, md: 2 } }}>
+                <AllianceTable alliances={data.alliances} />
+              </TabPanel>
+            )}
             {data.finals?.length > 0 && (
               <TabPanel value="finals" sx={{ p: { xs: 0, md: 2 } }}>
                 <RankingTable
