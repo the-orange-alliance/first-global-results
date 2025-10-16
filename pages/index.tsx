@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getApiBase } from "@/lib";
 import YearPage from "@/components/year-page";
-import { yearData } from "@/lib/data";
+import { pastYears, yearData } from "@/lib/data";
 
 export default function Home({ data: initialData }) {
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function Home({ data: initialData }) {
       handleModalClose={handleModalClose}
       tab={tab}
       handleTabChange={handleTabChange}
-      yearData={yearData[2024]}
+      yearData={yearData[pastYears[pastYears.length - 1] + 1]}
     />
   );
 }

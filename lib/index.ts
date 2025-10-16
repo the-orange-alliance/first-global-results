@@ -1,11 +1,13 @@
 export const PUBLIC_API_BASE = "https://api.first.global";
+export const STAGE_API_BASE = "https://api.fgcstage.zaiser.dev";
 export const LOCAL_API_BASE = "http://localhost:3005";
 
 export const getApiBase = (forceClient = false) => {
-  const env = process.env.NEXT_PUBLIC_API_ENV;
+  const env = process.env.NEXT_PUBLIC_PROD_URL;
+  const envStage = process.env.NEXT_PUBLIC_STAGE_URL;
   const isSsr = !forceClient && typeof window === "undefined";
 
-  return PUBLIC_API_BASE;
+  return envStage ? STAGE_API_BASE : env ? PUBLIC_API_BASE : PUBLIC_API_BASE;
 
   if (env === "production") {
     return isSsr ? LOCAL_API_BASE : PUBLIC_API_BASE;

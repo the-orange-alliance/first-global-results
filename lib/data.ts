@@ -17,6 +17,21 @@ export type YearData = {
 };
 
 export const yearData: { [key: number]: YearData } = {
+  2025: {
+    year: "2025",
+    date: "29 October-1 November 2025 in Panamá City",
+    customRankingName: "Protection Points",
+    customRankingKey: "protectionPoints",
+    watchLinks: {
+      all: "https://first.global/live",
+      main: "https://first.global/live",
+      field1: "https://www.youtube.com/watch?v=MRKgTGhcV0M",
+      field2: "https://www.youtube.com/watch?v=HdW0y-2kwD0",
+      field3: "https://first.global/live",
+      field4: "https://www.youtube.com/watch?v=ZRFGlhftoQE",
+      field5: "https://www.youtube.com/watch?v=TOi5-RFpaGY",
+    },
+  },
   2024: {
     year: "2024",
     date: "26-29 September 2024 in Athens",
@@ -64,4 +79,4 @@ export const yearData: { [key: number]: YearData } = {
   },
 };
 
-export const pastYears = [2022, 2023];
+export const pastYears = [2022, 2023, 2024];
