@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
+    "start:stage": "next start -p 4000",
     "lint": "next lint"
   },
   "dependencies": {
