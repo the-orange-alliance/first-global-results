@@ -26,7 +26,8 @@ export const marquee = (items: number, speed: number = 50) =>
 // This serves as a basic lookup for flags, but also a cache-buster in case flags change
 export const getFlagUrl = (countryCode: string) => {
   const cacheBusterMap: Record<string, string> = {
-    10: "10_hope"
+    10: "10_hope",
+    "sy": "sy_new",
   }
 
   if (cacheBusterMap[countryCode]) {
