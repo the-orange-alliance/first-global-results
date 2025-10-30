@@ -1,6 +1,7 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import Image from "next/image";
+import { getFlagUrl } from "@/lib";
 
 interface AllianceTableProps {
   alliances: any
@@ -92,7 +93,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
-                src={`/static/flags/4x3/${alliance.captain.team?.countryCode.toLowerCase()}.svg`}
+                src={getFlagUrl(alliance.captain.team?.countryCode.toLowerCase())}
                 width={16}
                 height={12}
                 style={{
@@ -112,7 +113,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
-                src={`/static/flags/4x3/${alliance.pick1.team?.countryCode.toLowerCase()}.svg`}
+                src={getFlagUrl(alliance.pick1.team?.countryCode.toLowerCase())}
                 width={16}
                 height={12}
                 style={{
@@ -132,7 +133,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
-                src={`/static/flags/4x3/${alliance.pick2.team?.countryCode.toLowerCase()}.svg`}
+                src={getFlagUrl(alliance.pick2.team?.countryCode.toLowerCase())}
                 width={16}
                 height={12}
                 style={{
@@ -152,7 +153,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
-                src={`/static/flags/4x3/${alliance.pick3.team?.countryCode.toLowerCase()}.svg`}
+                src={getFlagUrl(alliance.pick3.team?.countryCode.toLowerCase())}
                 width={16}
                 height={12}
                 style={{

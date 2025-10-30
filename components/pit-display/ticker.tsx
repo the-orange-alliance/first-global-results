@@ -23,7 +23,7 @@ const TickerComponent: React.FC<TickerProps> = ({ rankings, multiplier = 3, sort
                     <Stack key={ranking.teamKey} direction={"row"} spacing={1} sx={{ whiteSpace: 'nowrap', alignItems: 'center', mx: 2 }}>
                       <Typography sx={{ fontSize: '25vh' }}>#{ranking.rank}</Typography>
                       <Image
-                        src={`/static/flags/4x3/${ranking.team.countryCode.toLowerCase()}.svg`}
+                        src={getFlagUrl(ranking.team.countryCode.toLowerCase())}
                         width={16}
                         height={12}
                         style={{

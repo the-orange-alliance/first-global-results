@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import Image from "next/image";
 import { Box, Link, Stack, Tooltip } from "@mui/material";
+import { getFlagUrl } from "@/lib";
 
 type Alliance = "red" | "blue";
 
@@ -59,7 +60,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
         >
           <Box>
             <Image
-              src={`/static/flags/4x3/${participant.countryCode.toLowerCase()}.svg`}
+              src={getFlagUrl(participant.countryCode.toLowerCase())}
               width={16}
               height={12}
               style={{
