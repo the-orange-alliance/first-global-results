@@ -147,12 +147,12 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
           <DetailsList.Item icon={<HighestScoreIcon />} title="Highest Score">
             {rank.highestScore}
           </DetailsList.Item>
-          <DetailsList.Item
+          {/* <DetailsList.Item
             icon={<AddOutlined />}
             title={yearDataInfo.customRankingName}
           >
             {rank[yearDataInfo.customRankingKey]}
-          </DetailsList.Item>
+          </DetailsList.Item> */}
           <DetailsList.Item icon={<MatchesPlayedIcon />} title="Matches Played">
             {rank.played}
           </DetailsList.Item>
