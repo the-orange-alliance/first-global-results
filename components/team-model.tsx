@@ -14,17 +14,18 @@ import { TransitionProps } from "@mui/material/transitions";
 import CloseIcon from "@mui/icons-material/CloseRounded";
 import RankIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
 import HighestScoreIcon from "@mui/icons-material/Insights";
-import HydrogenIcon from "@mui/icons-material/Fitbit";
 import MatchesPlayedIcon from "@mui/icons-material/VerifiedOutlined";
 import NextMatchIcon from "@mui/icons-material/ScheduleRounded";
 import moment from "moment";
 import DetailsList from "@/components/details-list";
 import MatchList from "@/components/match-list";
-import { watchLinks } from "@/lib/data";
+import { pastYears, watchLinks, yearData } from "@/lib/data";
+import { AddOutlined } from "@mui/icons-material";
 
 interface TeamModelProps {
   country: string;
   data: any;
+  year?: number;
   onClose?: () => void;
 }
 
@@ -35,9 +36,15 @@ const MobileTransition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
+const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) => {
   const [countryData, setCountryData] = useState<any>(null);
   const isMobile = useMediaQuery("(max-width: 899px)");
+
+  if (!year) {
+    year = pastYears[pastYears.length - 1] + 1;
+  }
+
+  const yearDataInfo = yearData[year];
 
   useEffect(() => {
     if (country) {
@@ -141,10 +148,10 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose }) => {
             {rank.highestScore}
           </DetailsList.Item>
           <DetailsList.Item
-            icon={<HydrogenIcon />}
-            title="Total Oxygen + Hydrogen Points"
+            icon={<AddOutlined />}
+            title={yearDataInfo.customRankingName}
           >
-            {rank.oxyHydroPoints}
+            {rank[yearDataInfo.customRankingKey]}
           </DetailsList.Item>
           <DetailsList.Item icon={<MatchesPlayedIcon />} title="Matches Played">
             {rank.played}
