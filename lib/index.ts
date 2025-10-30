@@ -28,6 +28,7 @@ export const getFlagUrl = (countryCode: string) => {
   const cacheBusterMap: Record<string, string> = {
     10: "10_hope",
     "sy": "sy_new",
+    "cr": "cr_new",
   }
 
   if (cacheBusterMap[countryCode]) {
