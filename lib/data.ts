@@ -25,11 +25,11 @@ export const yearData: { [key: number]: YearData } = {
     watchLinks: {
       all: "https://first.global/live",
       main: "https://first.global/live",
-      field1: "https://www.youtube.com/watch?v=MRKgTGhcV0M",
-      field2: "https://www.youtube.com/watch?v=HdW0y-2kwD0",
-      field3: "https://first.global/live",
-      field4: "https://www.youtube.com/watch?v=ZRFGlhftoQE",
-      field5: "https://www.youtube.com/watch?v=TOi5-RFpaGY",
+      field1: "https://youtu.be/IMzAHjn2oqA",
+      field2: "https://youtu.be/DzvYXbAkqIc",
+      field3: "https://youtu.be/19KenSMx4QI",
+      field4: "https://youtu.be/jo-dh0LGt-I",
+      field5: "https://first.global/live",
     },
   },
   2024: {
