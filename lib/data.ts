@@ -1,10 +1,10 @@
 export const watchLinks = {
   all: "https://first.global/live",
   main: "https://first.global/live",
-  field1: "https://youtu.be/IMzAHjn2oqA",
-  field2: "https://youtu.be/DzvYXbAkqIc",
-  field3: "https://youtu.be/19KenSMx4QI",
-  field4: "https://youtu.be/jo-dh0LGt-I",
+  field1: "https://youtu.be/FbAeVwfciMQ",
+  field2: "https://youtu.be/EMmcTueSVu0",
+  field3: "https://youtu.be/-fznHfw67Mg",
+  field4: "https://youtu.be/W_ZVyhQoIOg",
   field5: "https://first.global/live",
 };
 
