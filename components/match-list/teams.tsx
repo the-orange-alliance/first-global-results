@@ -22,33 +22,15 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
     <Stack
       direction="row"
       spacing={0}
-      bgcolor={
-        alliance === "red" ? "var(--lighter-red)" : "var(--lighter-blue)"
-      }
-      height="100%"
-    >
+      sx={{
+        bgcolor: alliance === "red" ? "var(--lighter-red)" : "var(--lighter-blue)",
+        height: "100%"
+      }}>
       {participants.map((participant) => (
         <Stack
           key={participant.station}
           direction="row"
-          justifyContent="center"
-          px="0.5em"
-          py="0.375em"
-          fontSize="0.875em"
-          width="4.75em"
-          textAlign="center"
           spacing="0.5em"
-          height="100%"
-          fontWeight={isWinner ? 700 : undefined}
-          alignItems={"center"}
-          color={selectedTeamKey === participant.teamKey ? "white" : undefined}
-          bgcolor={
-            selectedTeamKey === participant.teamKey
-              ? alliance === "red"
-                ? "var(--red)"
-                : "var(--blue)"
-              : undefined
-          }
           style={{
             textDecoration:
               participant.tournamentKey !== "1" &&
@@ -57,7 +39,24 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
                 ? "underline"
                 : undefined,
           }}
-        >
+          sx={{
+            justifyContent: "center",
+            px: "0.5em",
+            py: "0.375em",
+            fontSize: "0.875em",
+            width: "4.75em",
+            textAlign: "center",
+            height: "100%",
+            fontWeight: isWinner ? 700 : undefined,
+            alignItems: "center",
+            color: selectedTeamKey === participant.teamKey ? "white" : undefined,
+
+            bgcolor: selectedTeamKey === participant.teamKey
+              ? alliance === "red"
+                ? "var(--red)"
+                : "var(--blue)"
+              : undefined
+          }}>
           <Box>
             <Image
               src={getFlagUrl(participant.countryCode.toLowerCase())}

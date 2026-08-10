@@ -70,7 +70,7 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
   return (
     <Dialog
       open={!!country}
-      TransitionComponent={isMobile ? MobileTransition : undefined}
+      slots={{ transition: isMobile ? MobileTransition : undefined }}
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
@@ -127,16 +127,17 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
       </DialogTitle>
       <DialogContent>
         <Box
-          display="inline-block"
-          border="1px solid"
-          color={(theme) => theme.palette.primary[600]}
-          borderColor={(theme) => theme.palette.primary[300]}
-          bgcolor={(theme) => theme.palette.primary[50]}
-          fontWeight={500}
-          borderRadius="0.75rem"
-          py={0.5}
-          px={2}
-        >
+          sx={{
+            display: "inline-block",
+            border: "1px solid",
+            color: (theme) => theme.palette.primary[600],
+            borderColor: (theme) => theme.palette.primary[300],
+            bgcolor: (theme) => theme.palette.primary[50],
+            fontWeight: 500,
+            borderRadius: "0.75rem",
+            py: 0.5,
+            px: 2
+          }}>
           Rank #{rank.rank}
         </Box>
 

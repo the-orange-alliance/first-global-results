@@ -64,8 +64,10 @@ const Navigation = () => {
         <Stack
           direction="row"
           spacing={1}
-          fontSize="0.875rem"
           divider={<Divider orientation="vertical" flexItem />}
+          sx={{
+            fontSize: "0.875rem"
+          }}
         >
           {links.map((link) => (
             <Link
@@ -98,7 +100,7 @@ const Navigation = () => {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose }}
+          slotProps={{ list: { onMouseLeave: handleClose } }}
         >
           {pastYears.map((year) => (
             <MenuItem

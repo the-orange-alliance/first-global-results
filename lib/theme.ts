@@ -2,7 +2,9 @@ import ArrowDropDownRounded from "@mui/icons-material/ArrowDropDownRounded";
 import { createTheme, Theme, alpha } from "@mui/material/styles";
 import { deepmerge } from "@mui/utils";
 
-declare module "@mui/material/styles/createPalette" {
+// MUI v7 removed multi-level deep imports, so the palette augmentation now
+// targets "@mui/material/styles" instead of ".../styles/createPalette".
+declare module "@mui/material/styles" {
   interface ColorRange {
     50: string;
     100: string;
@@ -217,12 +219,17 @@ export const getThemedComponents = (
             padding: theme.spacing(0.5, 1.25),
             marginLeft: theme.spacing(-1),
           },
-          containedPrimary: {
-            backgroundColor: theme.palette.primary[500],
-            color: "#fff",
-          },
         },
         variants: [
+          {
+            // MUI v9 removed the combined variant+color style rules
+            // (containedPrimary), so this targets the same buttons via variants.
+            props: { variant: "contained", color: "primary" },
+            style: {
+              backgroundColor: theme.palette.primary[500],
+              color: "#fff",
+            },
+          },
           {
             // @ts-ignore internal repo module augmentation issue
             props: { variant: "link" },
@@ -378,9 +385,13 @@ export const getThemedComponents = (
           IconComponent: ArrowDropDownRounded,
         },
         styleOverrides: {
-          iconFilled: {
-            top: "calc(50% - .25em)",
-          },
+          // MUI v9 removed the iconFilled style rule; the icon slot is now
+          // styled conditionally on the filled variant instead.
+          icon: ({ ownerState }) => ({
+            ...(ownerState.variant === "filled" && {
+              top: "calc(50% - .25em)",
+            }),
+          }),
         },
       },
       MuiTab: {

@@ -27,9 +27,9 @@ export default class FIRSTDocument extends Document {
     ctx.renderPage = () =>
       originalRenderPage({
         enhanceApp: (App: EnhancedApp) =>
-          function EnhanceApp(props) {
+          (function EnhanceApp(props) {
             return <App emotionCache={cache} {...props} />;
-          },
+          }),
       });
 
     const initialProps = await Document.getInitialProps(ctx);

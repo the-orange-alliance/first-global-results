@@ -66,14 +66,16 @@ const YearPage = ({
             xs: "column",
             md: "row",
           }}
-          alignItems={{
-            xs: "flex-start",
-            md: "center",
-          }}
-          justifyContent="space-between"
-          py={5}
-          gap={1.5}
-        >
+          sx={{
+            alignItems: {
+              xs: "flex-start",
+              md: "center",
+            },
+
+            justifyContent: "space-between",
+            py: 5,
+            gap: 1.5
+          }}>
           <Stack>
             <Typography variant="h1">
               {yearData.year} <em>FIRST</em> Global Challenge Event Results
@@ -179,7 +181,12 @@ const YearPage = ({
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <MatchList matches={data.matches} />
               </Box>
-              <Typography variant="body2" color="text.secondary" mt={2}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "text.secondary",
+                  mt: 2
+                }}>
                 All times are displayed in your local timezone.
               </Typography>
             </TabPanel>

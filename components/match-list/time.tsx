@@ -1,11 +1,14 @@
 import { watchLinks } from "@/lib/data";
-import { Box, BoxProps, Button, Link } from "@mui/material";
+import { Box, Button, Link } from "@mui/material";
+import type { ResponsiveStyleValue } from "@mui/system";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
 interface MatchTimeProps {
   match: any;
-  width: BoxProps["width"];
+  // MUI v9 removed system props from Box, so width is passed through sx and
+  // typed as the responsive value sx accepts rather than as a Box prop.
+  width: ResponsiveStyleValue<string | number>;
 }
 
 const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
@@ -36,19 +39,20 @@ const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
 
   return (
     <Box
-      bgcolor={(theme) =>
-        isLive ? theme.palette.primary.main : theme.palette.grey[50]
-      }
-      px="0.5em"
-      py="0.375em"
-      fontSize="0.875em"
-      width={width}
-      textAlign="center"
-      display="flex"
-      alignSelf="stretch"
-      alignItems="center"
-      justifyContent="center"
-    >
+      sx={{
+        bgcolor: (theme) =>
+          isLive ? theme.palette.primary.main : theme.palette.grey[50],
+
+        px: "0.5em",
+        py: "0.375em",
+        fontSize: "0.875em",
+        width: width,
+        textAlign: "center",
+        display: "flex",
+        alignSelf: "stretch",
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
       {isLive ? (
         <Link
           href={watchLinks["field" + match.field] || watchLinks.main}

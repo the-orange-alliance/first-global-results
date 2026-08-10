@@ -15,50 +15,50 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
 
   return (
     <>
-      <Grid container direction={"row"}>
-        <Grid item xs={.75}>
+      <Grid container>
+        <Grid size={.75}>
           <Typography>
             Rank
           </Typography>
         </Grid>
 
-        <Grid item xs={1.5}>
+        <Grid size={1.5}>
           <Typography>
             Alliance
           </Typography>
         </Grid>
 
-        <Grid item xs={1.5}>
+        <Grid size={1.5}>
           <Typography>
             Rank Score
           </Typography>
         </Grid>
 
-        <Grid item xs={1}>
+        <Grid size={1}>
           <Typography>
             Played
           </Typography>
         </Grid>
 
-        <Grid item xs={teamWidth}>
+        <Grid size={teamWidth}>
           <Typography>
             Team 1
           </Typography>
         </Grid>
 
-        <Grid item xs={teamWidth}>
+        <Grid size={teamWidth}>
           <Typography>
             Team 2
           </Typography>
         </Grid>
 
-        <Grid item xs={teamWidth}>
+        <Grid size={teamWidth}>
           <Typography>
             Team 3
           </Typography>
         </Grid>
 
-        <Grid item xs={teamWidth}>
+        <Grid size={teamWidth}>
           <Typography>
             Team 4
           </Typography>
@@ -67,30 +67,30 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
       <Divider />
 
       {alliances.map((alliance) => (
-        <Grid container key={alliance.rank} direction="row" sx={{ alignItems: 'center', my: 2 }}>
-          <Grid item xs={.75}>
+        <Grid container key={alliance.rank} sx={{ alignItems: 'center', my: 2 }}>
+          <Grid size={.75}>
             <Typography>
               {alliance.rank}
             </Typography>
           </Grid>
-          <Grid item xs={1.5}>
+          <Grid size={1.5}>
             <Typography>
               {alliance.name}
             </Typography>
           </Grid>
-          <Grid item xs={1.5}>
+          <Grid size={1.5}>
             <Typography>
               {alliance.rankingScore ?? 0}
             </Typography>
           </Grid>
-          <Grid item xs={1}>
+          <Grid size={1}>
             <Typography>
               {alliance.played ?? 0}
             </Typography>
           </Grid>
 
           {/* Captain */}
-          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid size={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={getFlagUrl(alliance.captain.team?.countryCode.toLowerCase())}
@@ -110,7 +110,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Pick 1 */}
-          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid size={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={getFlagUrl(alliance.pick1.team?.countryCode.toLowerCase())}
@@ -130,7 +130,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Pick 2 */}
-          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid size={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={getFlagUrl(alliance.pick2.team?.countryCode.toLowerCase())}
@@ -150,7 +150,7 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
           </Grid>
 
           {/* Pick 3 */}
-          <Grid item xs={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Grid size={teamWidth} sx={{ display: 'flex', flexDirection: 'row' }}>
             <Box>
               <Image
                 src={getFlagUrl(alliance.pick3.team?.countryCode.toLowerCase())}

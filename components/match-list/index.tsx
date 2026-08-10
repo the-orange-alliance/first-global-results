@@ -56,35 +56,40 @@ const MatchList: React.FC<MatchListProps> = ({
     <Stack
       direction="column"
       spacing={0.25}
-      alignItems={align === "center" ? "center" : "flex-start"}
       key="toplevel"
+      sx={{
+        alignItems: align === "center" ? "center" : "flex-start"
+      }}
     >
       {groupByTournamentLevel.map((level, index) => (
         <>
           <Stack
             direction="column"
             spacing={0.25}
-            alignItems="stretch"
-            mb={level.key > 1 ? undefined : 2}
             key={level.key}
-          >
+            sx={{
+              alignItems: "stretch",
+              mb: level.key > 1 ? undefined : 2
+            }}>
             <Stack
               direction="row"
-              justifyContent="center"
-              alignItems="center"
-              py={0.75}
-              bgcolor="rgba(0, 0, 0, 0.02)"
-            >
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                py: 0.75,
+                bgcolor: "rgba(0, 0, 0, 0.02)"
+              }}>
               <Box
-                bgcolor="white"
-                border={1}
-                borderColor="divider"
-                py={0.675}
-                px={1.75}
-                borderRadius={4}
-                fontSize="0.875rem"
-                fontWeight={500}
-              >
+                sx={{
+                  bgcolor: "white",
+                  border: 1,
+                  borderColor: "divider",
+                  py: 0.675,
+                  px: 1.75,
+                  borderRadius: 4,
+                  fontSize: "0.875rem",
+                  fontWeight: 500
+                }}>
                 {level.title} Matches
               </Box>
             </Stack>
@@ -92,29 +97,23 @@ const MatchList: React.FC<MatchListProps> = ({
               <Stack
                 key={match.eventKey + "-" + match.tournamentKey + "-" + match.id}
                 direction="row"
-                justifyContent="flex-end"
-                alignItems="center"
-                bgcolor={index % 2 === 0 ? "white" : "rgba(0, 0, 0, 0.02)"}
-                sx={
-                  match.participants.length > 4
-                    ? {
-                      fontSize: "1rem",
-                      "@media (max-width: 500px)": {
-                        fontSize: "0.875rem",
-                      },
-                      "@media (max-width: 400px)": {
-                        fontSize: "0.75rem",
-                      },
-                    }
-                    : undefined
-                }
-              >
+                sx={[{
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                  bgcolor: index % 2 === 0 ? "white" : "rgba(0, 0, 0, 0.02)"
+                }, match.participants.length > 4
+                  ? {
+                    fontSize: "1rem",
+                    "@media (max-width: 500px)": {
+                      fontSize: "0.875rem",
+                    },
+                    "@media (max-width: 400px)": {
+                      fontSize: "0.75rem",
+                    },
+                  }
+                  : undefined]}>
                 <Typography
-                  fontSize="0.75em"
                   onClick={() => detailsDialog.show(match)}
-                  px="1em"
-                  textAlign="center"
-                  fontWeight={match.played ? 500 : undefined}
                   color={
                     match.played
                       ? match.redScore > match.blueScore
@@ -124,18 +123,26 @@ const MatchList: React.FC<MatchListProps> = ({
                           : "var(--green)"
                       : "text.secondary"
                   }
-                  sx={match.played ? { cursor: 'pointer' } : undefined}
                   title={match.played ? "View match breakdown" : undefined}
-                >
+                  sx={[{
+                    fontSize: "0.75em",
+                    px: "1em",
+                    textAlign: "center",
+                    fontWeight: match.played ? 500 : undefined
+                  }, match.played ? { cursor: 'pointer' } : undefined]}>
                   {match.name.replace("Qualification", "Ranking")}
                 </Typography>
-                <Stack direction="row" height="100%">
+                <Stack direction="row" sx={{
+                  height: "100%"
+                }}>
                   <Stack
                     direction={{
                       xs: "column",
                       md: type === "column" ? "column" : "row",
                     }}
-                    height="100%"
+                    sx={{
+                      height: "100%"
+                    }}
                   >
                     <MatchTeams
                       alliance="red"
@@ -178,7 +185,9 @@ const MatchList: React.FC<MatchListProps> = ({
           </Stack>
 
           {level.key > 1 && (
-            <Typography variant="caption" mb={2}>
+            <Typography variant="caption" sx={{
+              mb: 2
+            }}>
               <u>Underline</u> shows teams who played during the match
             </Typography>
           )}
