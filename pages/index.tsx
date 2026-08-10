@@ -1,23 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getApiBase } from "@/lib";
-import YearPage from "@/components/year-page";
+import YearPage, { getDefaultTab } from "@/components/year-page";
 import { pastYears, yearData } from "@/lib/data";
+
+// The live season is always the one after the most recently archived year.
+const currentYear = pastYears[pastYears.length - 1] + 1;
 
 export default function Home({ data: initialData }) {
   const router = useRouter();
-  const { year } = router.query;
-  const yearI = parseInt(year as string);
-  const finalsTab = yearI < 2024 ? "finals" : 'alliance_finals';
-  const roundRobinTab = yearI < 2024 ? "round_robin" : 'tournament';
 
   const [data, setData] = useState(initialData);
-  const [tab, setTab] = useState(
-    initialData.finals?.length > 0
-      ? finalsTab
-      : initialData.round_robin?.length > 0
-        ? roundRobinTab
-        : "rankings"
+  const [tab, setTab] = useState(() =>
+    getDefaultTab(initialData, currentYear)
   );
   const [teamModal, setTeamModal] = useState<string | null>(null);
 
@@ -55,7 +50,7 @@ export default function Home({ data: initialData }) {
       handleModalClose={handleModalClose}
       tab={tab}
       handleTabChange={handleTabChange}
-      yearData={yearData[pastYears[pastYears.length - 1] + 1]}
+      yearData={yearData[currentYear]}
     />
   );
 }

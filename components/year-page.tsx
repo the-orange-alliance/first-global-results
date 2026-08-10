@@ -26,6 +26,19 @@ interface IProps {
   yearData: YearData;
 }
 
+/**
+ * Picks the tab to open on first paint.  Mirrors the render conditions in the
+ * TabList below, in the same order, so it can never select a tab that isn't
+ * rendered — which would leave the panel blank until the user clicked.
+ */
+export const getDefaultTab = (data: any, year: number): string => {
+  if (data.alliances_finals?.length > 0) return "alliance_finals";
+  if (data.alliances_round_robin?.length > 0) return "tournament";
+  if (data.finals?.length > 0 && year < 2024) return "finals";
+  if (data.round_robin?.length > 0 && year < 2024) return "round_robin";
+  return "rankings";
+};
+
 const YearPage = ({
   data,
   teamModal,
@@ -68,14 +81,20 @@ const YearPage = ({
             <Typography variant="subtitle1">{yearData.date}</Typography>
           </Stack>
 
-          <Button
-            variant="contained"
-            startIcon={<StreamIcon />}
-            href={yearData.watchLinks.main}
-            target="_blank"
-          >
-            Watch Live
-          </Button>
+          {yearData.watchLinks ? (
+            <Button
+              variant="contained"
+              startIcon={<StreamIcon />}
+              href={yearData.watchLinks.main}
+              target="_blank"
+            >
+              Watch Live
+            </Button>
+          ) : (
+            <Button variant="contained" startIcon={<StreamIcon />} disabled>
+              Streams Coming Soon
+            </Button>
+          )}
         </Stack>
 
         <Paper sx={{ p: 1 }} variant="outlined">

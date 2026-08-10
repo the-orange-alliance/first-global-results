@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getApiBase } from "@/lib";
 import { yearData } from "@/lib/data";
-import YearPage from "@/components/year-page";
+import YearPage, { getDefaultTab } from "@/components/year-page";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 type Props = {
@@ -37,17 +37,14 @@ async function getServerSideProps(context) {
 function PastYear({
   data: initialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [data] = useState(initialData);
-  const [tab, setTab] = useState(
-    initialData.finals?.length > 0
-      ? "finals"
-      : initialData.round_robin?.length > 0
-      ? "round_robin"
-      : "rankings"
-  );
-  const [teamModal, setTeamModal] = useState<string | null>(null);
   const router = useRouter();
   const { year } = router.query;
+
+  const [data] = useState(initialData);
+  const [tab, setTab] = useState(() =>
+    getDefaultTab(initialData, parseInt(year as string))
+  );
+  const [teamModal, setTeamModal] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof router.query.country === "string") {

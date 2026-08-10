@@ -1,10 +1,10 @@
 export const watchLinks = {
   all: "https://first.global/live",
   main: "https://first.global/live",
-  field1: "https://youtu.be/FbAeVwfciMQ",
-  field2: "https://youtu.be/EMmcTueSVu0",
-  field3: "https://youtu.be/-fznHfw67Mg",
-  field4: "https://youtu.be/W_ZVyhQoIOg",
+  field1: "https://first.global/live",
+  field2: "https://first.global/live",
+  field3: "https://first.global/live",
+  field4: "https://first.global/live",
   field5: "https://first.global/live",
 };
 
@@ -13,10 +13,19 @@ export type YearData = {
   date: string;
   customRankingName: string;
   customRankingKey: string;
-  watchLinks: typeof watchLinks;
+  // `null` until the season's streams are published.  While null the "Watch
+  // Live" button renders as a disabled "Streams Coming Soon" state.
+  watchLinks: typeof watchLinks | null;
 };
 
 export const yearData: { [key: number]: YearData } = {
+  2026: {
+    year: "2026",
+    date: "7-10 October 2026 in Incheon",
+    customRankingName: "Climb Points",
+    customRankingKey: "climbPoints",
+    watchLinks: null,
+  },
   2025: {
     year: "2025",
     date: "29 October-1 November 2025 in Panamá City",
@@ -79,4 +88,4 @@ export const yearData: { [key: number]: YearData } = {
   },
 };
 
-export const pastYears = [2022, 2023, 2024];
+export const pastYears = [2022, 2023, 2024, 2025];

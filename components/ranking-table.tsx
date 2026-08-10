@@ -25,7 +25,6 @@ interface Rank {
   ties: number;
   rankingScore: number;
   highestScore: number;
-  carbonPoints: number;
   allianceKey: string;
   team: any;
 }

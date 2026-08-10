@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import RankingCard from "@/components/pit-display/ranking-card";
 import MatchesCard from "@/components/pit-display/matches-card";
+import { pastYears } from "@/lib/data";
 
 interface PitDisplayProps {
   data: any;
@@ -29,7 +30,7 @@ const PitDisplay: React.FC<PitDisplayProps> = ({ data, year, sort }) => {
           />
           <div className="pd-header__content">
             <h1 className="pd-header__title">
-              {year ?? '2024'} <em>FIRST</em> Global Challenge
+              {year ?? pastYears[pastYears.length - 1] + 1} <em>FIRST</em> Global Challenge
             </h1>
             <h2 className="pd-header__description">
               Real-time results are available at{" "}
