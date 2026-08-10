@@ -1,11 +1,11 @@
 import { watchLinks } from "@/lib/data";
-import { Box, BoxTypeMap, Button, Link } from "@mui/material";
+import { Box, BoxProps, Button, Link } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
 interface MatchTimeProps {
   match: any;
-  width: BoxTypeMap["props"]["width"];
+  width: BoxProps["width"];
 }
 
 const MatchTime: React.FC<MatchTimeProps> = ({ match, width }) => {
