@@ -1,0 +1,53 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        # Matches the Node 24 LTS the project is developed on. Next.js 16
+        # requires >= 20.9.
+        node-version: [24]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        # `npm ci` fails outright if package-lock.json has drifted from
+        # package.json, which is part of what makes a tree deploy-ready.
+        run: npm ci
+
+      - name: Lint
+        # Next.js 16 removed `next lint`, and `next build` no longer lints, so
+        # this has to run as its own step.
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        # The build is the deploy-readiness signal: pages/index.tsx fetches
+        # https://api.first.global from getStaticProps at build time, so this
+        # also proves the upstream API is reachable and returning usable data.
+        run: npm run build
