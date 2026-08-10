@@ -1,10 +1,5 @@
 import React from "react";
-import type {
-  AppContextType,
-  AppInitialProps,
-  AppPropsType,
-  NextComponentType,
-} from "next/dist/shared/lib/utils";
+import type { AppProps } from "next/app";
 import Document, {
   Html,
   Head,
@@ -16,10 +11,10 @@ import { EmotionCache } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
 import { createEmotionCache } from "@/lib/emotion-cache";
 
-type EnhancedApp = NextComponentType<
-  AppContextType,
-  AppInitialProps,
-  AppPropsType & { emotionCache?: EmotionCache }
+// Public equivalent of the internal next/dist/shared/lib/utils types this file
+// used to import; those internal paths are not part of Next's public API.
+type EnhancedApp = React.ComponentType<
+  AppProps & { emotionCache?: EmotionCache }
 >;
 
 export default class FIRSTDocument extends Document {
@@ -31,9 +26,10 @@ export default class FIRSTDocument extends Document {
 
     ctx.renderPage = () =>
       originalRenderPage({
-        // eslint-disable-next-line react/display-name
-        enhanceApp: (App: EnhancedApp) => (props) =>
-          <App emotionCache={cache} {...props} />,
+        enhanceApp: (App: EnhancedApp) =>
+          function EnhanceApp(props) {
+            return <App emotionCache={cache} {...props} />;
+          },
       });
 
     const initialProps = await Document.getInitialProps(ctx);
