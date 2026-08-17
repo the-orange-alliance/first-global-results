@@ -1,0 +1,201 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  gate:
+    name: Verify CI is green
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    outputs:
+      ok: ${{ steps.gate.outputs.ok }}
+      sha: ${{ steps.sha.outputs.sha }}
+
+    steps:
+      - name: Resolve commit
+        id: sha
+        env:
+          EVENT_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: echo "sha=${EVENT_SHA:-$GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Check all CI workflows
+        id: gate
+        uses: the-orange-alliance/fgc-actions/ci-gate@v1
+        with:
+          workflows: Build
+          sha: ${{ steps.sha.outputs.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  # lib/index.ts picks its API base from NEXT_PUBLIC_STAGE_URL, and Next inlines
+  # NEXT_PUBLIC_* at build time. Stage and production are therefore genuinely
+  # different artifacts and have to be built separately.
+  build-stage:
+    name: Build (stage)
+    runs-on: ubuntu-latest
+    needs: gate
+    if: needs.gate.outputs.ok == 'true'
+    # `stage` carries no protection rules; declaring it here is only how the job
+    # gets at the environment's variables.
+    environment: stage
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.gate.outputs.sha }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Verify the stage flag is set
+        # An empty value is falsy in lib/index.ts, so a missing variable would
+        # silently produce a build that points at the production API.
+        env:
+          NEXT_PUBLIC_STAGE_URL: ${{ vars.NEXT_PUBLIC_STAGE_URL }}
+        run: |
+          test -n "$NEXT_PUBLIC_STAGE_URL" || {
+            echo "::error::NEXT_PUBLIC_STAGE_URL is not set on the stage environment"
+            exit 1
+          }
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        env:
+          NEXT_PUBLIC_STAGE_URL: ${{ vars.NEXT_PUBLIC_STAGE_URL }}
+        run: npm run build
+
+      - name: Upload release
+        uses: actions/upload-artifact@v7
+        with:
+          name: web-release-stage
+          path: |
+            .next
+            !.next/cache
+            public
+            next.config.js
+            package.json
+            package-lock.json
+          # upload-artifact excludes dotfiles by default, which would silently
+          # drop the entire .next build output.
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+  build-production:
+    name: Build (production)
+    runs-on: ubuntu-latest
+    needs: gate
+    if: needs.gate.outputs.ok == 'true'
+    # Deliberately no environment: NEXT_PUBLIC_STAGE_URL must be absent so
+    # getApiBase() falls through to the production API.
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.gate.outputs.sha }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload release
+        uses: actions/upload-artifact@v7
+        with:
+          name: web-release-production
+          path: |
+            .next
+            !.next/cache
+            public
+            next.config.js
+            package.json
+            package-lock.json
+          # upload-artifact excludes dotfiles by default, which would silently
+          # drop the entire .next build output.
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy-stage:
+    name: Deploy to stage
+    runs-on: ubuntu-latest
+    needs: [gate, build-stage]
+    environment: stage
+    concurrency:
+      group: deploy-web-stage
+      cancel-in-progress: false
+
+    steps:
+      - name: Download release
+        uses: actions/download-artifact@v8
+        with:
+          name: web-release-stage
+          path: release
+
+      - name: Deploy
+        uses: the-orange-alliance/fgc-actions/deploy@v1
+        with:
+          source-dir: release
+          commit: ${{ needs.gate.outputs.sha }}
+          host: ${{ secrets.DEPLOY_HOST }}
+          ssh-user: ${{ vars.DEPLOY_USER }}
+          ssh-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          known-hosts: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          deploy-root: ${{ vars.DEPLOY_ROOT }}
+          app-path: ${{ vars.APP_PATH }}
+          pm2-name: ${{ vars.PM2_NAME }}
+          health-url: ${{ vars.HEALTH_URL }}
+
+  deploy-production:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    needs: [gate, build-production, deploy-stage]
+    environment: production
+    concurrency:
+      group: deploy-web-production
+      cancel-in-progress: false
+
+    steps:
+      - name: Download release
+        uses: actions/download-artifact@v8
+        with:
+          name: web-release-production
+          path: release
+
+      - name: Deploy
+        uses: the-orange-alliance/fgc-actions/deploy@v1
+        with:
+          source-dir: release
+          commit: ${{ needs.gate.outputs.sha }}
+          host: ${{ secrets.DEPLOY_HOST }}
+          ssh-user: ${{ vars.DEPLOY_USER }}
+          ssh-key: ${{ secrets.DEPLOY_SSH_KEY }}
+          known-hosts: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          deploy-root: ${{ vars.DEPLOY_ROOT }}
+          app-path: ${{ vars.APP_PATH }}
+          pm2-name: ${{ vars.PM2_NAME }}
+          health-url: ${{ vars.HEALTH_URL }}
