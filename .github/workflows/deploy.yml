@@ -168,6 +168,7 @@ jobs:
           deploy-root: ${{ vars.DEPLOY_ROOT }}
           app-path: ${{ vars.APP_PATH }}
           pm2-name: ${{ vars.PM2_NAME }}
+          keep-releases: ${{ vars.KEEP_RELEASES }}
           health-url: ${{ vars.HEALTH_URL }}
 
   deploy-production:
@@ -198,4 +199,5 @@ jobs:
           deploy-root: ${{ vars.DEPLOY_ROOT }}
           app-path: ${{ vars.APP_PATH }}
           pm2-name: ${{ vars.PM2_NAME }}
+          keep-releases: ${{ vars.KEEP_RELEASES }}
           health-url: ${{ vars.HEALTH_URL }}
