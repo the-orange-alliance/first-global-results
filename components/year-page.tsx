@@ -128,11 +128,11 @@ const YearPage = ({
                   <Tab label="Tournament" value="tournament" />
                 )}
 
-                {data.finals?.length > 0 && yearI < 2024 && (
+                {data.finals?.length > 0 && yearI < 2023 && (
                   <Tab label="Finals" value="finals" />
                 )}
 
-                {data.round_robin?.length > 0 && yearI < 2024 && (
+                {data.round_robin?.length > 0 && yearI < 2023 && (
                   <Tab label="Round Robin" value="round_robin" />
                 )}
 
