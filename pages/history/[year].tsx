@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { getApiBase } from "@/lib";
+import { useCallback, useEffect, useState } from "react";
+import Router, { useRouter } from "next/router";
+import { getResultsUrl } from "@/lib";
 import { yearData } from "@/lib/data";
 import YearPage, { getDefaultTab } from "@/components/year-page";
 import { TeamLinkProvider } from "@/components/team-link";
@@ -20,7 +20,7 @@ async function getServerSideProps(context) {
       },
     };
   }
-  const res = await fetch(getApiBase() + "/v1?year=" + year, {
+  const res = await fetch(getResultsUrl(year), {
     // Force cache because this data never changes.
     cache: "force-cache",
     next: {
@@ -55,20 +55,25 @@ function PastYear({
     }
   }, [router.query.country]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
-    setTab(newValue);
-  };
+  const handleTabChange = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setTab(newValue);
+    },
+    []
+  );
 
-  const handleModalClose = () => {
+  // See the note in pages/index.tsx for why this navigates through the router
+  // singleton instead of the hook's instance.
+  const handleModalClose = useCallback(() => {
     // Back to this year's page, not "/". The href/as form keeps the push on the
     // current page so `shallow` is honoured and getServerSideProps doesn't rerun.
-    router.push(
+    Router.push(
       { pathname: "/history/[year]", query: { year } },
       `/history/${year}`,
       { shallow: true }
     );
     setTeamModal(null);
-  };
+  }, [year]);
 
   return (
     <TeamLinkProvider basePath={`/history/${year}`}>

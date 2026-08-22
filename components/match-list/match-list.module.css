@@ -1,0 +1,236 @@
+/*
+ * Static styles for the match rows.
+ *
+ * These used to be MUI `sx` objects, which cost ~33 Emotion serialisations per
+ * row.  At ~380 matches that was the dominant cost of opening the tab, so the
+ * row markup is plain DOM and every style below is a static class.
+ *
+ * Colour custom properties (--red, --lighter-blue, ...) are declared globally
+ * in pages/_app.tsx.  Values copied out of lib/theme.ts are noted inline,
+ * because plain CSS can't read the MUI palette.
+ */
+
+/* ---------------------------------------------------------------- rows ---- */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  /* theme.spacing = 10, so the old Stack spacing={0.25} was 2.5px. */
+  gap: 2.5px;
+  align-items: stretch;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #fff;
+  /* Off-screen rows skip layout and paint.  `auto` lets the browser remember
+     each row's real height once measured, so the scrollbar stays honest. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 32px;
+}
+
+.row:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Playoff matches carry 8 participants, so they shrink to stay on one line. */
+.wide {
+  font-size: 1rem;
+}
+
+@media (max-width: 500px) {
+  .wide {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .wide {
+    font-size: 0.75rem;
+  }
+}
+
+/* ----------------------------------------------------------- match name --- */
+
+.name {
+  margin: 0;
+  padding: 0 1em;
+  font-size: 0.75em;
+  line-height: 1.5; /* theme.typography.body1 */
+  letter-spacing: 0;
+  text-align: center;
+  color: #3e5060; /* theme.palette.text.secondary === grey[700] */
+}
+
+.played {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.redWin {
+  color: var(--red);
+}
+
+.blueWin {
+  color: var(--blue);
+}
+
+.tie {
+  color: var(--green);
+}
+
+/* -------------------------------------------------------------- teams ----- */
+
+.teams {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.alliances {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.alliance {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  background-color: var(--alliance-bg);
+}
+
+/* Carried as custom properties so `.selected` below can pick up the right
+   accent without either side needing an inline style object per row. */
+.allianceRed {
+  --alliance: var(--red);
+  --alliance-bg: var(--lighter-red);
+}
+
+.allianceBlue {
+  --alliance: var(--blue);
+  --alliance-bg: var(--lighter-blue);
+}
+
+.team {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  justify-content: center;
+  align-items: center;
+  width: 4.75em;
+  height: 100%;
+  padding: 0.375em 0.5em;
+  font-size: 0.875em;
+  text-align: center;
+}
+
+.winner {
+  font-weight: 700;
+}
+
+/* Marks teams that were on the field for this match. */
+.underline {
+  text-decoration: underline;
+}
+
+.selected {
+  color: #fff;
+  background-color: var(--alliance);
+}
+
+.flag {
+  flex: none;
+  display: block;
+  width: 1em;
+  height: 0.75em;
+  background-color: #fff;
+}
+
+.teamLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.teamLink:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.struck {
+  text-decoration: line-through;
+}
+
+/* ------------------------------------------------------------- scores ----- */
+
+.scores {
+  display: flex;
+  flex-direction: column;
+}
+
+.score {
+  width: 4.25em;
+  padding: 0.375em 1em;
+  font-size: 0.875em;
+  text-align: center;
+}
+
+.redScore {
+  background-color: var(--light-red);
+}
+
+.blueScore {
+  background-color: var(--light-blue);
+}
+
+/* --------------------------------------------------------------- time ----- */
+
+.time {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  width: 4em;
+  padding: 0.375em 0.5em;
+  font-size: 0.875em;
+  text-align: center;
+  background-color: #f3f6f9; /* theme.palette.grey[50] */
+}
+
+.live {
+  background-color: #007fff; /* theme.palette.primary.main */
+}
+
+.watchLink {
+  padding: 0 0.5em;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.watchLink:hover {
+  color: #ffffffbf;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------------- md and wider ---- */
+/*
+ * The old `direction={{ xs: "column", md: "row" }}` props.  `.column` on the
+ * list root is the `type="column"` variant used inside the team modal, which
+ * stays stacked at every width.
+ */
+
+@media (min-width: 900px) {
+  .list:not(.column) .alliances,
+  .list:not(.column) .scores {
+    flex-direction: row;
+  }
+
+  .list:not(.column) .time {
+    width: 8em;
+  }
+}

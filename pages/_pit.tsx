@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PitDisplay from "@/components/pit-display";
-import { getApiBase } from "@/lib";
+import { getResultsUrl } from "@/lib";
 import { useRouter } from "next/router";
 
 export default function Pit({ data: initialData }) {
@@ -12,7 +12,7 @@ export default function Pit({ data: initialData }) {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(getApiBase() + `/v1${year ? `?year=${year}` : ""}`);
+        const res = await fetch(getResultsUrl(Array.isArray(year) ? year[0] : year));
         const data = await res.json();
         setData(data);
         setIsError(false);
@@ -50,7 +50,7 @@ export default function Pit({ data: initialData }) {
 
 export async function getServerSideProps({ query, res }) {
   const { year } = query;
-  const req = await fetch(getApiBase() + `/v1${year ? `?year=${year}` : ""}`);
+  const req = await fetch(getResultsUrl(year));
   const data = await req.json();
 
   // tell browser to cache this page for 60 seconds

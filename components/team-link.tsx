@@ -36,16 +36,24 @@ export const TeamLinkProvider: React.FC<TeamLinkProviderProps> = ({
   children,
 }) => {
   const router = useRouter();
-  const { pathname, query } = router;
+  const { pathname } = router;
+  // Depend on the one param that matters rather than the whole query object,
+  // which Next hands back with a new identity on every route event.  That
+  // churn used to give `build` a new identity too, re-rendering every row that
+  // consumes this context.  `year` fills the [year] segment of the history
+  // route; the only other key ever present is `country`, which the builder
+  // overwrites anyway.
+  const year = router.query.year;
 
   const build = useCallback<TeamLinkBuilder>(
     (country) => ({
-      // Spreading the existing query preserves the `year` param that fills the
-      // [year] segment of the history route.
-      href: { pathname, query: { ...query, country } },
+      href: {
+        pathname,
+        query: year === undefined ? { country } : { year, country },
+      },
       as: `${basePath}/team/${country}`,
     }),
-    [pathname, query, basePath]
+    [pathname, year, basePath]
   );
 
   return (

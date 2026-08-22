@@ -18,6 +18,33 @@ export const getApiBase = (forceClient = false) => {
   }
 };
 
+/**
+ * URL for a season's results document.
+ *
+ * `excludeMatchDetails` drops `matches[].details`, which is roughly a third of
+ * the payload and is only ever read for the one match whose breakdown is open.
+ * The details modal fetches that on demand via {@link getMatchUrl}.
+ */
+export const getResultsUrl = (year?: string | number | null) => {
+  const params = new URLSearchParams({ excludeMatchDetails: "true" });
+  if (year) params.set("year", String(year));
+  return `${getApiBase()}/v1?${params.toString()}`;
+};
+
+/** URL for a single raw match document, details included. */
+export const getMatchUrl = (
+  year: string | number,
+  tournamentKey: string,
+  id: number
+) => {
+  const params = new URLSearchParams({
+    year: String(year),
+    tournamentKey,
+    id: String(id),
+  });
+  return `${getApiBase()}/v1/matches?${params.toString()}`;
+};
+
 export const marquee = (items: number, speed: number = 50) =>
   `${(items * 48) / speed}s linear 0s infinite normal none running marquee`;
 

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { getApiBase } from "@/lib";
+import { useCallback, useEffect, useState } from "react";
+import Router, { useRouter } from "next/router";
+import { getResultsUrl } from "@/lib";
 import YearPage, { getDefaultTab } from "@/components/year-page";
 import { TeamLinkProvider } from "@/components/team-link";
 import { pastYears, yearData } from "@/lib/data";
@@ -20,7 +20,7 @@ export default function Home({ data: initialData }) {
   useEffect(() => {
     // Auto refresh data every 1 minute
     const interval = setInterval(async () => {
-      const res = await fetch(getApiBase() + "/v1");
+      const res = await fetch(getResultsUrl());
       const data = await res.json();
       setData(data);
     }, 60 * 1000);
@@ -35,14 +35,22 @@ export default function Home({ data: initialData }) {
     }
   }, [router.query.country]);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
-    setTab(newValue);
-  };
+  const handleTabChange = useCallback(
+    (event: React.SyntheticEvent, newValue: string) => {
+      setTab(newValue);
+    },
+    []
+  );
 
-  const handleModalClose = () => {
-    router.push("/", undefined, { shallow: true });
+  // Navigates through the router singleton rather than the hook's instance:
+  // useRouter() hands back a fresh object every render, so depending on it
+  // would recreate this handler each time.  That churn re-ran TeamModel's
+  // effect — which filters every match — on every render, and defeated the
+  // memoisation in MatchList.
+  const handleModalClose = useCallback(() => {
+    Router.push("/", undefined, { shallow: true });
     setTeamModal(null);
-  };
+  }, []);
 
   return (
     <TeamLinkProvider basePath="">
@@ -59,7 +67,7 @@ export default function Home({ data: initialData }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(getApiBase() + "/v1");
+  const res = await fetch(getResultsUrl());
   const data = await res.json();
 
   return {

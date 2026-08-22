@@ -1,17 +1,21 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
-import MatchScores from "@/components/match-list/scores";
-import MatchTeams from "@/components/match-list/teams";
-import MatchTime from "@/components/match-list/time";
+import NiceModal from "@ebay/nice-modal-react";
 import { DetailsModal } from "../match-details-modal";
-import { useModal } from "@ebay/nice-modal-react";
+import MatchRow from "./row";
+import { buildGroups } from "./model";
+import type { MatchRowModel } from "./model";
+import styles from "./match-list.module.css";
 
 interface MatchListProps {
   matches: any[];
   type?: "column" | "responsive";
   align?: "start" | "center";
-  selectedTeamKey?: string;
+  selectedTeamKey?: number;
 }
+
+/** How often the "Watch Live" window is re-evaluated. */
+const TICK_MS = 30 * 1000;
 
 const MatchList: React.FC<MatchListProps> = ({
   matches,
@@ -19,54 +23,62 @@ const MatchList: React.FC<MatchListProps> = ({
   type = "responsive",
   selectedTeamKey,
 }) => {
-  const sortedMatches = useMemo(
+  // Row models are cached by match key across renders so that the live page's
+  // 60s refetch, which replaces the whole matches array, doesn't invalidate
+  // every row's props.  See buildGroups.
+  //
+  // Held in state rather than a ref so they can be read during render: this is
+  // a pure cache, so the same inputs still produce the same output.
+  const [cache] = useState(() => new Map<string, any>());
+  const [rawByKey] = useState(() => new Map<string, any>());
+
+  // Null until mounted: times are formatted in the viewer's timezone, so
+  // computing them during SSR would both be wrong and risk a hydration
+  // mismatch.  Rows show "TBD" for the first paint, as they always have.
+  const [now, setNow] = useState<number | null>(null);
+
+  const groups = useMemo(
     () =>
-      matches.sort((a, b) => {
-        const matchNumber1 = parseInt(a.name.split(" ")[2]);
-        const matchNumber2 = parseInt(b.name.split(" ")[2]);
-        return matchNumber1 - matchNumber2;
-      }),
-    [matches]
+      buildGroups(matches, cache, rawByKey, now, selectedTeamKey),
+    [matches, now, selectedTeamKey, cache, rawByKey]
   );
 
-  const groupByTournamentLevel = useMemo(() => {
-    const groups: { [key: number]: any[] } = {};
-    sortedMatches.forEach((match) => {
-      if (!groups[match.tournamentKey]) {
-        groups[match.tournamentKey] = [];
-      }
-      groups[match.tournamentKey].push(match);
-    });
+  const hasUnplayed = useMemo(() => matches.some((m) => !m.played), [matches]);
 
-    const result = Object.entries<any[]>(groups).map(
-      ([tournamentKey, matches]) => ({
-        key: parseInt(tournamentKey.replace('t', '')),
-        title: matches[0].name.match(/(.*) Match .*/)[1],
-        matches,
-      })
-    );
-    result.sort((a, b) => b.key - a.key);
-    return result;
-  }, [sortedMatches]);
+  // One timer for the whole list.  This used to be a setInterval per unplayed
+  // match, which meant 300+ concurrent timers each firing its own setState
+  // during a live event.
+  useEffect(() => {
+    setNow(Date.now());
+    if (!hasUnplayed) return;
+    const interval = setInterval(() => setNow(Date.now()), TICK_MS);
+    return () => clearInterval(interval);
+  }, [hasUnplayed]);
 
-
-  const detailsDialog = useModal(DetailsModal);
+  // NiceModal's standalone show() dispatches straight to its store. useModal()
+  // would subscribe this component to the modal context instead, so every open
+  // and close re-rendered all ~380 rows.
+  const openDetails = useCallback((key: string) => {
+    const match = rawByKey.get(key);
+    if (match?.played) NiceModal.show(DetailsModal, match);
+  }, [rawByKey]);
 
   return (
     <Stack
       direction="column"
       spacing={0.25}
-      key="toplevel"
+      className={
+        type === "column" ? `${styles.list} ${styles.column}` : styles.list
+      }
       sx={{
         alignItems: align === "center" ? "center" : "flex-start"
       }}
     >
-      {groupByTournamentLevel.map((level, index) => (
-        <>
+      {groups.map((level) => (
+        <React.Fragment key={level.key}>
           <Stack
             direction="column"
             spacing={0.25}
-            key={level.key}
             sx={{
               alignItems: "stretch",
               mb: level.key > 1 ? undefined : 2
@@ -93,95 +105,15 @@ const MatchList: React.FC<MatchListProps> = ({
                 {level.title} Matches
               </Box>
             </Stack>
-            {level.matches.map((match, index) => (
-              <Stack
-                key={match.eventKey + "-" + match.tournamentKey + "-" + match.id}
-                direction="row"
-                sx={[{
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                  bgcolor: index % 2 === 0 ? "white" : "rgba(0, 0, 0, 0.02)"
-                }, match.participants.length > 4
-                  ? {
-                    fontSize: "1rem",
-                    "@media (max-width: 500px)": {
-                      fontSize: "0.875rem",
-                    },
-                    "@media (max-width: 400px)": {
-                      fontSize: "0.75rem",
-                    },
-                  }
-                  : undefined]}>
-                <Typography
-                  onClick={() => detailsDialog.show(match)}
-                  color={
-                    match.played
-                      ? match.redScore > match.blueScore
-                        ? "var(--red)"
-                        : match.blueScore > match.redScore
-                          ? "var(--blue)"
-                          : "var(--green)"
-                      : "text.secondary"
-                  }
-                  title={match.played ? "View match breakdown" : undefined}
-                  sx={[{
-                    fontSize: "0.75em",
-                    px: "1em",
-                    textAlign: "center",
-                    fontWeight: match.played ? 500 : undefined
-                  }, match.played ? { cursor: 'pointer' } : undefined]}>
-                  {match.name.replace("Qualification", "Ranking")}
-                </Typography>
-                <Stack direction="row" sx={{
-                  height: "100%"
-                }}>
-                  <Stack
-                    direction={{
-                      xs: "column",
-                      md: type === "column" ? "column" : "row",
-                    }}
-                    sx={{
-                      height: "100%"
-                    }}
-                  >
-                    <MatchTeams
-                      alliance="red"
-                      isWinner={match.redScore > match.blueScore}
-                      selectedTeamKey={selectedTeamKey}
-                      participants={match.participants.filter(
-                        (p) => p.station < 20
-                      )}
-                    />
-                    <MatchTeams
-                      alliance="blue"
-                      isWinner={match.blueScore > match.redScore}
-                      selectedTeamKey={selectedTeamKey}
-                      participants={match.participants.filter(
-                        (p) => p.station > 20
-                      )}
-                    />
-                  </Stack>
-                </Stack>
-                {match.played ? (
-                  <MatchScores
-                    red={match.redScore}
-                    blue={match.blueScore}
-                    direction={{
-                      xs: "column",
-                      md: type === "column" ? "column" : "row",
-                    }}
-                  />
-                ) : (
-                  <MatchTime
-                    match={match}
-                    width={{
-                      xs: "4em",
-                      md: type === "column" ? "4em" : "8em",
-                    }}
-                  />
-                )}
-              </Stack>
-            ))}
+            <div className={styles.rows}>
+              {level.rows.map((row: MatchRowModel) => (
+                <MatchRow
+                  key={row.key}
+                  model={row}
+                  onOpenDetails={openDetails}
+                />
+              ))}
+            </div>
           </Stack>
 
           {level.key > 1 && (
@@ -191,7 +123,7 @@ const MatchList: React.FC<MatchListProps> = ({
               <u>Underline</u> shows teams who played during the match
             </Typography>
           )}
-        </>
+        </React.Fragment>
       ))}
     </Stack>
   );
