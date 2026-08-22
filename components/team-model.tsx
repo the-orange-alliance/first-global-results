@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -6,7 +6,9 @@ import {
   DialogContent,
   DialogTitle,
   Link,
+  Paper,
   Slide,
+  Stack,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -19,8 +21,14 @@ import NextMatchIcon from "@mui/icons-material/ScheduleRounded";
 import moment from "moment";
 import DetailsList from "@/components/details-list";
 import MatchList from "@/components/match-list";
+import BrandedText from "@/components/awards-list/branded-text";
+import MedalLine from "@/components/awards-list/medal-line";
+import { teamAwards } from "@/components/awards-list/team-awards";
 import { pastYears, watchLinks, yearData } from "@/lib/data";
 import { AddOutlined } from "@mui/icons-material";
+
+/** Stable empty set: award lines in here never link back to this same modal. */
+const EMPTY_COUNTRIES = new Set<string>();
 
 interface TeamModelProps {
   country: string;
@@ -60,6 +68,13 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
       setCountryData({ team, rank, matches });
     }
   }, [country, data, onClose]);
+
+  // Hooks cannot sit behind the countryData guard below, so this runs on every
+  // render and simply yields nothing until a country is selected.
+  const awards = useMemo(
+    () => teamAwards(data?.awards, countryData?.team?.country),
+    [data?.awards, countryData?.team?.country]
+  );
 
   if (!countryData) return;
 
@@ -202,6 +217,45 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
             </DetailsList.Item>
           )}
         </DetailsList>
+
+        {awards.length > 0 && (
+          <Stack spacing={1.5} sx={{ mt: 2 }}>
+            {awards.map(({ award, lines }) => (
+              <Paper
+                key={award.name}
+                variant="outlined"
+                sx={{ p: { xs: 1.5, md: 2 } }}
+              >
+                <Typography variant="h6">
+                  <BrandedText>{award.name}</BrandedText>
+                </Typography>
+
+                {award.description && (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "text.secondary", mt: 0.25 }}
+                  >
+                    <BrandedText>{award.description}</BrandedText>
+                  </Typography>
+                )}
+
+                <Stack spacing={1} sx={{ mt: 1.5 }}>
+                  {lines.map((line) => (
+                    <MedalLine
+                      key={line.key}
+                      label={line.label}
+                      color={line.color}
+                      recipients={line.recipients}
+                      // Every recipient here is the team whose modal this is,
+                      // so a link would just point back at the open dialog.
+                      teamCountries={EMPTY_COUNTRIES}
+                    />
+                  ))}
+                </Stack>
+              </Paper>
+            ))}
+          </Stack>
+        )}
 
         <MatchList
           matches={matches}

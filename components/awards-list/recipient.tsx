@@ -69,12 +69,11 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
   const { country, countryCode, recipientName } = recipient;
   const teamLink = useTeamLink();
 
-  // The person or organization is the headline when there is one; the country
-  // they came from drops to a subtitle underneath.
-  const primary = recipientName || country;
   const isTeam = teamCountries.has(country);
 
-  const name = isTeam ? (
+  // The team name always carries the link, wherever it lands: the modal is
+  // about the team, not about the individual or sponsor being honoured.
+  const teamName = isTeam ? (
     <NextLink
       {...teamLink(country)}
       prefetch={false}
@@ -82,10 +81,10 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
       passHref
       legacyBehavior
     >
-      <Link underline="hover">{primary}</Link>
+      <Link underline="hover">{country}</Link>
     </NextLink>
   ) : (
-    primary
+    country
   );
 
   return (
@@ -95,8 +94,10 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
       </Box>
 
       <Box sx={{ minWidth: 0 }}>
+        {/* The person or organization is the headline when there is one, and
+            the team they represent drops to a subtitle underneath. */}
         <Typography component="div" sx={{ fontWeight: 500, lineHeight: 1.3 }}>
-          {name}
+          {recipientName || teamName}
         </Typography>
 
         {recipientName && (
@@ -105,7 +106,7 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
             component="div"
             sx={{ color: "text.secondary", lineHeight: 1.3 }}
           >
-            {country}
+            {teamName}
           </Typography>
         )}
       </Box>
