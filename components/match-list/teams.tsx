@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import Image from "next/image";
 import { Box, Link, Stack, Tooltip } from "@mui/material";
 import { getFlagUrl } from "@/lib";
+import { useTeamLink } from "@/components/team-link";
 
 type Alliance = "red" | "blue";
 
@@ -18,6 +19,8 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
   isWinner,
   selectedTeamKey,
 }) => {
+  const teamLink = useTeamLink();
+
   return (
     <Stack
       direction="row"
@@ -71,7 +74,7 @@ const MatchTeams: React.FC<MatchTeamsProps> = ({
             />
           </Box>
           <NextLink
-            href={`/team/${participant.country}`}
+            {...teamLink(participant.country)}
             prefetch={false}
             shallow
             passHref

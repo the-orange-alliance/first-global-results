@@ -59,7 +59,12 @@ const YearPage = ({
         title={`${yearData.year} FIRST Global Challenge Event Results`}
       />
       <Navigation />
-      <TeamModel country={teamModal} data={data} onClose={handleModalClose} />
+      <TeamModel
+        country={teamModal}
+        data={data}
+        year={yearI}
+        onClose={handleModalClose}
+      />
 
       <Container sx={{ pb: 4 }}>
         <Stack

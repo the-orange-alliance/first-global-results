@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import Image from "next/image";
 import { Box, Link, Typography } from "@mui/material";
 import { getFlagUrl } from "@/lib";
+import { useTeamLink } from "@/components/team-link";
 import type { AwardRecipient } from "./types";
 
 /**
@@ -58,14 +59,15 @@ interface RecipientProps {
   recipient: AwardRecipient;
   /**
    * Countries that have a ranking row this season. Only those open the team
-   * modal — `/team/:country` rewrites to `/`, and team-model.tsx bounces the
-   * user back to the home page when it can't find a matching ranking.
+   * modal — team-model.tsx closes itself immediately when it can't find a
+   * matching ranking, so a link for a non-competitor would just flicker.
    */
   teamCountries: Set<string>;
 }
 
 const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
   const { country, countryCode, recipientName } = recipient;
+  const teamLink = useTeamLink();
 
   // The person or organization is the headline when there is one; the country
   // they came from drops to a subtitle underneath.
@@ -74,7 +76,7 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
 
   const name = isTeam ? (
     <NextLink
-      href={`/team/${country}`}
+      {...teamLink(country)}
       prefetch={false}
       shallow
       passHref

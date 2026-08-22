@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import NextLink from "next/link";
+import { useTeamLink } from "@/components/team-link";
 import {
   Link,
   Table,
@@ -81,6 +82,7 @@ const RankingTable = ({
 }) => {
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<ColumnKey>("rank");
+  const teamLink = useTeamLink();
 
   const handleRequestSort = (key: ColumnKey) => {
     const isAsc = orderBy === key && order === "asc";
@@ -191,7 +193,7 @@ const RankingTable = ({
                       ranking.rank
                     ) : col.key === "team" ? (
                       <NextLink
-                        href={`/team/${ranking.team?.country}`}
+                        {...teamLink(ranking.team?.country)}
                         prefetch={false}
                         shallow
                         passHref

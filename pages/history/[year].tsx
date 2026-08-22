@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { getApiBase } from "@/lib";
 import { yearData } from "@/lib/data";
 import YearPage, { getDefaultTab } from "@/components/year-page";
+import { TeamLinkProvider } from "@/components/team-link";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 type Props = {
@@ -59,19 +60,27 @@ function PastYear({
   };
 
   const handleModalClose = () => {
-    router.push("/", undefined, { shallow: true });
+    // Back to this year's page, not "/". The href/as form keeps the push on the
+    // current page so `shallow` is honoured and getServerSideProps doesn't rerun.
+    router.push(
+      { pathname: "/history/[year]", query: { year } },
+      `/history/${year}`,
+      { shallow: true }
+    );
     setTeamModal(null);
   };
 
   return (
-    <YearPage
-      data={data}
-      teamModal={teamModal}
-      handleModalClose={handleModalClose}
-      tab={tab}
-      handleTabChange={handleTabChange}
-      yearData={yearData[parseInt(year as string)]}
-    />
+    <TeamLinkProvider basePath={`/history/${year}`}>
+      <YearPage
+        data={data}
+        teamModal={teamModal}
+        handleModalClose={handleModalClose}
+        tab={tab}
+        handleTabChange={handleTabChange}
+        yearData={yearData[parseInt(year as string)]}
+      />
+    </TeamLinkProvider>
   );
 }
 

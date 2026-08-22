@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getApiBase } from "@/lib";
 import YearPage, { getDefaultTab } from "@/components/year-page";
+import { TeamLinkProvider } from "@/components/team-link";
 import { pastYears, yearData } from "@/lib/data";
 
 // The live season is always the one after the most recently archived year.
@@ -44,14 +45,16 @@ export default function Home({ data: initialData }) {
   };
 
   return (
-    <YearPage
-      data={data}
-      teamModal={teamModal}
-      handleModalClose={handleModalClose}
-      tab={tab}
-      handleTabChange={handleTabChange}
-      yearData={yearData[currentYear]}
-    />
+    <TeamLinkProvider basePath="">
+      <YearPage
+        data={data}
+        teamModal={teamModal}
+        handleModalClose={handleModalClose}
+        tab={tab}
+        handleTabChange={handleTabChange}
+        yearData={yearData[currentYear]}
+      />
+    </TeamLinkProvider>
   );
 }
 
