@@ -108,8 +108,16 @@ const YearPage = ({
         <Paper sx={{ p: 1 }} variant="outlined">
           <TabContext value={tab}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              {/* Up to six tabs don't fit on a phone. Scrollable keeps them on
+                  one row and lets that row scroll on its own, rather than the
+                  widest tab dragging the whole page sideways. Above ~600px
+                  everything fits and this renders identically to a fixed
+                  TabList. */}
               <TabList
                 onChange={handleTabChange}
+                variant="scrollable"
+                scrollButtons="auto"
+                allowScrollButtonsMobile
               >
 
                 {showFinalsAlliances && (

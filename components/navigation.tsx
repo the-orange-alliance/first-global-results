@@ -2,13 +2,13 @@ import { pastYears, yearData } from "@/lib/data";
 import {
   Box,
   Button,
+  Container,
   Divider,
   Link,
   Menu,
   MenuItem,
   Stack,
 } from "@mui/material";
-import { Container } from "@mui/system";
 import { useState } from "react";
 
 const links = [
@@ -62,7 +62,12 @@ const Navigation = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          // The logo and the link row together need ~460px. Below that they
+          // wrap onto two centred lines instead of pushing the whole page into
+          // a horizontal scroll.
+          flexWrap: "wrap",
+          rowGap: 1,
+          justifyContent: { xs: "center", sm: "space-between" },
         }}
       >
         <img
