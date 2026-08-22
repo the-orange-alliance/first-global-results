@@ -16,6 +16,7 @@ import RankingTable from "./ranking-table";
 import TeamModel from "./team-model";
 import StreamIcon from "@mui/icons-material/PlayCircleOutlined";
 import AllianceTable from "./alliance-table";
+import AwardsList from "./awards-list";
 
 interface IProps {
   data: any;
@@ -150,6 +151,7 @@ const YearPage = ({
                   type="PLAYOFF"
                   extraRankingItemKey={yearData.customRankingKey}
                   extraRankingItemTitle={yearData.customRankingName}
+                  rankingScoreTitle={yearData.rankingScoreName}
                 />
               </TabPanel>
             )}
@@ -162,6 +164,7 @@ const YearPage = ({
                   type="PLAYOFF"
                   extraRankingItemKey={yearData.customRankingKey}
                   extraRankingItemTitle={yearData.customRankingName}
+                  rankingScoreTitle={yearData.rankingScoreName}
                 />
               </TabPanel>
             )}
@@ -173,6 +176,7 @@ const YearPage = ({
                 type="RANKING"
                 extraRankingItemKey={yearData.customRankingKey}
                 extraRankingItemTitle={yearData.customRankingName}
+                rankingScoreTitle={yearData.rankingScoreName}
               />
             </TabPanel>
 
@@ -190,7 +194,14 @@ const YearPage = ({
                 All times are displayed in your local timezone.
               </Typography>
             </TabPanel>
-            <TabPanel value="awards">TBD</TabPanel>
+            {/* `?? []` guards the history pages, which serve a force-cached
+                /v1 response that may predate the awards key. */}
+            <TabPanel value="awards" sx={{ p: { xs: 1, md: 2 } }}>
+              <AwardsList
+                awards={data.awards ?? []}
+                rankings={data.rankings ?? []}
+              />
+            </TabPanel>
           </TabContext>
         </Paper>
       </Container>

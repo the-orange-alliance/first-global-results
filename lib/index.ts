@@ -26,14 +26,20 @@ export const marquee = (items: number, speed: number = 50) =>
 // This serves as a basic lookup for flags, but also a cache-buster in case flags change
 export const getFlagUrl = (countryCode: string) => {
   const cacheBusterMap: Record<string, string> = {
+    // Codes 10-14 are the IAC codes for Team HOPE and the continental teams;
+    // their files carry a name suffix, so a bare "12.svg" would 404.
     10: "10_hope",
+    11: "11_south-america",
+    12: "12_oceania",
+    13: "13_north-america",
+    14: "14_europe",
     "sy": "sy_new",
     "cr": "cr_new",
   }
 
-  if (cacheBusterMap[countryCode]) {
-    countryCode = cacheBusterMap[countryCode];
-  }
+  // Normalize before the lookup, not after: the keys are lowercase, so an
+  // uppercase code like "SY" would otherwise miss and resolve to the stale file.
+  const code = countryCode.toLowerCase();
 
-  return `/static/flags/4x3/${countryCode.toLowerCase()}.svg`;
+  return `/static/flags/4x3/${cacheBusterMap[code] ?? code}.svg`;
 }

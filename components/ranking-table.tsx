@@ -31,8 +31,9 @@ interface Rank {
 type ColumnKey = keyof Rank | string;
 
 const makeColumns = (
-  customItemTitle: string,
-  customItemKey: string
+  customItemTitle: string | null,
+  customItemKey: string | null,
+  rankingScoreTitle: string
 ): {
   key: ColumnKey;
   label: string;
@@ -42,19 +43,25 @@ const makeColumns = (
   return [
     { key: "rank", label: "Rank", isSortable: true },
     { key: "team", label: "Team", isSortable: true },
-    { key: "rankingScore", label: "Ranking Score", isSortable: true },
+    { key: "rankingScore", label: rankingScoreTitle, isSortable: true },
     {
       key: "highestScore",
       label: "Highest Points",
       isSortable: true,
       hideOnPlayoffs: true,
     },
-    {
-      key: customItemKey,
-      label: customItemTitle,
-      isSortable: true,
-      hideOnPlayoffs: true,
-    },
+    // Seasons without a game-specific ranking stat leave both null; drop the
+    // column entirely rather than rendering an unlabelled, empty one.
+    ...(customItemKey && customItemTitle
+      ? [
+          {
+            key: customItemKey,
+            label: customItemTitle,
+            isSortable: true,
+            hideOnPlayoffs: true,
+          },
+        ]
+      : []),
     { key: "played", label: "Played", isSortable: true, hideOnPlayoffs: true },
   ];
 };
@@ -64,11 +71,13 @@ const RankingTable = ({
   type,
   extraRankingItemTitle,
   extraRankingItemKey,
+  rankingScoreTitle = "Ranking Score",
 }: {
   rankings: Rank[];
   type: "RANKING" | "PLAYOFF";
-  extraRankingItemTitle: string;
-  extraRankingItemKey: string;
+  extraRankingItemTitle: string | null;
+  extraRankingItemKey: string | null;
+  rankingScoreTitle?: string;
 }) => {
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<ColumnKey>("rank");
@@ -108,7 +117,11 @@ const RankingTable = ({
     return sorted;
   }, [order, orderBy, rankings]);
 
-  const columns = makeColumns(extraRankingItemTitle, extraRankingItemKey);
+  const columns = makeColumns(
+    extraRankingItemTitle,
+    extraRankingItemKey,
+    rankingScoreTitle
+  );
 
   return (
     <TableContainer>

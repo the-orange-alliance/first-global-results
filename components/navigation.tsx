@@ -1,4 +1,4 @@
-import { pastYears } from "@/lib/data";
+import { pastYears, yearData } from "@/lib/data";
 import {
   Box,
   Button,
@@ -39,6 +39,15 @@ const Navigation = () => {
     setAnchorEl(null);
   }
 
+  const historyYears = pastYears.map((year) => {
+    // split on "in"
+    const [yearLabel, location] = yearData[year].date.split(" in ");
+    return {
+      year,
+      label: `${yearLabel} (${location})`,
+    };
+  });
+
   return (
     <Box
       component="nav"
@@ -59,7 +68,7 @@ const Navigation = () => {
         <img
           src="https://first.global/wp-content/uploads/2017/11/FG-header-black.png"
           height={56}
-          alt="FIRST Global"
+          alt="FIRST Global logo"
         />
         <Stack
           direction="row"
@@ -102,14 +111,14 @@ const Navigation = () => {
           onClose={handleClose}
           slotProps={{ list: { onMouseLeave: handleClose } }}
         >
-          {pastYears.map((year) => (
+          {historyYears.map((yearInfo) => (
             <MenuItem
-              key={year}
+              key={yearInfo.year}
               onClick={handleClose}
               component={Link}
-              href={`/history/${year}`}
+              href={`/history/${yearInfo.year}`}
             >
-              {year}
+              {yearInfo.label}
             </MenuItem>
           ))}
         </Menu>

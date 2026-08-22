@@ -142,7 +142,10 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
         </Box>
 
         <DetailsList>
-          <DetailsList.Item icon={<RankIcon />} title="Ranking Score">
+          <DetailsList.Item
+            icon={<RankIcon />}
+            title={yearDataInfo?.rankingScoreName ?? "Ranking Score"}
+          >
             {rank.rankingScore}
           </DetailsList.Item>
           <DetailsList.Item icon={<HighestScoreIcon />} title="Highest Score">

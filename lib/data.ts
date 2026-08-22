@@ -11,8 +11,13 @@ export const watchLinks = {
 export type YearData = {
   year: string;
   date: string;
-  customRankingName: string;
-  customRankingKey: string;
+  // Label for the ranking-score column.  Seasons that scored it under another
+  // name override it here; everything else falls back to "Ranking Score".
+  rankingScoreName?: string;
+  // `null` for seasons without a game-specific ranking stat (e.g. 2019).  Both
+  // fields are null together, and the column is hidden from the ranking table.
+  customRankingName: string | null;
+  customRankingKey: string | null;
   // `null` until the season's streams are published.  While null the "Watch
   // Live" button renders as a disabled "Streams Coming Soon" state.
   watchLinks: typeof watchLinks | null;
@@ -86,6 +91,51 @@ export const yearData: { [key: number]: YearData } = {
       field5: "https://www.youtube.com/watch?v=tvajnIBsM9s",
     },
   },
+  2019: {
+    year: "2019",
+    date: "24-27 October 2019 in Dubai",
+    customRankingName: null,
+    customRankingKey: null,
+    watchLinks: {
+      all: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+      main: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+      field1: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+      field2: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+      field3: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+      field4: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+      field5: "https://www.youtube.com/watch?v=TWMRKjT7VdI",
+    },
+  },
+  2018: {
+    year: "2018",
+    date: "16-18 August 2018 in Mexico City",
+    customRankingName: "Parking Points",
+    customRankingKey: "parkingPoints",
+    watchLinks: {
+      all: "https://www.youtube.com/watch?v=nImLMbcu024",
+      main: "https://www.youtube.com/watch?v=nImLMbcu024",
+      field1: "https://www.youtube.com/watch?v=nImLMbcu024",
+      field2: "https://www.youtube.com/watch?v=nImLMbcu024",
+      field3: "https://www.youtube.com/watch?v=nImLMbcu024",
+      field4: "https://www.youtube.com/watch?v=nImLMbcu024",
+      field5: "https://www.youtube.com/watch?v=nImLMbcu024",
+    },
+  },
+  2017: {
+    year: "2017",
+    date: "16-18 July in Washington, D.C.",
+    customRankingName: null,
+    customRankingKey: null,
+    watchLinks: {
+      all: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+      main: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+      field1: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+      field2: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+      field3: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+      field4: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+      field5: "https://www.youtube.com/watch?v=Ddh0kF-DbSk",
+    },
+  },
 };
 
-export const pastYears = [2022, 2023, 2024, 2025];
+export const pastYears = [2017, 2018, 2019, 2022, 2023, 2024, 2025];
