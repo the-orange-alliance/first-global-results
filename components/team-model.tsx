@@ -24,11 +24,12 @@ import MatchList from "@/components/match-list";
 import BrandedText from "@/components/awards-list/branded-text";
 import MedalLine from "@/components/awards-list/medal-line";
 import { teamAwards } from "@/components/awards-list/team-awards";
+import type { TeamsByCode } from "@/components/awards-list/types";
 import { pastYears, watchLinks, yearData } from "@/lib/data";
 import { AddOutlined } from "@mui/icons-material";
 
-/** Stable empty set: award lines in here never link back to this same modal. */
-const EMPTY_COUNTRIES = new Set<string>();
+/** Stable empty map: award lines here never link back to this same modal. */
+const NO_TEAM_LINKS: TeamsByCode = new Map();
 
 interface TeamModelProps {
   country: string;
@@ -72,8 +73,8 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
   // Hooks cannot sit behind the countryData guard below, so this runs on every
   // render and simply yields nothing until a country is selected.
   const awards = useMemo(
-    () => teamAwards(data?.awards, countryData?.team?.country),
-    [data?.awards, countryData?.team?.country]
+    () => teamAwards(data?.awards, countryData?.team?.countryCode),
+    [data?.awards, countryData?.team?.countryCode]
   );
 
   if (!countryData) return;
@@ -248,7 +249,7 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
                       recipients={line.recipients}
                       // Every recipient here is the team whose modal this is,
                       // so a link would just point back at the open dialog.
-                      teamCountries={EMPTY_COUNTRIES}
+                      teamsByCode={NO_TEAM_LINKS}
                     />
                   ))}
                 </Stack>

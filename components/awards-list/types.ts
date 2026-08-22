@@ -24,3 +24,33 @@ export interface Award {
   /** Honorable mentions and other non-medal recipients. Always an array. */
   other: AwardRecipient[];
 }
+
+/**
+ * Competing teams for a season, keyed by normalized IAC code, mapped to the
+ * `country` value that season's team documents use.
+ *
+ * Awards and teams disagree on `country`: awards store a display name
+ * ("Poland"), while the teams collection stores whatever the season used —
+ * 2017 uses "POL". `countryCode` is the one field both agree on, so it is the
+ * join key, and the mapped value carries the team's own `country` for URLs.
+ */
+export type TeamsByCode = Map<string, string>;
+
+/** Codes are compared case-insensitively and untrimmed data does turn up. */
+export const normalizeCode = (code: string | undefined | null) =>
+  (code ?? "").trim().toUpperCase();
+
+/** Build the code -> country lookup from a season's ranking rows. */
+export const teamsByCodeFrom = (rankings: any[] | undefined): TeamsByCode => {
+  const map: TeamsByCode = new Map();
+
+  (rankings || []).forEach((rank) => {
+    const team = rank?.team;
+    const code = normalizeCode(team?.countryCode);
+    if (code && typeof team?.country === "string" && !map.has(code)) {
+      map.set(code, team.country);
+    }
+  });
+
+  return map;
+};

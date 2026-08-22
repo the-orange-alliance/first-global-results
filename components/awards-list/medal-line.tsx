@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Recipient from "./recipient";
-import type { AwardRecipient } from "./types";
+import type { AwardRecipient, TeamsByCode } from "./types";
 
 /** Medal slots in ceremony order. `silver` is the theme's grey[400]. */
 export const MEDALS = [
@@ -52,7 +52,7 @@ interface MedalLineProps {
   color: string;
   /** One entry for a medal, possibly several for honorable mentions. */
   recipients: AwardRecipient[];
-  teamCountries: Set<string>;
+  teamsByCode: TeamsByCode;
 }
 
 /**
@@ -65,7 +65,7 @@ const MedalLine: React.FC<MedalLineProps> = ({
   label,
   color,
   recipients,
-  teamCountries,
+  teamsByCode,
 }) => (
   <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
     <Medal label={label} color={color} />
@@ -74,7 +74,7 @@ const MedalLine: React.FC<MedalLineProps> = ({
         <Recipient
           key={`${recipient.country}-${index}`}
           recipient={recipient}
-          teamCountries={teamCountries}
+          teamsByCode={teamsByCode}
         />
       ))}
     </Stack>

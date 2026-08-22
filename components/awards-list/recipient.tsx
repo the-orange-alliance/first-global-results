@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Box, Link, Typography } from "@mui/material";
 import { getFlagUrl } from "@/lib";
 import { useTeamLink } from "@/components/team-link";
-import type { AwardRecipient } from "./types";
+import { normalizeCode, type AwardRecipient, type TeamsByCode } from "./types";
 
 /**
  * Flag for an award recipient, falling back to a blank swatch.
@@ -58,24 +58,30 @@ const Flag: React.FC<{ countryCode: string }> = ({ countryCode }) => {
 interface RecipientProps {
   recipient: AwardRecipient;
   /**
-   * Countries that have a ranking row this season. Only those open the team
-   * modal — team-model.tsx closes itself immediately when it can't find a
-   * matching ranking, so a link for a non-competitor would just flicker.
+   * Competing teams keyed by IAC code, mapped to the `country` value the modal
+   * URL uses. Only teams with a ranking row link out — team-model.tsx closes
+   * itself when it can't find a matching ranking, so a link for a
+   * non-competitor would just flicker.
    */
-  teamCountries: Set<string>;
+  teamsByCode: TeamsByCode;
 }
 
-const Recipient: React.FC<RecipientProps> = ({ recipient, teamCountries }) => {
+const Recipient: React.FC<RecipientProps> = ({ recipient, teamsByCode }) => {
   const { country, countryCode, recipientName } = recipient;
   const teamLink = useTeamLink();
 
-  const isTeam = teamCountries.has(country);
+  // Join on the code, never on `country`: the awards collection stores a
+  // display name ("Poland") while the teams collection stores whatever that
+  // season used — for 2017 that's "POL", so matching on the name finds nothing.
+  // The link then has to use the *team's* country value, because that is what
+  // the modal resolves `?country=` against.
+  const linkCountry = teamsByCode.get(normalizeCode(countryCode));
 
   // The team name always carries the link, wherever it lands: the modal is
   // about the team, not about the individual or sponsor being honoured.
-  const teamName = isTeam ? (
+  const teamName = linkCountry ? (
     <NextLink
-      {...teamLink(country)}
+      {...teamLink(linkCountry)}
       prefetch={false}
       shallow
       passHref

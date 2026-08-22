@@ -2,12 +2,17 @@ import { useMemo } from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import BrandedText from "./branded-text";
 import MedalLine, { HONORABLE_MENTION, MEDALS } from "./medal-line";
-import type { Award, AwardRecipient } from "./types";
+import {
+  teamsByCodeFrom,
+  type Award,
+  type AwardRecipient,
+  type TeamsByCode,
+} from "./types";
 
 const AwardCard: React.FC<{
   award: Award;
-  teamCountries: Set<string>;
-}> = ({ award, teamCountries }) => {
+  teamsByCode: TeamsByCode;
+}> = ({ award, teamsByCode }) => {
   const medals = MEDALS.map((medal) => ({
     ...medal,
     // A category may go unawarded; those slots are null and render nothing
@@ -39,7 +44,7 @@ const AwardCard: React.FC<{
             label={medal.label}
             color={medal.color}
             recipients={[medal.recipient as AwardRecipient]}
-            teamCountries={teamCountries}
+            teamsByCode={teamsByCode}
           />
         ))}
 
@@ -48,7 +53,7 @@ const AwardCard: React.FC<{
             label={HONORABLE_MENTION.label}
             color={HONORABLE_MENTION.color}
             recipients={other}
-            teamCountries={teamCountries}
+            teamsByCode={teamsByCode}
           />
         )}
 
@@ -69,15 +74,7 @@ interface AwardsListProps {
 }
 
 const AwardsList: React.FC<AwardsListProps> = ({ awards, rankings }) => {
-  const teamCountries = useMemo(
-    () =>
-      new Set<string>(
-        (rankings || [])
-          .map((rank) => rank?.team?.country)
-          .filter((country): country is string => typeof country === "string")
-      ),
-    [rankings]
-  );
+  const teamsByCode = useMemo(() => teamsByCodeFrom(rankings), [rankings]);
 
   // Empty is the normal state mid-event and for most legacy seasons — awards
   // are uploaded after the closing ceremony.
@@ -98,7 +95,7 @@ const AwardsList: React.FC<AwardsListProps> = ({ awards, rankings }) => {
         <AwardCard
           key={award.name}
           award={award}
-          teamCountries={teamCountries}
+          teamsByCode={teamsByCode}
         />
       ))}
     </Stack>

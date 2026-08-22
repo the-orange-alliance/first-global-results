@@ -1,5 +1,5 @@
 import { HONORABLE_MENTION, MEDALS } from "./medal-line";
-import type { Award, AwardRecipient } from "./types";
+import { normalizeCode, type Award, type AwardRecipient } from "./types";
 
 export interface AwardLine {
   key: string;
@@ -15,19 +15,27 @@ export interface TeamAward {
 }
 
 /**
- * The awards a country appears in, reduced to the lines that name it.
+ * The awards a team appears in, reduced to the lines that name it.
  *
- * A country can hold more than one slot in a single award — an honorable
- * mention alongside a medal, or two individuals from the same country — so
- * `lines` is an array rather than a single hit.
+ * Matched on IAC `countryCode`, not on `country`: the awards collection stores
+ * a display name ("Poland") while the teams collection stores whatever the
+ * season used — 2017 stores "POL" — so the two names never meet.
+ *
+ * A team can hold more than one slot in a single award — an honorable mention
+ * alongside a medal, or two individuals from the same country — so `lines` is
+ * an array rather than a single hit.
  */
 export const teamAwards = (
   awards: Award[] | undefined,
-  country: string | undefined
+  countryCode: string | undefined
 ): TeamAward[] => {
-  if (!awards?.length || !country) {
+  const code = normalizeCode(countryCode);
+  if (!awards?.length || !code) {
     return [];
   }
+
+  const isTeam = (recipient: AwardRecipient | null | undefined) =>
+    !!recipient && normalizeCode(recipient.countryCode) === code;
 
   return awards
     .map((award) => {
@@ -35,14 +43,12 @@ export const teamAwards = (
 
       MEDALS.forEach((medal) => {
         const recipient = award[medal.key];
-        if (recipient?.country === country) {
-          lines.push({ ...medal, recipients: [recipient] });
+        if (isTeam(recipient)) {
+          lines.push({ ...medal, recipients: [recipient as AwardRecipient] });
         }
       });
 
-      const mentions = (award.other ?? []).filter(
-        (recipient) => recipient.country === country
-      );
+      const mentions = (award.other ?? []).filter(isTeam);
       if (mentions.length > 0) {
         lines.push({ ...HONORABLE_MENTION, recipients: mentions });
       }
