@@ -44,7 +44,7 @@ const Navigation = () => {
     const [yearLabel, location] = yearData[year].date.split(" in ");
     return {
       year,
-      label: `${yearLabel} (${location})`,
+      label: `${year} (${location})`,
     };
   });
 

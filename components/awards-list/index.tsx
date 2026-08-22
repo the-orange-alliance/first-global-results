@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
+import BrandedText from "./branded-text";
 import Recipient from "./recipient";
 import type { Award, AwardRecipient } from "./types";
 
@@ -54,14 +55,16 @@ const AwardCard: React.FC<{
 
   return (
     <Paper variant="outlined" sx={{ p: { xs: 1.5, md: 2 } }}>
-      <Typography variant="h6">{award.name}</Typography>
+      <Typography variant="h6">
+        <BrandedText>{award.name}</BrandedText>
+      </Typography>
 
       {award.description && (
         <Typography
           variant="body2"
           sx={{ color: "text.secondary", mt: 0.25 }}
         >
-          {award.description}
+          <BrandedText>{award.description}</BrandedText>
         </Typography>
       )}
 

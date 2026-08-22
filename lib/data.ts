@@ -123,7 +123,7 @@ export const yearData: { [key: number]: YearData } = {
   },
   2017: {
     year: "2017",
-    date: "16-18 July in Washington, D.C.",
+    date: "16-18 July 2017 in Washington, D.C.",
     customRankingName: null,
     customRankingKey: null,
     watchLinks: {
