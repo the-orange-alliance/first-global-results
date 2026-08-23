@@ -1,12 +1,7 @@
-import { HONORABLE_MENTION, MEDALS } from "./medal-line";
+import { awardLines, type AwardLine } from "./lines";
 import { normalizeCode, type Award, type AwardRecipient } from "./types";
 
-export interface AwardLine {
-  key: string;
-  label: string;
-  color: string;
-  recipients: AwardRecipient[];
-}
+export type { AwardLine };
 
 export interface TeamAward {
   award: Award;
@@ -34,26 +29,10 @@ export const teamAwards = (
     return [];
   }
 
-  const isTeam = (recipient: AwardRecipient | null | undefined) =>
-    !!recipient && normalizeCode(recipient.countryCode) === code;
+  const isTeam = (recipient: AwardRecipient) =>
+    normalizeCode(recipient.countryCode) === code;
 
   return awards
-    .map((award) => {
-      const lines: AwardLine[] = [];
-
-      MEDALS.forEach((medal) => {
-        const recipient = award[medal.key];
-        if (isTeam(recipient)) {
-          lines.push({ ...medal, recipients: [recipient as AwardRecipient] });
-        }
-      });
-
-      const mentions = (award.other ?? []).filter(isTeam);
-      if (mentions.length > 0) {
-        lines.push({ ...HONORABLE_MENTION, recipients: mentions });
-      }
-
-      return { award, lines };
-    })
+    .map((award) => ({ award, lines: awardLines(award, isTeam) }))
     .filter((entry) => entry.lines.length > 0);
 };

@@ -1,26 +1,17 @@
 import { useMemo } from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import BrandedText from "./branded-text";
-import MedalLine, { HONORABLE_MENTION, MEDALS } from "./medal-line";
-import {
-  teamsByCodeFrom,
-  type Award,
-  type AwardRecipient,
-  type TeamsByCode,
-} from "./types";
+import { awardLines } from "./lines";
+import MedalLine from "./medal-line";
+import { teamsByCodeFrom, type Award, type TeamsByCode } from "./types";
 
 const AwardCard: React.FC<{
   award: Award;
   teamsByCode: TeamsByCode;
 }> = ({ award, teamsByCode }) => {
-  const medals = MEDALS.map((medal) => ({
-    ...medal,
-    // A category may go unawarded; those slots are null and render nothing
-    // rather than an empty row.
-    recipient: award[medal.key] as AwardRecipient | null,
-  })).filter((medal) => medal.recipient);
-
-  const other = award.other ?? [];
+  // Not every award hands out every medal, and a medal can be shared, so the
+  // rows are derived rather than fixed. Empty ones are already dropped.
+  const lines = awardLines(award);
 
   return (
     <Paper variant="outlined" sx={{ p: { xs: 1.5, md: 2 } }}>
@@ -38,26 +29,17 @@ const AwardCard: React.FC<{
       )}
 
       <Stack spacing={1} sx={{ mt: 1.5 }}>
-        {medals.map((medal) => (
+        {lines.map((line) => (
           <MedalLine
-            key={medal.key}
-            label={medal.label}
-            color={medal.color}
-            recipients={[medal.recipient as AwardRecipient]}
+            key={line.key}
+            label={line.label}
+            color={line.color}
+            recipients={line.recipients}
             teamsByCode={teamsByCode}
           />
         ))}
 
-        {other.length > 0 && (
-          <MedalLine
-            label={HONORABLE_MENTION.label}
-            color={HONORABLE_MENTION.color}
-            recipients={other}
-            teamsByCode={teamsByCode}
-          />
-        )}
-
-        {medals.length === 0 && other.length === 0 && (
+        {lines.length === 0 && (
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Not yet presented.
           </Typography>

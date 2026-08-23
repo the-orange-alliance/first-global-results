@@ -12,6 +12,18 @@ export interface AwardRecipient {
   recipientName?: string;
 }
 
+/** The medal a recipient placed at. Same vocabulary as the three slots below. */
+export type AwardClass = "gold" | "silver" | "bronze";
+
+/**
+ * A recipient who placed outside the three slots. `class` puts them on that
+ * medal's line anyway — a shared gold, or a medal handed to two teams — and
+ * null keeps them on the honorable-mention line.
+ */
+export interface OtherAwardRecipient extends AwardRecipient {
+  class: AwardClass | null;
+}
+
 export interface Award {
   name: string;
   description: string;
@@ -21,8 +33,8 @@ export interface Award {
   gold: AwardRecipient | null;
   silver: AwardRecipient | null;
   bronze: AwardRecipient | null;
-  /** Honorable mentions and other non-medal recipients. Always an array. */
-  other: AwardRecipient[];
+  /** Recipients outside the three slots, each with its own class. Always an array. */
+  other: OtherAwardRecipient[];
 }
 
 /**
