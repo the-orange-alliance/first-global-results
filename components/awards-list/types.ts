@@ -6,9 +6,13 @@
  * the continental teams are "11"-"14".
  */
 export interface AwardRecipient {
-  country: string;
-  countryCode: string;
-  /** Set only for awards given to a specific person or organization. */
+  /**
+   * Absent for an award to an individual who neither represents nor was
+   * nominated by a country. Travels as a pair with `countryCode`.
+   */
+  country?: string;
+  countryCode?: string;
+  /** The person or organization honoured. Present whenever there is no country. */
   recipientName?: string;
 }
 

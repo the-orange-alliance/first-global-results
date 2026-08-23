@@ -13,6 +13,9 @@ import { normalizeCode, type AwardRecipient, type TeamsByCode } from "./types";
  * competed — the African Union ("16"), sponsors, individuals — and those IAC
  * codes have no SVG under `public/static/flags`. A missing file would otherwise
  * render as a broken image, so a failed load degrades to an empty box instead.
+ *
+ * The blank swatch is for a recipient that has a country whose flag is missing.
+ * A recipient with no country at all renders no flag slot — see below.
  */
 const Flag: React.FC<{ countryCode: string }> = ({ countryCode }) => {
   const [failed, setFailed] = useState(false);
@@ -84,7 +87,7 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamsByCode }) => {
 
   // The team name always carries the link, wherever it lands: the modal is
   // about the team, not about the individual or sponsor being honoured.
-  const teamName = linkCountry ? (
+  const teamName = !country ? null : linkCountry ? (
     <NextLink
       {...teamLink(linkCountry)}
       prefetch={false}
@@ -100,18 +103,26 @@ const Recipient: React.FC<RecipientProps> = ({ recipient, teamsByCode }) => {
 
   return (
     <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.75, minWidth: 0 }}>
-      <Box sx={{ alignSelf: "center", display: "flex" }}>
-        <Flag countryCode={countryCode} />
-      </Box>
+      {/* An award can go to an individual who represents no country. Rendering
+          the swatch anyway would leave an empty box hanging off their name, so
+          the whole slot goes rather than standing in for a flag that is not
+          missing — there was never one to show. */}
+      {country && (
+        <Box sx={{ alignSelf: "center", display: "flex" }}>
+          <Flag countryCode={countryCode ?? ""} />
+        </Box>
+      )}
 
       <Box sx={{ minWidth: 0 }}>
         {/* The person or organization is the headline when there is one, and
-            the team they represent drops to a subtitle underneath. */}
+            the team they represent drops to a subtitle underneath. With no
+            country there is no subtitle, and with no name the country is the
+            headline itself. */}
         <Typography component="div" sx={{ fontWeight: 500, lineHeight: 1.3 }}>
           {recipientName || teamName}
         </Typography>
 
-        {recipientName && (
+        {recipientName && teamName && (
           <Typography
             variant="body2"
             component="div"

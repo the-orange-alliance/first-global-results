@@ -72,7 +72,7 @@ const MedalLine: React.FC<MedalLineProps> = ({
     <Stack spacing={0.5}>
       {recipients.map((recipient, index) => (
         <Recipient
-          key={`${recipient.country}-${index}`}
+          key={`${recipient.country ?? recipient.recipientName ?? ""}-${index}`}
           recipient={recipient}
           teamsByCode={teamsByCode}
         />
