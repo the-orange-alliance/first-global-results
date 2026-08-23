@@ -1,4 +1,4 @@
-import { HONORABLE_MENTION, MEDALS } from "./medal-line";
+import { HONORABLE_MENTION, MEDALS, RECIPIENTS } from "./medal-line";
 import type { Award, AwardRecipient } from "./types";
 
 export interface AwardLine {
@@ -41,10 +41,20 @@ export const awardLines = (
     };
   });
 
+  // Whether this award placed anybody at all, judged on the whole award rather
+  // than on what survived `keep`. In the team modal a team that took only a
+  // mention still sees it called one, because the medals it sat below are real
+  // even though they belong to other teams.
+  const anyMedal =
+    MEDALS.some((medal) => award[medal.key]) ||
+    (award.other ?? []).some((recipient) =>
+      MEDAL_KEYS.includes(recipient.class as string)
+    );
+
   // Written as "not a medal" rather than "class is null" so a hand-edited
   // document with an unrecognized class still shows its recipient somewhere.
   lines.push({
-    ...HONORABLE_MENTION,
+    ...(anyMedal ? HONORABLE_MENTION : RECIPIENTS),
     recipients: other.filter(
       (recipient) => !MEDAL_KEYS.includes(recipient.class as string)
     ),

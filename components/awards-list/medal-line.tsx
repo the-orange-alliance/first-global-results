@@ -18,6 +18,19 @@ export const HONORABLE_MENTION = {
   color: "#CDD2D7",
 } as const;
 
+/**
+ * The same line, relabelled for an award that handed out no medals at all.
+ *
+ * "Honorable mention" is a rank relative to a medal — being named alongside a
+ * winner. Where there is no winner to be mentioned alongside, the people on
+ * this line are not runners-up; they are simply who received the award.
+ */
+export const RECIPIENTS = {
+  key: "other",
+  label: "Recipients",
+  color: HONORABLE_MENTION.color,
+} as const;
+
 /** Width of the label column, so recipients line up down the card. */
 const LABEL_WIDTH = { xs: "5.5rem", md: "7rem" };
 
