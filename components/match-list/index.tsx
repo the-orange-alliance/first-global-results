@@ -89,11 +89,11 @@ const MatchList: React.FC<MatchListProps> = ({
                 justifyContent: "center",
                 alignItems: "center",
                 py: 0.75,
-                bgcolor: "rgba(0, 0, 0, 0.02)"
+                bgcolor: "action.hover"
               }}>
               <Box
                 sx={{
-                  bgcolor: "white",
+                  bgcolor: "background.paper",
                   border: 1,
                   borderColor: "divider",
                   py: 0.675,

@@ -104,7 +104,12 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
                   width={16}
                   height={12}
                   style={{
+                    // Kept white in both schemes so flags with white fields
+                    // stay readable; the ring stops the swatch floating on a
+                    // dark surface. Inline style, so the palette is reached
+                    // through the CSS variable lib/theme.ts emits.
                     backgroundColor: "#ffffff",
+                    boxShadow: "0 0 0 1px var(--mui-palette-divider)",
                     width: "1em",
                     height: "0.75em",
                   }}
@@ -124,7 +129,12 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
                   width={16}
                   height={12}
                   style={{
+                    // Kept white in both schemes so flags with white fields
+                    // stay readable; the ring stops the swatch floating on a
+                    // dark surface. Inline style, so the palette is reached
+                    // through the CSS variable lib/theme.ts emits.
                     backgroundColor: "#ffffff",
+                    boxShadow: "0 0 0 1px var(--mui-palette-divider)",
                     width: "1em",
                     height: "0.75em",
                   }}
@@ -144,7 +154,12 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
                   width={16}
                   height={12}
                   style={{
+                    // Kept white in both schemes so flags with white fields
+                    // stay readable; the ring stops the swatch floating on a
+                    // dark surface. Inline style, so the palette is reached
+                    // through the CSS variable lib/theme.ts emits.
                     backgroundColor: "#ffffff",
+                    boxShadow: "0 0 0 1px var(--mui-palette-divider)",
                     width: "1em",
                     height: "0.75em",
                   }}
@@ -164,7 +179,12 @@ const AllianceTable: React.FC<AllianceTableProps> = ({
                   width={16}
                   height={12}
                   style={{
+                    // Kept white in both schemes so flags with white fields
+                    // stay readable; the ring stops the swatch floating on a
+                    // dark surface. Inline style, so the palette is reached
+                    // through the CSS variable lib/theme.ts emits.
                     backgroundColor: "#ffffff",
+                    boxShadow: "0 0 0 1px var(--mui-palette-divider)",
                     width: "1em",
                     height: "0.75em",
                   }}

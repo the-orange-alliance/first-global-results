@@ -10,6 +10,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useState } from "react";
+import ThemeModeSelect from "./theme-mode-select";
 
 const links = [
   {
@@ -52,7 +53,7 @@ const Navigation = () => {
     <Box
       component="nav"
       sx={{
-        bgcolor: "white",
+        bgcolor: "background.paper",
         borderBottom: "1px solid",
         borderColor: "divider",
         py: 1,
@@ -70,10 +71,19 @@ const Navigation = () => {
           justifyContent: { xs: "center", sm: "space-between" },
         }}
       >
-        <img
+        {/* FIRST Global publish this mark as black-on-transparent only, so it
+            vanishes against a dark nav.  It is flat black artwork and inverts
+            cleanly; the brightness trim stops the inverted white glaring. */}
+        <Box
+          component="img"
           src="https://first.global/wp-content/uploads/2017/11/FG-header-black.png"
           height={56}
           alt="FIRST Global logo"
+          sx={(theme) => ({
+            ...theme.applyStyles("dark", {
+              filter: "invert(1) brightness(0.9)",
+            }),
+          })}
         />
         <Stack
           direction="row"
@@ -90,7 +100,7 @@ const Navigation = () => {
               target="_blank"
               sx={{
                 color: "inherit",
-                "&:hover": { color: "rgba(0, 0, 0, 0.75)" },
+                "&:hover": { color: "text.secondary" },
                 transition: "color 0.2s ease-in-out",
               }}
             >
@@ -102,12 +112,13 @@ const Navigation = () => {
             onMouseOver={handleClick}
             sx={{
               color: "inherit",
-              "&:hover": { color: "rgba(0, 0, 0, 0.75)" },
+              "&:hover": { color: "text.secondary" },
               fontWeight: "inherit",
             }}
           >
             History
           </Button>
+          <ThemeModeSelect />
         </Stack>
 
         <Menu

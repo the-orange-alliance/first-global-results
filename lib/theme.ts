@@ -20,8 +20,42 @@ declare module "@mui/material/styles" {
 
   interface PaletteColor extends ColorRange {}
 
+  /**
+   * Heading colours.  They used to sit on `typography.h1.color` and friends,
+   * but typography is shared by both colour schemes and so cannot flip; they
+   * live in the palette now and are applied via MuiTypography below.
+   */
+  interface HeadingPalette {
+    primary: string;
+    secondary: string;
+    subtitle: string;
+  }
+
+  /**
+   * The three surfaces of a match row.  A palette node rather than hand-copied
+   * hexes, so MUI emits `--mui-palette-matchList-*` for each scheme and
+   * components/match-list/match-list.module.css can read them directly.
+   */
+  interface MatchListPalette {
+    rowBg: string;
+    timeBg: string;
+    liveBg: string;
+  }
+
   interface Palette {
     primaryDark: PaletteColor;
+    heading: HeadingPalette;
+    matchList: MatchListPalette;
+  }
+
+  interface PaletteOptions {
+    heading?: HeadingPalette;
+    matchList?: MatchListPalette;
+  }
+
+  // Opts in to `theme.vars`, which only exists because of `cssVariables` below.
+  interface CssThemeVariables {
+    enabled: true;
   }
 }
 
@@ -63,61 +97,124 @@ const grey = {
   800: "#2D3843", // vs white bg: WCAG 11.9 AAA, APCA 97.3 Best for text
   900: "#1A2027",
 };
+const error = {
+  50: "#FFF0F1",
+  100: "#FFDBDE",
+  200: "#FFBDC2",
+  300: "#FF99A2",
+  400: "#FF7A86",
+  500: "#FF505F",
+  main: "#EB0014", // contrast 4.63:1
+  600: "#EB0014",
+  700: "#C70011",
+  800: "#94000D",
+  900: "#570007",
+};
+const success = {
+  50: "#E9FBF0",
+  100: "#C6F6D9",
+  200: "#9AEFBC",
+  300: "#6AE79C",
+  400: "#3EE07F",
+  500: "#21CC66",
+  600: "#1DB45A",
+  main: "#1AA251",
+  700: "#1AA251",
+  800: "#178D46",
+  900: "#0F5C2E",
+};
+const warning = {
+  50: "#FFF9EB",
+  100: "#FFF3C1",
+  200: "#FFECA1",
+  300: "#FFDC48", // vs blueDark900: WCAG 10.4 AAA, APCA 72 Ok for text
+  400: "#F4C000", // vs blueDark900: WCAG 6.4 AA normal, APCA 48 Only large text
+  500: "#DEA500", // vs blueDark900: WCAG 8 AAA normal, APCA 58 Only large text
+  main: "#DEA500",
+  600: "#D18E00", // vs blueDark900: WCAG 6.4 AA normal, APCA 48 Only large text
+  700: "#AB6800", // vs white bg: WCAG 4.4 AA large, APCA 71 Ok for text
+  800: "#8C5800", // vs white bg: WCAG 5.9 AAA large, APCA 80 Best for text
+  900: "#5A3600", // vs white bg: WCAG 10.7 AAA, APCA 95 Best for text
+};
 
 const theme = createTheme({
-  palette: {
-    primary: blue,
-    divider: grey[100],
-    background: {
-      default: grey[50],
+  /**
+   * Emits the whole palette as `--mui-palette-*` custom properties, one block
+   * per scheme.  Two things depend on this:
+   *
+   *  - the scheme can flip without re-rendering the tree, and
+   *  - plain CSS (match-list.module.css) and styled-jsx can finally read the
+   *    palette, which they could never do through the JS theme object.
+   *
+   * The selector is spelled out rather than using the `"data"` shorthand
+   * (which generates `[data-dark]`) so that it matches the attribute
+   * InitColorSchemeScript sets by default in pages/_document.tsx.
+   */
+  cssVariables: { colorSchemeSelector: '[data-mui-color-scheme="%s"]' },
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: blue,
+        divider: grey[100],
+        background: {
+          default: grey[50],
+        },
+        common: {
+          black: "#1D1D1D",
+        },
+        text: {
+          primary: grey[900],
+          secondary: grey[700],
+        },
+        grey,
+        error,
+        success,
+        warning,
+        heading: {
+          primary: blueDark[900],
+          secondary: blueDark[700],
+          subtitle: alpha(blueDark[900], 0.8),
+        },
+        matchList: {
+          rowBg: "#fff",
+          timeBg: grey[50],
+          liveBg: blue[500],
+        },
+      },
     },
-    mode: "light",
-    common: {
-      black: "#1D1D1D",
-    },
-    text: {
-      primary: grey[900],
-      secondary: grey[700],
-    },
-    grey,
-    error: {
-      50: "#FFF0F1",
-      100: "#FFDBDE",
-      200: "#FFBDC2",
-      300: "#FF99A2",
-      400: "#FF7A86",
-      500: "#FF505F",
-      main: "#EB0014", // contrast 4.63:1
-      600: "#EB0014",
-      700: "#C70011",
-      800: "#94000D",
-      900: "#570007",
-    },
-    success: {
-      50: "#E9FBF0",
-      100: "#C6F6D9",
-      200: "#9AEFBC",
-      300: "#6AE79C",
-      400: "#3EE07F",
-      500: "#21CC66",
-      600: "#1DB45A",
-      main: "#1AA251",
-      700: "#1AA251",
-      800: "#178D46",
-      900: "#0F5C2E",
-    },
-    warning: {
-      50: "#FFF9EB",
-      100: "#FFF3C1",
-      200: "#FFECA1",
-      300: "#FFDC48", // vs blueDark900: WCAG 10.4 AAA, APCA 72 Ok for text
-      400: "#F4C000", // vs blueDark900: WCAG 6.4 AA normal, APCA 48 Only large text
-      500: "#DEA500", // vs blueDark900: WCAG 8 AAA normal, APCA 58 Only large text
-      main: "#DEA500",
-      600: "#D18E00", // vs blueDark900: WCAG 6.4 AA normal, APCA 48 Only large text
-      700: "#AB6800", // vs white bg: WCAG 4.4 AA large, APCA 71 Ok for text
-      800: "#8C5800", // vs white bg: WCAG 5.9 AAA large, APCA 80 Best for text
-      900: "#5A3600", // vs white bg: WCAG 10.7 AAA, APCA 95 Best for text
+    dark: {
+      palette: {
+        // The ramps stay put so `primary[500]` and friends keep meaning the
+        // same colour in both schemes.  Only `main` moves, to a step that is
+        // legible against blueDark 900 — see the contrast notes on each ramp.
+        primary: { ...blue, main: blue[400] },
+        divider: blueDark[600],
+        background: {
+          default: blueDark[900],
+          paper: blueDark[800],
+        },
+        common: {
+          black: "#1D1D1D",
+        },
+        text: {
+          primary: grey[100],
+          secondary: grey[400],
+        },
+        grey,
+        error: { ...error, main: error[400] },
+        success: { ...success, main: success[400] },
+        warning: { ...warning, main: warning[300] },
+        heading: {
+          primary: grey[50],
+          secondary: blue[200],
+          subtitle: alpha(grey[100], 0.8),
+        },
+        matchList: {
+          rowBg: blueDark[800],
+          timeBg: blueDark[700],
+          liveBg: blue[600],
+        },
+      },
     },
   },
   shape: {
@@ -129,13 +226,11 @@ const theme = createTheme({
       fontSize: "2rem",
       fontWeight: 800,
       lineHeight: 78 / 70,
-      color: blueDark[900],
     },
     h2: {
       fontSize: "clamp(1.5rem, 0.9643rem + 1.4286vw, 2.25rem)",
       fontWeight: 800,
       lineHeight: 44 / 36,
-      color: blueDark[700],
     },
     h3: {
       fontSize: "2.25rem",
@@ -151,7 +246,6 @@ const theme = createTheme({
       fontSize: "1.5rem",
       lineHeight: 36 / 24,
       letterSpacing: 0.1,
-      color: blue.main,
     },
     h6: {
       fontSize: "1.25rem",
@@ -167,7 +261,6 @@ const theme = createTheme({
       lineHeight: 24 / 18,
       letterSpacing: 0,
       fontWeight: 400,
-      color: alpha(blueDark[900], 0.8),
     },
     body1: {
       fontSize: "1rem",
@@ -192,6 +285,16 @@ const theme = createTheme({
   },
 });
 
+/**
+ * Every colour below has to come from `theme.vars` (a `var(--mui-palette-*)`
+ * string that resolves per scheme) or from `theme.applyStyles("dark", ...)`.
+ * Reading `theme.palette.*` here would freeze one scheme's hex into the
+ * stylesheet, because this runs once, at module evaluation.
+ *
+ * The grey ramp is shared by both schemes, so grey steps are only safe for
+ * things that should *not* flip.  Anything that should flip uses a semantic
+ * token — text.*, divider, action.*, background.* — instead.
+ */
 export const getThemedComponents = (
   theme: Theme
 ): {
@@ -226,7 +329,7 @@ export const getThemedComponents = (
             // (containedPrimary), so this targets the same buttons via variants.
             props: { variant: "contained", color: "primary" },
             style: {
-              backgroundColor: theme.palette.primary[500],
+              backgroundColor: theme.vars.palette.primary[500],
               color: "#fff",
             },
           },
@@ -236,11 +339,14 @@ export const getThemedComponents = (
             style: {
               fontSize: theme.typography.pxToRem(14),
               fontWeight: 700,
-              color: theme.palette.primary[600],
+              color: theme.vars.palette.primary[600],
               mb: 1,
               "& svg": {
                 ml: -0.5,
               },
+              ...theme.applyStyles("dark", {
+                color: theme.vars.palette.primary[300],
+              }),
             },
           },
         ],
@@ -252,12 +358,15 @@ export const getThemedComponents = (
             style: {
               height: 34,
               width: 34,
-              border: `1px solid ${theme.palette.grey[200]}`,
+              border: `1px solid ${theme.vars.palette.divider}`,
               borderRadius: theme.shape.borderRadius,
-              color: theme.palette.primary[500],
+              color: theme.vars.palette.primary.main,
               "&:hover": {
-                borderColor: theme.palette.grey[300],
-                background: theme.palette.grey[50],
+                borderColor: theme.vars.palette.grey[300],
+                background: theme.vars.palette.action.hover,
+                ...theme.applyStyles("dark", {
+                  borderColor: theme.vars.palette.grey[700],
+                }),
               },
             },
           },
@@ -276,7 +385,7 @@ export const getThemedComponents = (
       MuiDivider: {
         styleOverrides: {
           root: {
-            borderColor: theme.palette.grey[100],
+            borderColor: theme.vars.palette.divider,
           },
         },
       },
@@ -286,11 +395,11 @@ export const getThemedComponents = (
         },
         styleOverrides: {
           root: {
-            color: theme.palette.primary[600],
+            color: theme.vars.palette.primary[600],
             display: "inline-flex",
             alignItems: "center",
             "&:hover": {
-              color: theme.palette.primary[700],
+              color: theme.vars.palette.primary[700],
             },
             "&.MuiTypography-body1 > svg": {
               marginTop: 2,
@@ -298,6 +407,12 @@ export const getThemedComponents = (
             "& svg:last-child": {
               marginLeft: 2,
             },
+            ...theme.applyStyles("dark", {
+              color: theme.vars.palette.primary[300],
+              "&:hover": {
+                color: theme.vars.palette.primary[200],
+              },
+            }),
           },
         },
       },
@@ -307,42 +422,63 @@ export const getThemedComponents = (
             fontWeight: 500,
             ...(variant === "outlined" &&
               color === "default" && {
-                color: theme.palette.grey[900],
+                color: theme.vars.palette.text.primary,
                 backgroundColor: "transparent",
-                borderColor: theme.palette.grey[200],
+                borderColor: theme.vars.palette.divider,
                 "&:hover": {
-                  color: theme.palette.grey[900],
+                  color: theme.vars.palette.text.primary,
                 },
               }),
             ...(variant === "outlined" &&
               color === "primary" && {
                 "&:hover": {
-                  color: theme.palette.primary[500],
+                  color: theme.vars.palette.primary.main,
                 },
               }),
             ...(variant === "filled" &&
               color === "default" && {
                 border: "1px solid transparent",
-                color: theme.palette.primary[700],
-                backgroundColor: alpha(theme.palette.primary[100], 0.5),
+                color: theme.vars.palette.primary[700],
+                // `alpha()` cannot operate on a `var(...)` string, so tints are
+                // mixed from the raw ramp and the dark values written out.
+                backgroundColor: alpha(blue[100], 0.5),
                 "&:hover": {
-                  backgroundColor: theme.palette.primary[100],
+                  backgroundColor: blue[100],
                 },
+                ...theme.applyStyles("dark", {
+                  color: theme.vars.palette.primary[200],
+                  backgroundColor: alpha(blue[900], 0.5),
+                  "&:hover": {
+                    backgroundColor: alpha(blue[800], 0.6),
+                  },
+                }),
               }),
             // for labelling product in the search
             // @ts-ignore internal repo module augmentation issue
             ...(variant === "light" && {
               ...(color === "default" && {
-                color: theme.palette.primary[700],
-                backgroundColor: alpha(theme.palette.primary[100], 0.3),
+                color: theme.vars.palette.primary[700],
+                backgroundColor: alpha(blue[100], 0.3),
+                ...theme.applyStyles("dark", {
+                  color: theme.vars.palette.primary[200],
+                  backgroundColor: alpha(blue[900], 0.4),
+                }),
               }),
               ...(color === "warning" && {
-                color: theme.palette.warning[900],
-                backgroundColor: theme.palette.warning[100],
+                color: theme.vars.palette.warning[900],
+                backgroundColor: theme.vars.palette.warning[100],
+                ...theme.applyStyles("dark", {
+                  color: theme.vars.palette.warning[300],
+                  backgroundColor: alpha(warning[900], 0.4),
+                }),
               }),
               ...(color === "success" && {
-                color: theme.palette.success[900],
-                backgroundColor: theme.palette.success[100],
+                color: theme.vars.palette.success[900],
+                backgroundColor: theme.vars.palette.success[100],
+                ...theme.applyStyles("dark", {
+                  color: theme.vars.palette.success[300],
+                  backgroundColor: alpha(success[900], 0.4),
+                }),
               }),
             }),
           }),
@@ -362,20 +498,26 @@ export const getThemedComponents = (
             textTransform: "none",
             fontWeight: 500,
             fontSize: theme.typography.pxToRem(14),
-            color: theme.palette.grey[700],
+            color: theme.vars.palette.text.secondary,
             borderRadius: 0,
             "&:hover": {
-              backgroundColor: theme.palette.grey[50],
+              backgroundColor: theme.vars.palette.action.hover,
             },
             "&.Mui-selected": {
-              color: theme.palette.primary[500],
+              color: theme.vars.palette.primary.main,
               borderRadius: 10,
               border: "1px solid",
-              borderColor: `${theme.palette.primary[500]} !important`,
-              backgroundColor: theme.palette.primary[50],
+              borderColor: `${theme.vars.palette.primary.main} !important`,
+              backgroundColor: theme.vars.palette.primary[50],
               "&:hover": {
-                backgroundColor: theme.palette.primary[100],
+                backgroundColor: theme.vars.palette.primary[100],
               },
+              ...theme.applyStyles("dark", {
+                backgroundColor: alpha(blue[900], 0.5),
+                "&:hover": {
+                  backgroundColor: alpha(blue[800], 0.6),
+                },
+              }),
             },
           },
         },
@@ -403,17 +545,20 @@ export const getThemedComponents = (
         styleOverrides: {
           root: {
             backgroundImage: "none",
-            backgroundColor: "#fff",
+            backgroundColor: theme.vars.palette.background.paper,
             "&[href]": {
               textDecorationLine: "none",
             },
           },
           outlined: {
             display: "block",
-            borderColor: theme.palette.grey[200],
+            borderColor: theme.vars.palette.divider,
             "a&, button&": {
               "&:hover": {
                 boxShadow: "0px 4px 20px rgba(170, 180, 190, 0.3)",
+                ...theme.applyStyles("dark", {
+                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+                }),
               },
             },
           },
@@ -423,14 +568,32 @@ export const getThemedComponents = (
         styleOverrides: {
           root: {
             padding: theme.spacing(1, 2),
-            borderColor: theme.palette.divider,
+            borderColor: theme.vars.palette.divider,
           },
           head: {
-            color: theme.palette.text.primary,
+            color: theme.vars.palette.text.primary,
             fontWeight: 700,
           },
           body: {
-            color: theme.palette.text.secondary,
+            color: theme.vars.palette.text.secondary,
+          },
+        },
+      },
+      // Heading colours land here rather than on `typography.*` because
+      // typography is shared across colour schemes and cannot flip.
+      MuiTypography: {
+        styleOverrides: {
+          h1: {
+            color: theme.vars.palette.heading.primary,
+          },
+          h2: {
+            color: theme.vars.palette.heading.secondary,
+          },
+          h5: {
+            color: theme.vars.palette.primary.main,
+          },
+          subtitle1: {
+            color: theme.vars.palette.heading.subtitle,
           },
         },
       },

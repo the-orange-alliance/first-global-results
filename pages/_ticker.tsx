@@ -27,9 +27,12 @@ export default function Pit({ data: initialData }) {
   }, []);
 
   return (
-    <>
+    // Dark-by-design venue screen with no theme selector: pin it to the light
+    // scheme so site-wide dark mode can't restyle the MUI Divider between
+    // entries into something invisible on black. See pages/_pit.tsx.
+    <div data-mui-color-scheme="light" style={{ display: "contents" }}>
       <TickerComponent rankings={data.rankings} multiplier={multParsed} sort={Array.isArray(sort) ? sort.toString() : sort} />
-    </>
+    </div>
   );
 }
 

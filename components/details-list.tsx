@@ -11,7 +11,8 @@ const Root: React.FC<RootProps> = (props) => {
         display: "flex",
         flexFlow: "row",
         flexWrap: "wrap",
-        border: "1px solid #eaeaea",
+        border: "1px solid",
+        borderColor: "divider",
         borderRadius: "0.5rem",
       }}
       {...props}
@@ -33,7 +34,7 @@ const Item: React.FC<ItemProps> = ({ icon, title, font, children }) => {
           flex: "0 0 11rem",
           display: "flex",
           alignItems: "center",
-          color: "rgba(0, 0, 0, 0.75)",
+          color: "text.secondary",
           fontWeight: 500,
           lineHeight: 1.25,
           padding: "0.375em 0.75rem",
@@ -48,7 +49,8 @@ const Item: React.FC<ItemProps> = ({ icon, title, font, children }) => {
             paddingBottom: "0.125em",
           },
           ":not(:last-of-type)": {
-            borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
+            borderBottom: "1px solid",
+            borderColor: "divider",
           },
         }}
       >
@@ -65,7 +67,8 @@ const Item: React.FC<ItemProps> = ({ icon, title, font, children }) => {
             font === "monospace" ? '"Roboto Mono", monospace' : "inherit",
           fontWeight: 700,
           ":not(:last-of-type)": {
-            borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
+            borderBottom: "1px solid",
+            borderColor: "divider",
           },
           display: "flex",
           alignItems: "center",

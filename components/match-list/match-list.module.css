@@ -5,9 +5,10 @@
  * row.  At ~380 matches that was the dominant cost of opening the tab, so the
  * row markup is plain DOM and every style below is a static class.
  *
- * Colour custom properties (--red, --lighter-blue, ...) are declared globally
- * in pages/_app.tsx.  Values copied out of lib/theme.ts are noted inline,
- * because plain CSS can't read the MUI palette.
+ * The alliance colour custom properties (--red, --lighter-blue, ...) are
+ * declared globally in pages/_app.tsx.  Everything else reads the
+ * --mui-palette-* variables lib/theme.ts emits, which is what lets these
+ * static classes follow the light/dark colour scheme.
  */
 
 /* ---------------------------------------------------------------- rows ---- */
@@ -25,7 +26,7 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--mui-palette-matchList-rowBg);
   /* Off-screen rows skip layout and paint.  `auto` lets the browser remember
      each row's real height once measured, so the scrollbar stays honest. */
   content-visibility: auto;
@@ -33,7 +34,7 @@
 }
 
 .row:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--mui-palette-action-hover);
 }
 
 /* Playoff matches carry 8 participants, so they shrink to stay on one line. */
@@ -62,7 +63,7 @@
   line-height: 1.5; /* theme.typography.body1 */
   letter-spacing: 0;
   text-align: center;
-  color: #3e5060; /* theme.palette.text.secondary === grey[700] */
+  color: var(--mui-palette-text-secondary);
 }
 
 .played {
@@ -147,7 +148,10 @@
   display: block;
   width: 1em;
   height: 0.75em;
+  /* Flags with white fields need a white backing in both schemes; the ring
+     stops it reading as a floating white chip on a dark row. */
   background-color: #fff;
+  box-shadow: 0 0 0 1px var(--mui-palette-divider);
 }
 
 .teamLink {
@@ -197,11 +201,11 @@
   padding: 0.375em 0.5em;
   font-size: 0.875em;
   text-align: center;
-  background-color: #f3f6f9; /* theme.palette.grey[50] */
+  background-color: var(--mui-palette-matchList-timeBg);
 }
 
 .live {
-  background-color: #007fff; /* theme.palette.primary.main */
+  background-color: var(--mui-palette-matchList-liveBg);
 }
 
 .watchLink {

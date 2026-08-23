@@ -12,6 +12,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+import { blue } from "@/lib/theme";
 import { TransitionProps } from "@mui/material/transitions";
 import CloseIcon from "@mui/icons-material/CloseRounded";
 import RankIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
@@ -127,9 +129,11 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
             p: 0.75,
             borderRadius: "50%",
             color: "text.primary",
-            bgcolor: (theme) => theme.palette.grey[50],
+            // The grey ramp is shared by both colour schemes, so a grey[50]
+            // disc stayed white on a dark dialog. The action tokens flip.
+            bgcolor: "action.hover",
             "&:hover": {
-              bgcolor: (theme) => theme.palette.grey[100],
+              bgcolor: "action.selected",
             },
           }}
         >
@@ -143,17 +147,24 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
       </DialogTitle>
       <DialogContent>
         <Box
-          sx={{
+          sx={(theme) => ({
             display: "inline-block",
             border: "1px solid",
-            color: (theme) => theme.palette.primary[600],
-            borderColor: (theme) => theme.palette.primary[300],
-            bgcolor: (theme) => theme.palette.primary[50],
+            // The primary ramp is shared by both schemes, so these steps have
+            // to be picked per scheme rather than read straight off the theme.
+            color: theme.vars.palette.primary[600],
+            borderColor: theme.vars.palette.primary[300],
+            bgcolor: theme.vars.palette.primary[50],
             fontWeight: 500,
             borderRadius: "0.75rem",
             py: 0.5,
-            px: 2
-          }}>
+            px: 2,
+            ...theme.applyStyles("dark", {
+              color: theme.vars.palette.primary[200],
+              borderColor: theme.vars.palette.primary[700],
+              bgcolor: alpha(blue[900], 0.5),
+            }),
+          })}>
           Rank #{rank.rank}
         </Box>
 

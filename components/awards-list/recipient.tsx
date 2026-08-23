@@ -29,9 +29,9 @@ const Flag: React.FC<{ countryCode: string }> = ({ countryCode }) => {
       <Box
         sx={{
           ...sx,
-          bgcolor: (theme) => theme.palette.grey[100],
+          bgcolor: "action.selected",
           border: "1px solid",
-          borderColor: (theme) => theme.palette.grey[200],
+          borderColor: "divider",
         }}
       />
     );
@@ -45,7 +45,12 @@ const Flag: React.FC<{ countryCode: string }> = ({ countryCode }) => {
         height={12}
         onError={() => setFailed(true)}
         style={{
+          // Flags with white fields (Japan, Poland, ...) need their own white
+          // backing in both schemes. This is an inline style, not `sx`, so it
+          // reaches the palette through the CSS variable lib/theme.ts emits;
+          // the ring keeps the swatch from floating on a dark surface.
           backgroundColor: "#ffffff",
+          boxShadow: "0 0 0 1px var(--mui-palette-divider)",
           width: "100%",
           height: "100%",
         }}

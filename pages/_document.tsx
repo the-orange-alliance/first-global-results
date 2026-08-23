@@ -9,6 +9,7 @@ import Document, {
 } from "next/document";
 import { EmotionCache } from "@emotion/react";
 import createEmotionServer from "@emotion/server/create-instance";
+import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 import { createEmotionCache } from "@/lib/emotion-cache";
 
 // Public equivalent of the internal next/dist/shared/lib/utils types this file
@@ -61,6 +62,12 @@ export default class FIRSTDocument extends Document {
           />
         </Head>
         <body>
+          {/* Must be the first thing in the body: it reads the stored mode (or
+              prefers-color-scheme, for the default "system") and stamps
+              data-mui-color-scheme onto <html> before the first paint.  Without
+              it a dark-mode visitor gets a white flash on every page load. The
+              attribute it sets is the one lib/theme.ts scopes its variables to. */}
+          <InitColorSchemeScript defaultMode="system" />
           <Main />
           <NextScript />
         </body>
