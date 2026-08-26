@@ -15,8 +15,10 @@ const MEDAL_KEYS: string[] = MEDALS.map((medal) => medal.key);
  *
  * A medal line is the slot recipient followed by every `other` entry classed to
  * that medal — the slots hold one recipient each, but a shared gold needs two,
- * and both belong on the same line. Everything left over is an honorable
- * mention.
+ * and both belong on the same line. Beyond the medals, two independent lines
+ * follow: "honorable mention" for that explicit class, and "Recipients" for
+ * everything else (null, or an unrecognized class) — both always shown when
+ * populated, regardless of whether the award gave out any medals.
  *
  * Shared by the awards tab and the team modal so an award reads the same in
  * both places.
@@ -41,22 +43,20 @@ export const awardLines = (
     };
   });
 
-  // Whether this award placed anybody at all, judged on the whole award rather
-  // than on what survived `keep`. In the team modal a team that took only a
-  // mention still sees it called one, because the medals it sat below are real
-  // even though they belong to other teams.
-  const anyMedal =
-    MEDALS.some((medal) => award[medal.key]) ||
-    (award.other ?? []).some((recipient) =>
-      MEDAL_KEYS.includes(recipient.class as string)
-    );
-
-  // Written as "not a medal" rather than "class is null" so a hand-edited
-  // document with an unrecognized class still shows its recipient somewhere.
   lines.push({
-    ...(anyMedal ? HONORABLE_MENTION : RECIPIENTS),
+    ...HONORABLE_MENTION,
+    recipients: other.filter((recipient) => recipient.class === "honorable mention"),
+  });
+
+  // Written as "not a medal and not honorable mention" rather than "class is
+  // null" so a hand-edited document with an unrecognized class still shows its
+  // recipient somewhere.
+  lines.push({
+    ...RECIPIENTS,
     recipients: other.filter(
-      (recipient) => !MEDAL_KEYS.includes(recipient.class as string)
+      (recipient) =>
+        !MEDAL_KEYS.includes(recipient.class as string) &&
+        recipient.class !== "honorable mention"
     ),
   });
 

@@ -11,22 +11,20 @@ export const MEDALS = [
 
 export type MedalKey = (typeof MEDALS)[number]["key"];
 
-/** Non-medal recipients share one line, labelled and coloured as grey[300]. */
+/**
+ * Two independent, always-labelled lines for non-medal recipients, both
+ * coloured as grey[300]. Both can appear on the same award, regardless of
+ * whether it gave out any medals: "honorable mention" is its own explicit
+ * class, and null (a plain, unclassified recipient) is a separate line.
+ */
 export const HONORABLE_MENTION = {
-  key: "other",
+  key: "honorable-mention",
   label: "Honorable Mention",
   color: "#CDD2D7",
 } as const;
 
-/**
- * The same line, relabelled for an award that handed out no medals at all.
- *
- * "Honorable mention" is a rank relative to a medal — being named alongside a
- * winner. Where there is no winner to be mentioned alongside, the people on
- * this line are not runners-up; they are simply who received the award.
- */
 export const RECIPIENTS = {
-  key: "other",
+  key: "recipients",
   label: "Recipients",
   color: HONORABLE_MENTION.color,
 } as const;
