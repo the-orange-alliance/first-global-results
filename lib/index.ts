@@ -60,8 +60,6 @@ export const getFlagUrl = (countryCode: string) => {
     12: "12_oceania",
     13: "13_north-america",
     14: "14_europe",
-    "sy": "sy_new",
-    "cr": "cr_new",
   }
 
   // Normalize before the lookup, not after: the keys are lowercase, so an
