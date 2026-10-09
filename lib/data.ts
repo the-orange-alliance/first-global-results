@@ -1,11 +1,12 @@
+// Current season's streams; used by live match rows and the team modal.
 export const watchLinks = {
   all: "https://first.global/live",
-  main: "https://first.global/live",
-  field1: "https://first.global/live",
-  field2: "https://first.global/live",
-  field3: "https://first.global/live",
-  field4: "https://first.global/live",
-  field5: "https://first.global/live",
+  main: "https://www.youtube.com/watch?v=UekLwTOuNUU",
+  field1: "https://www.youtube.com/watch?v=tkQpTnlTcu8",
+  field2: "https://www.youtube.com/watch?v=F_kvVyXWrZU",
+  field3: "https://www.youtube.com/watch?v=YNKPPyYxfJM",
+  field4: "https://www.youtube.com/watch?v=ZkFxxa22V5g",
+  field5: "https://www.youtube.com/watch?v=onEdqqlQjaQ",
 };
 
 export type YearData = {
@@ -29,7 +30,7 @@ export const yearData: { [key: number]: YearData } = {
     date: "7-10 October 2026 in Incheon",
     customRankingName: "Climb Points",
     customRankingKey: "climbPoints",
-    watchLinks: null,
+    watchLinks,
   },
   2025: {
     year: "2025",

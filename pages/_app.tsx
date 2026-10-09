@@ -31,8 +31,11 @@ const MyApp = ({
                these stay hand-written because they are not palette entries.
 
                The dark values are lighter hues with much higher tint alphas —
-               a 2% or 12% wash is effectively invisible on a dark surface. */
-            :root {
+               a 2% or 12% wash is effectively invisible on a dark surface.
+               The light selector restores the light values inside subtrees
+               pinned to light (components/pit-display/light-scheme.tsx). */
+            :root,
+            [data-mui-color-scheme="light"] {
               --green: #00701a;
               --red: rgb(255, 82, 82);
               --light-red: rgba(255, 82, 82, 0.12);

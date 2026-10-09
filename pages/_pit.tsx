@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PitDisplay from "@/components/pit-display";
+import LightScheme from "@/components/pit-display/light-scheme";
 import { getResultsUrl } from "@/lib";
 import { useRouter } from "next/router";
 
@@ -24,12 +25,7 @@ export default function Pit({ data: initialData }) {
   }, []);
 
   return (
-    // The pit display is a venue screen that is dark by design, in its own
-    // hand-written CSS, and has no theme selector. Pinning the subtree to the
-    // light scheme keeps the site-wide dark mode from flipping the few MUI
-    // components in here — a `divider`-coloured rule would vanish on black.
-    // `display: contents` keeps the wrapper out of the layout.
-    <div data-mui-color-scheme="light" style={{ display: "contents" }}>
+    <LightScheme>
       <PitDisplay data={data} year={Array.isArray(year) ? year.toString() : year} sort={Array.isArray(sort) ? sort.toString() : sort} />
       {isError && <div className="error">Disconnected</div>}
       <style jsx>{`
@@ -49,7 +45,7 @@ export default function Pit({ data: initialData }) {
           text-transform: uppercase;
         }
       `}</style>
-    </div>
+    </LightScheme>
   );
 }
 

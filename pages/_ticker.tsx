@@ -3,6 +3,7 @@ import PitDisplay from "@/components/pit-display";
 import { getResultsUrl } from "@/lib";
 import { useRouter } from "next/router";
 import TickerComponent from "@/components/pit-display/ticker";
+import LightScheme from "@/components/pit-display/light-scheme";
 
 export default function Pit({ data: initialData }) {
   const [data, setData] = useState(initialData);
@@ -27,12 +28,9 @@ export default function Pit({ data: initialData }) {
   }, []);
 
   return (
-    // Dark-by-design venue screen with no theme selector: pin it to the light
-    // scheme so site-wide dark mode can't restyle the MUI Divider between
-    // entries into something invisible on black. See pages/_pit.tsx.
-    <div data-mui-color-scheme="light" style={{ display: "contents" }}>
+    <LightScheme>
       <TickerComponent rankings={data.rankings} multiplier={multParsed} sort={Array.isArray(sort) ? sort.toString() : sort} />
-    </div>
+    </LightScheme>
   );
 }
 
