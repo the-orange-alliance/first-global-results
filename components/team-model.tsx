@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   Box,
   Button,
@@ -28,6 +29,7 @@ import MedalLine from "@/components/awards-list/medal-line";
 import { teamAwards } from "@/components/awards-list/team-awards";
 import type { TeamsByCode } from "@/components/awards-list/types";
 import { pastYears, watchLinks, yearData } from "@/lib/data";
+import { getFlagUrl } from "@/lib";
 import { AddOutlined } from "@mui/icons-material";
 
 /** Stable empty map: award lines here never link back to this same modal. */
@@ -49,6 +51,7 @@ const MobileTransition = forwardRef(function Transition(
 
 const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) => {
   const [countryData, setCountryData] = useState<any>(null);
+  const [flagFailed, setFlagFailed] = useState(false);
   const isMobile = useMediaQuery("(max-width: 899px)");
 
   if (!year) {
@@ -69,6 +72,7 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
         match.participants.some((p) => p.teamKey === rank.teamKey)
       );
       setCountryData({ team, rank, matches });
+      setFlagFailed(false);
     }
   }, [country, data, onClose]);
 
@@ -117,8 +121,29 @@ const TeamModel: React.FC<TeamModelProps> = ({ country, data, onClose, year }) =
           fontSize: "1.75rem",
           fontWeight: 700,
           display: "flex",
+          alignItems: "center",
         }}
       >
+        {team.countryCode && !flagFailed && (
+          <Image
+            src={getFlagUrl(team.countryCode)}
+            width={40}
+            height={30}
+            onError={() => setFlagFailed(true)}
+            style={{
+              // Same treatment as the table flags: a white backing for flags
+              // with white fields, and a divider ring for dark surfaces.
+              flex: "0 0 auto",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 0 0 1px var(--mui-palette-divider)",
+              borderRadius: "3px",
+              width: "1.33em",
+              height: "1em",
+              marginRight: "0.5em",
+            }}
+            alt={`${team.countryCode} flag`}
+          />
+        )}
         {team.name} ({team.country})
         <Button
           onClick={onClose}
