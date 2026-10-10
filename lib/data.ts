@@ -1,12 +1,12 @@
 // Current season's streams; used by live match rows and the team modal.
 export const watchLinks = {
   all: "https://first.global/live",
-  main: "https://www.youtube.com/watch?v=UekLwTOuNUU",
-  field1: "https://www.youtube.com/watch?v=tkQpTnlTcu8",
-  field2: "https://www.youtube.com/watch?v=F_kvVyXWrZU",
-  field3: "https://www.youtube.com/watch?v=YNKPPyYxfJM",
-  field4: "https://www.youtube.com/watch?v=ZkFxxa22V5g",
-  field5: "https://www.youtube.com/watch?v=onEdqqlQjaQ",
+  main: "https://www.youtube.com/watch?v=juiOD0SCK9Q",
+  field1: "https://www.youtube.com/watch?v=jKX6kQnTp7g",
+  field2: "https://www.youtube.com/watch?v=P4tHKmWGoS0",
+  field3: "https://www.youtube.com/watch?v=3H32iaSLciE",
+  field4: "https://www.youtube.com/watch?v=u9lpqA9azkM",
+  field5: "https://www.youtube.com/watch?v=-zWoaHmeZ38",
 };
 
 export type YearData = {
